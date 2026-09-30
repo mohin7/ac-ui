@@ -31,7 +31,7 @@ const shadows = [
     <code class="prose-code">.is-rounded-N</code> steps still exist as <code class="prose-code">rounded-N</code>.
   </p>
   <div class="my-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
-    <div v-for="r in radii" :key="r.cls" class="rounded-10 border border-border bg-white p-4 text-center shadow-xs">
+    <div v-for="r in radii" :key="r.cls" class="rounded-10 border border-border bg-surface p-4 text-center shadow-xs">
       <div class="mx-auto mb-3 size-14 border-2 border-primary bg-primary-95" :class="r.cls" />
       <CopyChip :text="r.cls" />
       <p class="mt-1 text-xs leading-[17px] text-muted">{{ r.px }} · {{ r.use }}</p>
@@ -44,7 +44,7 @@ const shadows = [
     with <code class="prose-code">shadow-xs</code>; stronger shadows are only for things that float above the page.
   </p>
   <div class="preview-canvas my-6 grid gap-6 rounded-12 border border-border-light p-8 sm:grid-cols-3">
-    <div v-for="s in shadows" :key="s.cls" class="rounded-10 bg-white p-5" :class="[s.cls, s.cls !== 'shadow-button' && s.cls !== 'shadow-xs' ? '' : 'border border-border']">
+    <div v-for="s in shadows" :key="s.cls" class="rounded-10 bg-surface p-5" :class="[s.cls, s.cls !== 'shadow-button' && s.cls !== 'shadow-xs' ? '' : 'border border-border']">
       <CopyChip :text="s.cls" />
       <p class="mt-2 text-base leading-[20px] text-label">{{ s.use }}</p>
     </div>

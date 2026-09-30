@@ -39,12 +39,12 @@ const weights = [
   <DocHeading id="families">Families</DocHeading>
   <p>Geist for all UI text, Geist Mono for code, resource names and commands. Both are self-hosted variable fonts. The Bulma version used Roboto and Inconsolata.</p>
   <div class="my-4 grid gap-4 md:grid-cols-2">
-    <div class="rounded-10 border border-border bg-white shadow-xs p-6">
+    <div class="rounded-10 border border-border bg-surface shadow-xs p-6">
       <CopyChip text="font-sans" />
       <p class="mt-2 text-5xl leading-tight text-heading">Aa Bb Cc 123</p>
       <p class="mt-2">Your cluster is ready. Import it to start managing databases.</p>
     </div>
-    <div class="rounded-10 border border-border bg-white shadow-xs p-6">
+    <div class="rounded-10 border border-border bg-surface shadow-xs p-6">
       <CopyChip text="font-mono" /> · <CopyChip text="text-code" />
       <p class="mt-2 font-mono text-5xl leading-tight text-heading">{ } 0O 1lI</p>
       <p class="mt-2 text-code">kubectl get postgres -n demo</p>
@@ -53,7 +53,7 @@ const weights = [
 
   <DocHeading id="headings">Headings</DocHeading>
   <p>Plain <code class="prose-code">h1</code>–<code class="prose-code">h6</code> elements are styled by the theme, in heading colour, with tighter tracking as they grow.</p>
-  <div class="my-4 overflow-hidden rounded-10 border border-border bg-white shadow-xs">
+  <div class="my-4 overflow-hidden rounded-10 border border-border bg-surface shadow-xs">
     <div
       v-for="h in headings"
       :key="h.tag"
@@ -71,7 +71,7 @@ const weights = [
     In this system <code class="prose-code">text-sm</code> (11px) is smaller than
     <code class="prose-code">text-xs</code> (12px). It's kept from the source so existing class names mean the same size.
   </Callout>
-  <div class="my-4 overflow-hidden rounded-10 border border-border bg-white shadow-xs">
+  <div class="my-4 overflow-hidden rounded-10 border border-border bg-surface shadow-xs">
     <div v-for="s in scale" :key="s.cls" class="flex items-baseline gap-6 border-b border-border-light px-6 py-3 last:border-0">
       <span class="w-24 shrink-0"><CopyChip :text="s.cls" /></span>
       <span class="w-10 shrink-0 text-xs text-label">{{ s.px }}px</span>
@@ -82,7 +82,7 @@ const weights = [
 
   <DocHeading id="weights">Weights</DocHeading>
   <div class="my-4 flex flex-wrap gap-3">
-    <div v-for="w in weights" :key="w.w" class="rounded-10 border border-border bg-white shadow-xs px-5 py-4">
+    <div v-for="w in weights" :key="w.w" class="rounded-10 border border-border bg-surface shadow-xs px-5 py-4">
       <p class="text-3xl text-heading" :class="w.cls">Aa</p>
       <CopyChip :text="w.cls" /> <span class="text-xs text-label">{{ w.w }}</span>
     </div>

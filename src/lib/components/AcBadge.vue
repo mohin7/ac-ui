@@ -43,11 +43,11 @@ defineSlots<{
 
 const classes = computed(() => {
   const [solid, light, outlined] = recipes[props.color];
-  return { solid, light: `ring-1 ring-inset ${light}`, outlined: `bg-white ring-1 ring-inset ${outlined}` }[props.variant];
+  return { solid, light: `ring-1 ring-inset ${light}`, outlined: `bg-surface ring-1 ring-inset ${outlined}` }[props.variant];
 });
 
 const dotClass = computed(() => {
-  if (props.variant === "solid" && props.color !== "default") return "bg-white";
+  if (props.variant === "solid" && props.color !== "default") return "bg-surface";
   return recipes[props.color][3];
 });
 </script>

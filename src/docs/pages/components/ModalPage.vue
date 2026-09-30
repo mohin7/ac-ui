@@ -42,14 +42,14 @@ const donts = ["Don't open a modal from inside a modal.", "Don't use a modal for
 
   <DocHeading id="theme">Theme</DocHeading>
   <p>The Tailwind classes this component uses, all from the AppsCode theme. See <RouterLink to="/getting-started/theming">Theming</RouterLink>.</p>
-  <div class="overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+  <div class="overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
     <table class="w-full text-left text-base">
       <thead class="border-b border-border bg-surface-muted text-xs text-label">
         <tr><th class="h-9 px-4 font-medium">Classes</th><th class="h-9 px-4 font-medium">Used for</th></tr>
       </thead>
       <tbody>
         <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">rounded-12 border-border shadow-xl</code></td><td class="px-4 py-3">Panel</td></tr>
-        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">bg-slate-10/40 backdrop-blur-[2px]</code></td><td class="px-4 py-3">Backdrop</td></tr>
+        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">bg-overlay backdrop-blur-[2px]</code></td><td class="px-4 py-3">Backdrop</td></tr>
         <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">bg-surface-muted border-t</code></td><td class="px-4 py-3">Footer</td></tr>
         <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">max-w-110 … max-w-250</code></td><td class="px-4 py-3">Sizes</td></tr>
       </tbody>

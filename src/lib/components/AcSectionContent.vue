@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useId } from "vue";
+import { ArrowLeft, ChevronDown } from "lucide-vue-next";
 
 export interface Props {
   /** Section title. */
@@ -44,7 +45,7 @@ const bodyId = useId();
 </script>
 
 <template>
-  <section :class="!plain && 'rounded-10 border border-border bg-white shadow-xs'" data-testid="ac-section-content">
+  <section :class="!plain && 'rounded-10 border border-border bg-surface shadow-xs'" data-testid="ac-section-content">
     <header
       class="flex items-center justify-between gap-4"
       :class="[plain ? 'mb-3' : 'px-5 py-3.5', !plain && open && 'border-b border-border-light']"
@@ -57,9 +58,7 @@ const bodyId = useId();
           aria-label="Back"
           @click="emit('back')"
         >
-          <svg class="size-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M9.5 3.5 5 8l4.5 4.5" />
-          </svg>
+          <ArrowLeft class="size-4" aria-hidden="true" />
         </button>
         <div class="min-w-0">
           <slot name="header">
@@ -76,15 +75,13 @@ const bodyId = useId();
         <button
           v-if="collapsible"
           type="button"
-          class="inline-flex size-7 cursor-pointer items-center justify-center rounded-6 border border-border bg-white text-label shadow-xs transition hover:border-border-dark hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+          class="inline-flex size-7 cursor-pointer items-center justify-center rounded-6 border border-border bg-surface text-label shadow-xs transition hover:border-border-dark hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
           :aria-expanded="open"
           :aria-controls="bodyId"
           :aria-label="open ? 'Collapse section' : 'Expand section'"
           @click="open = !open"
         >
-          <svg class="size-3.5 transition-transform duration-200" :class="!open && '-rotate-90'" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="m4 6 4 4 4-4" />
-          </svg>
+          <ChevronDown class="size-4 transition-transform duration-200" :class="!open && '-rotate-90'" aria-hidden="true" />
         </button>
       </div>
     </header>

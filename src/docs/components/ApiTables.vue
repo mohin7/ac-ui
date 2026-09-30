@@ -52,7 +52,7 @@ const kebab = (s: string) => (s.startsWith("v-model") ? s : s.replace(/[A-Z]/g, 
   </p>
 
   <DocHeading :id="`${idPrefix}props`" :level="3">Props</DocHeading>
-  <div class="mb-10 overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+  <div class="mb-10 overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
     <table class="w-full text-left text-base">
       <thead class="border-b border-border bg-surface-muted text-xs text-label">
         <tr>
@@ -82,7 +82,7 @@ const kebab = (s: string) => (s.startsWith("v-model") ? s : s.replace(/[A-Z]/g, 
 
   <template v-if="slots.length">
     <DocHeading :id="`${idPrefix}slots`" :level="3">Slots</DocHeading>
-    <div class="mb-10 overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+    <div class="mb-10 overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
       <table class="w-full text-left text-base">
         <thead class="border-b border-border bg-surface-muted text-xs text-label">
           <tr>
@@ -107,7 +107,7 @@ const kebab = (s: string) => (s.startsWith("v-model") ? s : s.replace(/[A-Z]/g, 
 
   <template v-if="events.length">
     <DocHeading :id="`${idPrefix}emits`" :level="3">Emits</DocHeading>
-    <div class="mb-10 overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+    <div class="mb-10 overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
       <table class="w-full text-left text-base">
         <thead class="border-b border-border bg-surface-muted text-xs text-label">
           <tr>

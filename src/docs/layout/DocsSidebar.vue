@@ -25,10 +25,10 @@ const tree = computed(() => {
 
 <template>
   <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" enter-active-class="transition-opacity" leave-active-class="transition-opacity">
-    <div v-if="open" class="fixed inset-0 z-40 bg-slate-10/30 backdrop-blur-[2px] lg:hidden" aria-hidden="true" @click="emit('close')" />
+    <div v-if="open" class="fixed inset-0 z-40 bg-overlay backdrop-blur-[2px] lg:hidden" aria-hidden="true" @click="emit('close')" />
   </Transition>
   <aside
-    class="fixed top-0 bottom-0 left-0 z-50 w-68 overflow-y-auto border-r border-border-light bg-white px-4 pt-5 pb-12 transition-transform duration-300 ease-out-soft [scrollbar-width:none] hover:[scrollbar-width:thin] lg:sticky lg:top-15 lg:z-0 lg:h-[calc(100dvh-60px)] lg:w-60 lg:translate-x-0 lg:border-0 lg:bg-transparent lg:px-0 lg:pt-8"
+    class="fixed top-0 bottom-0 left-0 z-50 w-68 overflow-y-auto border-r border-border-light bg-surface px-4 pt-5 pb-12 transition-transform duration-300 ease-out-soft [scrollbar-width:none] hover:[scrollbar-width:thin] lg:sticky lg:top-15 lg:z-0 lg:h-[calc(100dvh-60px)] lg:w-60 lg:translate-x-0 lg:border-0 lg:bg-transparent lg:px-0 lg:pt-8"
     :class="open ? 'translate-x-0 shadow-xl lg:shadow-none' : '-translate-x-full'"
     aria-label="Documentation"
   >
@@ -41,7 +41,7 @@ const tree = computed(() => {
         type="search"
         placeholder="Filter"
         aria-label="Filter pages"
-        class="h-8 w-full rounded-6 border border-border bg-white pr-3 pl-8 text-base text-heading shadow-xs transition placeholder:text-muted hover:border-border-dark focus:focus-ring"
+        class="h-8 w-full rounded-6 border border-border bg-surface pr-3 pl-8 text-base text-heading shadow-xs transition placeholder:text-muted hover:border-border-dark focus:focus-ring"
       />
     </div>
     <nav>
@@ -62,7 +62,7 @@ const tree = computed(() => {
                 @click="emit('close')"
               >
                 {{ p.title }}
-                <span v-if="p.badge" class="ml-auto rounded-4 bg-white px-1.5 text-[10px] leading-4 font-medium text-primary-20 ring-1 ring-primary-80 ring-inset">{{ p.badge }}</span>
+                <span v-if="p.badge" class="ml-auto rounded-4 bg-surface px-1.5 text-[10px] leading-4 font-medium text-primary-20 ring-1 ring-primary-80 ring-inset">{{ p.badge }}</span>
               </RouterLink>
             </li>
           </ul>

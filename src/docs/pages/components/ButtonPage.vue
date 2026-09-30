@@ -62,7 +62,7 @@ const donts = ["Don't place two solid primary buttons side by side.", "Don't col
 
   <DocHeading id="theme">Theme</DocHeading>
   <p>The Tailwind classes this component uses, all from the AppsCode theme. See <RouterLink to="/getting-started/theming">Theming</RouterLink>.</p>
-  <div class="overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+  <div class="overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
     <table class="w-full text-left text-base">
       <thead class="border-b border-border bg-surface-muted text-xs text-label">
         <tr><th class="h-9 px-4 font-medium">Classes</th><th class="h-9 px-4 font-medium">Used for</th></tr>
@@ -70,7 +70,7 @@ const donts = ["Don't place two solid primary buttons side by side.", "Don't col
       <tbody>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">bg-primary / hover:bg-primary-hover</code></td><td class="px-4 py-3">Solid primary fill</td></tr>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">bg-primary-95 / text-primary-20</code></td><td class="px-4 py-3">Light variant</td></tr>
-        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-primary-70 bg-white</code></td><td class="px-4 py-3">Outlined variant</td></tr>
+        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-primary-70 bg-surface</code></td><td class="px-4 py-3">Outlined variant</td></tr>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">rounded-6</code></td><td class="px-4 py-3">Corner radius</td></tr>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">h-8 px-3.5 text-base font-medium shadow-button</code></td><td class="px-4 py-3">Normal size</td></tr>
       </tbody>

@@ -21,7 +21,7 @@ const copyImport = () => copy(`import { ${props.page.component} } from "@/lib";`
       <button
         v-if="page.component"
         type="button"
-        class="mt-1.5 inline-flex h-8 cursor-pointer items-center gap-2 rounded-6 border border-border bg-white px-3 text-base font-medium text-heading shadow-xs transition hover:border-border-dark hover:bg-surface-muted"
+        class="mt-1.5 inline-flex h-8 cursor-pointer items-center gap-2 rounded-6 border border-border bg-surface px-3 text-base font-medium text-heading shadow-xs transition hover:border-border-dark hover:bg-surface-muted"
         @click="copyImport"
       >
         <svg v-if="!copied" class="size-3.5 text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">

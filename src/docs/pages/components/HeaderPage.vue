@@ -47,13 +47,13 @@ const donts = ["Don't use more than one solid primary button in the header.", "D
 
   <DocHeading id="theme">Theme</DocHeading>
   <p>The Tailwind classes this component uses, all from the AppsCode theme. See <RouterLink to="/getting-started/theming">Theming</RouterLink>.</p>
-  <div class="overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+  <div class="overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
     <table class="w-full text-left text-base">
       <thead class="border-b border-border bg-surface-muted text-xs text-label">
         <tr><th class="h-9 px-4 font-medium">Classes</th><th class="h-9 px-4 font-medium">Used for</th></tr>
       </thead>
       <tbody>
-        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">border-b border-border-light bg-white/90 backdrop-blur-md</code></td><td class="px-4 py-3">Bar</td></tr>
+        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">border-b border-border-light bg-surface/90 backdrop-blur-md</code></td><td class="px-4 py-3">Bar</td></tr>
         <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">px-6 py-4</code></td><td class="px-4 py-3">Padding</td></tr>
       </tbody>
     </table>

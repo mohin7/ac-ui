@@ -55,8 +55,8 @@ const onKey = (e: KeyboardEvent) => {
 
 <template>
   <Teleport to="body">
-    <div v-if="open" class="fixed inset-0 z-[60] flex animate-fade-in items-start justify-center bg-slate-10/40 p-4 pt-[12vh] backdrop-blur-[2px]" @click.self="open = false">
-      <div class="w-full max-w-150 animate-pop-in overflow-hidden rounded-12 border border-border bg-white shadow-xl" role="dialog" aria-label="Search docs">
+    <div v-if="open" class="fixed inset-0 z-[60] flex animate-fade-in items-start justify-center bg-overlay p-4 pt-[12vh] backdrop-blur-[2px]" @click.self="open = false">
+      <div class="w-full max-w-150 animate-pop-in overflow-hidden rounded-12 border border-border bg-surface shadow-xl" role="dialog" aria-label="Search docs">
         <div class="flex items-center gap-2 border-b border-border px-4">
           <svg class="size-4 text-label" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3 3" />

@@ -1,4 +1,14 @@
 {
+  "AcAccordion": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcAccordionItem": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
   "AcAlert": {
     "props": [
       {
@@ -37,6 +47,11 @@
         "description": "The message. Links inside are underlined in primary."
       }
     ]
+  },
+  "AcAvatar": {
+    "props": [],
+    "events": [],
+    "slots": []
   },
   "AcBadge": {
     "props": [
@@ -84,6 +99,11 @@
         "description": "Badge content. Replaces `label`."
       }
     ]
+  },
+  "AcBanner": {
+    "props": [],
+    "events": [],
+    "slots": []
   },
   "AcButton": {
     "props": [
@@ -163,6 +183,11 @@
         "description": "A 16px icon before the label (an inline SVG or icon component)."
       }
     ]
+  },
+  "AcButtons": {
+    "props": [],
+    "events": [],
+    "slots": []
   },
   "AcCard": {
     "props": [
@@ -531,6 +556,51 @@
       }
     ]
   },
+  "AcDivider": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcDropdown": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcDropdownDivider": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcDropdownItem": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcEmptyState": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcFileUpload": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcForm": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcFormFooter": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcFormSection": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
   "AcHeader": {
     "props": [
       {
@@ -621,6 +691,11 @@
       }
     ]
   },
+  "AcInfoTable": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
   "AcInput": {
     "props": [
       {
@@ -700,6 +775,11 @@
         "signature": "(event: \"update:modelValue\", value: string | number): void"
       }
     ],
+    "slots": []
+  },
+  "AcKbd": {
+    "props": [],
+    "events": [],
     "slots": []
   },
   "AcModal": {
@@ -793,6 +873,31 @@
         "description": "Left side of the footer, e.g. a \"Don't show again\" checkbox."
       }
     ]
+  },
+  "AcNavbar": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcNavbarItem": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcPagination": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcPreloader": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcProgress": {
+    "props": [],
+    "events": [],
+    "slots": []
   },
   "AcSearchBar": {
     "props": [
@@ -925,6 +1030,11 @@
         "description": "Section body."
       }
     ]
+  },
+  "AcSegmentedControl": {
+    "props": [],
+    "events": [],
+    "slots": []
   },
   "AcSelect": {
     "props": [
@@ -1072,6 +1182,51 @@
         "description": "Content shown when the list is empty or nothing matches."
       }
     ]
+  },
+  "AcSidePanel": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcSidebar": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcSidebarItem": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcSidebarSection": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcSkeleton": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcSpinner": {
+    "props": [
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | \"large\" | \"xs\" | undefined",
+        "default": "\"small\"",
+        "required": false,
+        "description": "Diameter: `xs` 12px, `small` 16px, `normal` 20px, `large` 32px."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Loading\"",
+        "required": false,
+        "description": "Read by screen readers. Pass an empty string when a visible label sits next to it."
+      }
+    ],
+    "events": [],
+    "slots": []
   },
   "AcSteps": {
     "props": [
@@ -1253,5 +1408,56 @@
         "description": "Panel content, rendered under the tab list. Receives the active key."
       }
     ]
+  },
+  "AcTag": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcTextarea": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcThemeMode": {
+    "props": [
+      {
+        "name": "defaultMode",
+        "type": "ColorMode | undefined",
+        "default": "\"light\"",
+        "required": false,
+        "description": "Used until the viewer picks a mode."
+      },
+      {
+        "name": "display",
+        "type": "\"icons\" | \"labels\" | undefined",
+        "default": "\"icons\"",
+        "required": false,
+        "description": "`icons` is a compact 3-icon switch; `labels` adds the words, for menus and settings pages."
+      }
+    ],
+    "events": [
+      {
+        "name": "set:theme",
+        "type": "[theme: \"dark\" | \"light\"]",
+        "signature": "(event: \"set:theme\", theme: \"dark\" | \"light\"): void"
+      }
+    ],
+    "slots": []
+  },
+  "AcToaster": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcTooltip": {
+    "props": [],
+    "events": [],
+    "slots": []
+  },
+  "AcUserMenu": {
+    "props": [],
+    "events": [],
+    "slots": []
   }
 }

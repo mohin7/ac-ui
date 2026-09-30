@@ -18,7 +18,7 @@ defineSlots<{
 </script>
 
 <template>
-  <section class="rounded-10 border border-border bg-white shadow-xs" data-testid="ac-card">
+  <section class="rounded-10 border border-border bg-surface shadow-xs" data-testid="ac-card">
     <header
       v-if="title || $slots.actions"
       class="flex items-center justify-between gap-4 border-b border-border-light px-5 py-3.5"

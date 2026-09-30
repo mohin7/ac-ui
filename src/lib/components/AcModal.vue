@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
+import { X } from "lucide-vue-next";
 
 export interface Props {
   /** Heading of the dialog. */
@@ -137,7 +138,7 @@ const widths = {
     >
       <div
         v-if="open"
-        class="fixed inset-0 z-[80] overflow-y-auto bg-slate-10/40 backdrop-blur-[2px]"
+        class="fixed inset-0 z-[80] overflow-y-auto bg-overlay backdrop-blur-[2px]"
         data-testid="ac-modal"
         @keydown="onKeydown"
         @mousedown.self="closeOnOutsideClick && close()"
@@ -150,7 +151,7 @@ const widths = {
             :aria-labelledby="title ? `${id}-title` : undefined"
             :aria-describedby="description ? `${id}-desc` : undefined"
             tabindex="-1"
-            class="relative flex max-h-[calc(100dvh-32px)] w-full animate-pop-in flex-col rounded-12 border border-border bg-white shadow-xl outline-none sm:max-h-[calc(100dvh-64px)]"
+            class="relative flex max-h-[calc(100dvh-32px)] w-full animate-pop-in flex-col rounded-12 border border-border bg-surface shadow-xl outline-none sm:max-h-[calc(100dvh-64px)]"
             :class="widths[size]"
           >
             <header class="flex shrink-0 items-start gap-4 border-b border-border-light px-5 py-4">
@@ -170,9 +171,7 @@ const widths = {
                   data-testid="ac-modal-close"
                   @click="close"
                 >
-                  <svg class="size-3.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-                    <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" />
-                  </svg>
+                  <X class="size-4" aria-hidden="true" />
                 </button>
               </div>
             </header>

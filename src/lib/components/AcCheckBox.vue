@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T">
 import { useId } from "vue";
+import { Check } from "lucide-vue-next";
 import type { Option } from "./types";
 
 export interface Props<V> {
@@ -34,18 +35,13 @@ const id = useId();
           :name="name"
           :value="option.value"
           :disabled="option.disabled"
-          class="peer size-4 cursor-pointer appearance-none rounded-4 border border-border-dark bg-white shadow-xs transition-[background-color,border-color,box-shadow] duration-150 group-hover:border-slate-60 checked:border-primary checked:bg-primary checked:shadow-button focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed"
+          class="peer size-4 cursor-pointer appearance-none rounded-4 border border-border-dark bg-surface shadow-xs transition-[background-color,border-color,box-shadow] duration-150 group-hover:border-slate-60 checked:border-primary checked:bg-primary checked:shadow-button focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed"
         />
-        <svg
+        <Check
           class="pointer-events-none absolute inset-0 m-auto size-3 scale-75 text-white opacity-0 transition duration-150 peer-checked:scale-100 peer-checked:opacity-100"
-          viewBox="0 0 12 12"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
+          :stroke-width="3"
           aria-hidden="true"
-        >
-          <path d="M2.5 6.5 5 9l4.5-6" />
-        </svg>
+        />
       </span>
       <span>{{ option.label }}</span>
     </label>

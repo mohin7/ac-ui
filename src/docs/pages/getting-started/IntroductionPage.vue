@@ -38,7 +38,7 @@ const layers = [
   <section class="relative mb-20 pt-6">
     <div class="relative grid items-center gap-14 lg:grid-cols-[1fr_minmax(0,440px)]">
       <div>
-        <span class="inline-flex h-6.5 items-center gap-2 rounded-50 border border-border bg-white/80 pr-3 pl-1 text-xs font-medium text-label shadow-xs">
+        <span class="inline-flex h-6.5 items-center gap-2 rounded-50 border border-border bg-surface/80 pr-3 pl-1 text-xs font-medium text-label shadow-xs">
           <span class="rounded-50 bg-primary px-2 py-0.5 text-[11px] text-white">v0.2</span>
           Geist, softer elevation, refined controls
         </span>
@@ -58,7 +58,7 @@ const layers = [
       <!-- A live composition made from the real components -->
       <div class="preview-canvas relative rounded-16 border border-border-light p-5" aria-label="Component preview">
         <div class="relative space-y-3">
-          <div class="rounded-12 border border-border bg-white p-4 shadow-lg">
+          <div class="rounded-12 border border-border bg-surface p-4 shadow-lg">
             <div class="flex items-center gap-3">
               <img src="/logos/kubedb-logo.png" alt="" class="size-9 rounded-8 bg-surface-muted p-1" />
               <div class="min-w-0 flex-1">
@@ -74,7 +74,7 @@ const layers = [
               </div>
             </div>
           </div>
-          <div class="ml-8 rounded-12 border border-border bg-white p-4 shadow-md">
+          <div class="ml-8 rounded-12 border border-border bg-surface p-4 shadow-md">
             <div class="flex items-center justify-between">
               <div>
                 <p class="font-medium text-heading">Enable TLS</p>
@@ -101,7 +101,7 @@ const layers = [
 
   <DocHeading id="principles">Principles</DocHeading>
   <div class="my-5 grid gap-4 md:grid-cols-3">
-    <div v-for="p in principles" :key="p.title" class="rounded-10 border border-border bg-white p-5 shadow-xs">
+    <div v-for="p in principles" :key="p.title" class="rounded-10 border border-border bg-surface p-5 shadow-xs">
       <span class="mb-4 inline-flex size-8 items-center justify-center rounded-8 bg-primary-95 text-primary-20 ring-1 ring-primary-90 ring-inset">
         <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path :d="p.icon" /></svg>
       </span>
@@ -112,7 +112,7 @@ const layers = [
 
   <DocHeading id="whats-inside">What's inside</DocHeading>
   <div class="my-5 grid gap-4 md:grid-cols-3">
-    <div v-for="l in layers" :key="l.name" class="rounded-10 border border-border bg-white p-5 shadow-xs">
+    <div v-for="l in layers" :key="l.name" class="rounded-10 border border-border bg-surface p-5 shadow-xs">
       <h5>{{ l.name }}</h5>
       <p class="mt-1 font-mono text-[11.5px] text-muted">{{ l.path }}</p>
       <p class="mt-3 text-base leading-[21px] text-label">{{ l.body }}</p>
@@ -126,7 +126,7 @@ const layers = [
       v-for="c in components"
       :key="c.path"
       :to="c.path"
-      class="group rounded-10 border border-border bg-white p-4 shadow-xs transition hover:-translate-y-px hover:border-border-dark hover:shadow-md"
+      class="group rounded-10 border border-border bg-surface p-4 shadow-xs transition hover:-translate-y-px hover:border-border-dark hover:shadow-md"
     >
       <span class="flex items-center justify-between gap-2">
         <span class="font-semibold text-heading">{{ c.title }}</span>

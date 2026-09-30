@@ -33,7 +33,7 @@ const layout = `<!-- A typical console page section -->
     One Tailwind unit is 4px (<code class="prose-code">--spacing: 4px</code>), so any spacing utility is
     <code class="prose-code">N × 4px</code>. Components step in 4s and 8s; stay on the steps below.
   </p>
-  <div class="my-4 overflow-hidden rounded-10 border border-border bg-white shadow-xs">
+  <div class="my-4 overflow-hidden rounded-10 border border-border bg-surface shadow-xs">
     <div v-for="s in spacing" :key="s.n" class="flex items-center gap-4 border-b border-border-light px-6 py-2.5 last:border-0">
       <span class="w-14 shrink-0"><CopyChip :text="`p-${s.n}`" /></span>
       <span class="w-12 shrink-0 text-xs text-label">{{ s.px }}px</span>

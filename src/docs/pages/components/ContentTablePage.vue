@@ -37,13 +37,13 @@ const donts = ["Don't nest a Content Table inside a Card — it is already a sur
 
   <DocHeading id="theme">Theme</DocHeading>
   <p>The Tailwind classes this component uses, all from the AppsCode theme. See <RouterLink to="/getting-started/theming">Theming</RouterLink>.</p>
-  <div class="overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+  <div class="overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
     <table class="w-full text-left text-base">
       <thead class="border-b border-border bg-surface-muted text-xs text-label">
         <tr><th class="h-9 px-4 font-medium">Classes</th><th class="h-9 px-4 font-medium">Used for</th></tr>
       </thead>
       <tbody>
-        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">rounded-10 border-border bg-white shadow-xs</code></td><td class="px-4 py-3">Surface</td></tr>
+        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">rounded-10 border-border bg-surface shadow-xs</code></td><td class="px-4 py-3">Surface</td></tr>
         <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">px-5 py-3.5 border-b border-border-light</code></td><td class="px-4 py-3">Header</td></tr>
       </tbody>
     </table>

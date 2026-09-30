@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { Menu, Search } from "lucide-vue-next";
+import { AcThemeMode } from "@/lib";
 import BrandHueMenu from "./BrandHueMenu.vue";
 
 const emit = defineEmits<{ search: []; menu: [] }>();
@@ -16,7 +18,7 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
 </script>
 
 <template>
-  <header class="sticky top-0 z-40 border-b border-border-light bg-white/85 backdrop-blur-md backdrop-saturate-150">
+  <header class="sticky top-0 z-40 border-b border-border-light bg-surface/85 backdrop-blur-md backdrop-saturate-150">
     <div class="mx-auto flex h-15 max-w-360 items-center gap-3 px-4 lg:px-8">
       <button
         type="button"
@@ -24,9 +26,7 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
         aria-label="Open navigation"
         @click="emit('menu')"
       >
-        <svg class="size-4.5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-          <path d="M3 6h14M3 10h14M3 14h14" />
-        </svg>
+        <Menu class="size-4.5" aria-hidden="true" />
       </button>
       <RouterLink to="/" class="flex shrink-0 items-center gap-2.5" aria-label="AppsCode Design System home">
         <img src="/logos/appscode-mark.png" alt="" class="size-6.5 rounded-6" />
@@ -57,17 +57,16 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
       <div class="ml-auto flex items-center gap-1.5">
         <button
           type="button"
-          class="group inline-flex h-8 cursor-pointer items-center gap-2 rounded-6 border border-border bg-surface-muted pr-1.5 pl-2.5 text-base text-muted shadow-xs transition hover:border-border-dark hover:bg-white sm:w-60"
+          class="group inline-flex h-8 cursor-pointer items-center gap-2 rounded-6 border border-border bg-surface-muted pr-1.5 pl-2.5 text-base text-muted shadow-xs transition hover:border-border-dark hover:bg-surface sm:w-60"
           @click="emit('search')"
         >
-          <svg class="size-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-            <circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3 3" />
-          </svg>
+          <Search class="size-3.5" aria-hidden="true" />
           <span class="hidden flex-1 text-left sm:inline">Search docs…</span>
-          <kbd class="hidden h-5 items-center rounded-4 border border-border bg-white px-1.5 font-sans text-[11px] font-medium text-label sm:inline-flex">
+          <kbd class="hidden h-5 items-center rounded-4 border border-border bg-surface px-1.5 font-sans text-[11px] font-medium text-label sm:inline-flex">
             {{ isMac ? "⌘" : "Ctrl" }} K
           </kbd>
         </button>
+        <AcThemeMode class="hidden sm:inline-flex" default-mode="system" />
         <BrandHueMenu />
       </div>
     </div>

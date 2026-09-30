@@ -5,7 +5,7 @@
 
 @layer base {
   html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-  body { background: var(--color-white); }
+  body { background: var(--color-surface); }
 }
 
 /* Code */
@@ -13,6 +13,8 @@
 .shiki span { font-family: var(--font-mono); }
 .shiki { background-color: transparent !important; font-size: 12.5px; line-height: 1.7; }
 .shiki code { counter-reset: line; }
+.dark .shiki,
+.dark .shiki span { color: var(--shiki-dark) !important; }
 
 /* Inline code in prose and tables */
 .prose-code {
@@ -28,7 +30,7 @@
 
 /* Example previews sit on a faint dot grid so components read as objects on a canvas */
 .preview-canvas {
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   background-image: radial-gradient(circle at 1px 1px, var(--color-slate-80) 1px, transparent 0);
   background-size: 16px 16px;
   background-position: -8px -8px;

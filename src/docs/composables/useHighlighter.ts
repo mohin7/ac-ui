@@ -6,7 +6,7 @@ let highlighter: Promise<HighlighterCore> | undefined;
 // One shared Shiki instance, loaded on first use, with only the languages the docs show.
 export function getHighlighter() {
   highlighter ??= createHighlighterCore({
-    themes: [import("shiki/themes/vitesse-light.mjs")],
+    themes: [import("shiki/themes/vitesse-light.mjs"), import("shiki/themes/vitesse-dark.mjs")],
     langs: [
       import("shiki/langs/vue.mjs"),
       import("shiki/langs/typescript.mjs"),
@@ -22,5 +22,5 @@ export function getHighlighter() {
 
 export async function highlight(code: string, lang: string) {
   const h = await getHighlighter();
-  return h.codeToHtml(code, { lang, theme: "vitesse-light" });
+  return h.codeToHtml(code, { lang, themes: { light: "vitesse-light", dark: "vitesse-dark" } });
 }

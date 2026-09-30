@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="Row extends Record<string, unknown>">
 import { computed, ref } from "vue";
+import { ArrowUp, ChevronsUpDown } from "lucide-vue-next";
 
 export interface Column {
   key: string;
@@ -67,7 +68,7 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
 </script>
 
 <template>
-  <div class="ac-scrollbar w-full rounded-10 border border-border bg-white shadow-xs" data-testid="ac-table">
+  <div class="ac-scrollbar w-full rounded-10 border border-border bg-surface shadow-xs" data-testid="ac-table">
     <table class="w-full border-separate border-spacing-0 text-base">
       <thead>
         <tr>
@@ -83,21 +84,13 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
           >
             <span class="inline-flex items-center gap-1" :class="sortKey === col.key && 'text-heading'">
               {{ col.label }}
-              <svg
+              <component
+                :is="sortKey === col.key ? ArrowUp : ChevronsUpDown"
                 v-if="col.sortable"
                 class="size-3 transition-transform"
                 :class="[sortKey === col.key ? 'text-primary' : 'text-slate-60', sortKey === col.key && sortMode === 'desc' && 'rotate-180']"
-                viewBox="0 0 12 12"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
                 aria-hidden="true"
-              >
-                <path v-if="sortKey === col.key" d="M6 9.5v-7M3 5.5l3-3 3 3" />
-                <path v-else d="M3.5 4.5 6 2l2.5 2.5M3.5 7.5 6 10l2.5-2.5" />
-              </svg>
+              />
             </span>
           </th>
         </tr>

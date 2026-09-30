@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from "vue";
+import { Search, X } from "lucide-vue-next";
 
 export interface Props {
   /** Placeholder text. */
@@ -33,25 +34,14 @@ const clear = () => {
 
 <template>
   <div class="relative w-full" data-testid="ac-search-bar">
-    <svg
-      class="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.6"
-      stroke-linecap="round"
-      aria-hidden="true"
-    >
-      <circle cx="7" cy="7" r="4.5" />
-      <path d="m10.5 10.5 3 3" />
-    </svg>
+    <Search class="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted" aria-hidden="true" />
     <input
       ref="input"
       v-model="model"
       type="search"
       :placeholder="placeholder"
       :aria-label="placeholder"
-      class="block w-full rounded-6 border border-border bg-white pr-8 pl-8 text-base text-heading shadow-xs transition-[border-color,box-shadow] outline-none placeholder:text-muted hover:border-border-dark focus:focus-ring [&::-webkit-search-cancel-button]:hidden"
+      class="block w-full rounded-6 border border-border bg-surface pr-8 pl-8 text-base text-heading shadow-xs transition-[border-color,box-shadow] outline-none placeholder:text-muted hover:border-border-dark focus:focus-ring [&::-webkit-search-cancel-button]:hidden"
       :class="size === 'small' ? 'h-8' : 'h-9'"
       @keydown.esc="model && (clear(), $event.stopPropagation())"
     />
@@ -62,9 +52,7 @@ const clear = () => {
       aria-label="Clear search"
       @click="clear"
     >
-      <svg class="size-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-        <path d="M3 3l6 6M9 3 3 9" />
-      </svg>
+      <X class="size-3" aria-hidden="true" />
     </button>
   </div>
 </template>

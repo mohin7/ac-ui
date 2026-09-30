@@ -12,6 +12,8 @@
  *   import "@fontsource-variable/geist"; import "@fontsource-variable/geist-mono";
  */
 @source "./components";
+/* Dark mode is class-based: `.dark` (new) or `.is-dark-theme` (the old library's class) on <html> or any subtree. */
+@custom-variant dark (&:where(.dark, .dark *, .is-dark-theme, .is-dark-theme *));
 :root {
   /* Runtime brand hue — change these on <html> to re-hue every primary/secondary step. */
   --primary-hue: 149;
@@ -191,6 +193,8 @@
   --color-surface-sunken: var(--color-slate-90);
   /* focus ring: a translucent primary halo, drawn 3px around focused controls */
   --color-ring: hsl(var(--primary-hue) var(--primary-saturation) 40% / 0.28);
+  /* modal and drawer backdrop */
+  --color-overlay: rgb(2 6 23 / 0.4);
 
   /* type — Geist for UI, Geist Mono for code and resource names */
   --font-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
@@ -270,6 +274,170 @@
     from { opacity: 0; transform: translateY(4px) scale(0.98); }
     to { opacity: 1; transform: none; }
   }
+}
+
+/*
+ * Dark theme. Scale steps 5–70 are mirrored (5 ↔ 95% lightness) so "-10 text on a -97 tint" still reads,
+ * and the pale 80–97 tints become translucent washes of the hue over the dark surface.
+ */
+.dark,
+.is-dark-theme {
+  color-scheme: dark;
+  /* primary */
+  --color-primary-5: hsl(var(--primary-hue) var(--primary-saturation) 95%);
+  --color-primary-10: hsl(var(--primary-hue) var(--primary-saturation) 90%);
+  --color-primary-20: hsl(var(--primary-hue) var(--primary-saturation) 82%);
+  --color-primary-30: hsl(var(--primary-hue) var(--primary-saturation) 72%);
+  --color-primary-40: hsl(var(--primary-hue) var(--primary-saturation) 62%);
+  --color-primary-50: hsl(var(--primary-hue) var(--primary-saturation) 52%);
+  --color-primary-60: hsl(var(--primary-hue) var(--primary-saturation) 42%);
+  --color-primary-70: hsl(var(--primary-hue) var(--primary-saturation) 32%);
+  --color-primary-80: hsl(var(--primary-hue) var(--primary-saturation) 55% / 0.32);
+  --color-primary-90: hsl(var(--primary-hue) var(--primary-saturation) 55% / 0.2);
+  --color-primary-93: hsl(var(--primary-hue) var(--primary-saturation) 55% / 0.15);
+  --color-primary-95: hsl(var(--primary-hue) var(--primary-saturation) 55% / 0.11);
+  --color-primary-97: hsl(var(--primary-hue) var(--primary-saturation) 55% / 0.07);
+  --color-primary-light-gray: hsl(var(--primary-hue) 10% 12%);
+  --color-primary-dark-gray: hsl(var(--primary-hue) 10% 90%);
+  /* secondary */
+  --color-secondary-5: hsl(var(--secondary-hue) var(--secondary-saturation) 95%);
+  --color-secondary-10: hsl(var(--secondary-hue) var(--secondary-saturation) 90%);
+  --color-secondary-20: hsl(var(--secondary-hue) var(--secondary-saturation) 82%);
+  --color-secondary-30: hsl(var(--secondary-hue) var(--secondary-saturation) 72%);
+  --color-secondary-40: hsl(var(--secondary-hue) var(--secondary-saturation) 62%);
+  --color-secondary-50: hsl(var(--secondary-hue) var(--secondary-saturation) 52%);
+  --color-secondary-60: hsl(var(--secondary-hue) var(--secondary-saturation) 42%);
+  --color-secondary-70: hsl(var(--secondary-hue) var(--secondary-saturation) 32%);
+  --color-secondary-80: hsl(var(--secondary-hue) var(--secondary-saturation) 55% / 0.32);
+  --color-secondary-90: hsl(var(--secondary-hue) var(--secondary-saturation) 55% / 0.2);
+  --color-secondary-93: hsl(var(--secondary-hue) var(--secondary-saturation) 55% / 0.15);
+  --color-secondary-95: hsl(var(--secondary-hue) var(--secondary-saturation) 55% / 0.11);
+  --color-secondary-97: hsl(var(--secondary-hue) var(--secondary-saturation) 55% / 0.07);
+  --color-secondary-light-gray: hsl(var(--secondary-hue) 10% 12%);
+  --color-secondary-dark-gray: hsl(var(--secondary-hue) 10% 90%);
+  /* green */
+  --color-green-5: hsl(141 53% 95%);
+  --color-green-10: hsl(141 53% 90%);
+  --color-green-20: hsl(141 53% 82%);
+  --color-green-30: hsl(141 53% 72%);
+  --color-green-40: hsl(141 53% 62%);
+  --color-green-50: hsl(141 53% 52%);
+  --color-green-60: hsl(141 53% 42%);
+  --color-green-70: hsl(141 53% 32%);
+  --color-green-80: hsl(141 53% 55% / 0.32);
+  --color-green-90: hsl(141 53% 55% / 0.2);
+  --color-green-93: hsl(141 53% 55% / 0.15);
+  --color-green-95: hsl(141 53% 55% / 0.11);
+  --color-green-97: hsl(141 53% 55% / 0.07);
+  /* blue */
+  --color-blue-5: hsl(217 71% 95%);
+  --color-blue-10: hsl(217 71% 90%);
+  --color-blue-20: hsl(217 71% 82%);
+  --color-blue-30: hsl(217 71% 72%);
+  --color-blue-40: hsl(217 71% 62%);
+  --color-blue-50: hsl(217 71% 52%);
+  --color-blue-60: hsl(217 71% 42%);
+  --color-blue-70: hsl(217 71% 32%);
+  --color-blue-80: hsl(217 71% 55% / 0.32);
+  --color-blue-90: hsl(217 71% 55% / 0.2);
+  --color-blue-93: hsl(217 71% 55% / 0.15);
+  --color-blue-95: hsl(217 71% 55% / 0.11);
+  --color-blue-97: hsl(217 71% 55% / 0.07);
+  /* purple */
+  --color-purple-5: hsl(286 66% 95%);
+  --color-purple-10: hsl(286 66% 90%);
+  --color-purple-20: hsl(286 66% 82%);
+  --color-purple-30: hsl(286 66% 72%);
+  --color-purple-40: hsl(286 66% 62%);
+  --color-purple-50: hsl(286 66% 52%);
+  --color-purple-60: hsl(286 66% 42%);
+  --color-purple-70: hsl(286 66% 32%);
+  --color-purple-80: hsl(286 66% 55% / 0.32);
+  --color-purple-90: hsl(286 66% 55% / 0.2);
+  --color-purple-93: hsl(286 66% 55% / 0.15);
+  --color-purple-95: hsl(286 66% 55% / 0.11);
+  --color-purple-97: hsl(286 66% 55% / 0.07);
+  /* yellow */
+  --color-yellow-5: hsl(38 93% 95%);
+  --color-yellow-10: hsl(38 93% 90%);
+  --color-yellow-20: hsl(38 93% 82%);
+  --color-yellow-30: hsl(38 93% 72%);
+  --color-yellow-40: hsl(38 93% 62%);
+  --color-yellow-50: hsl(38 93% 52%);
+  --color-yellow-60: hsl(38 93% 42%);
+  --color-yellow-70: hsl(38 93% 32%);
+  --color-yellow-80: hsl(38 93% 55% / 0.32);
+  --color-yellow-90: hsl(38 93% 55% / 0.2);
+  --color-yellow-93: hsl(38 93% 55% / 0.15);
+  --color-yellow-95: hsl(38 93% 55% / 0.11);
+  --color-yellow-97: hsl(38 93% 55% / 0.07);
+  /* red */
+  --color-red-5: hsl(348 100% 95%);
+  --color-red-10: hsl(348 100% 90%);
+  --color-red-20: hsl(348 100% 82%);
+  --color-red-30: hsl(348 100% 72%);
+  --color-red-40: hsl(348 100% 62%);
+  --color-red-50: hsl(348 100% 52%);
+  --color-red-60: hsl(348 100% 42%);
+  --color-red-70: hsl(348 100% 32%);
+  --color-red-80: hsl(348 100% 55% / 0.32);
+  --color-red-90: hsl(348 100% 55% / 0.2);
+  --color-red-93: hsl(348 100% 55% / 0.15);
+  --color-red-95: hsl(348 100% 55% / 0.11);
+  --color-red-97: hsl(348 100% 55% / 0.07);
+  /* gray */
+  --color-gray-5: hsl(0 0% 95%);
+  --color-gray-10: hsl(0 0% 90%);
+  --color-gray-20: hsl(0 0% 82%);
+  --color-gray-30: hsl(0 0% 72%);
+  --color-gray-40: hsl(0 0% 62%);
+  --color-gray-50: hsl(0 0% 52%);
+  --color-gray-60: hsl(0 0% 42%);
+  --color-gray-70: hsl(0 0% 32%);
+  --color-gray-80: hsl(0 0% 55% / 0.32);
+  --color-gray-90: hsl(0 0% 55% / 0.2);
+  --color-gray-93: hsl(0 0% 55% / 0.15);
+  --color-gray-95: hsl(0 0% 55% / 0.11);
+  --color-gray-97: hsl(0 0% 55% / 0.07);
+  /* slate: inverted so text stays light and borders stay subtle */
+  --color-slate-5: #f8fafc;
+  --color-slate-10: #f1f5f9;
+  --color-slate-20: #e2e8f0;
+  --color-slate-30: #cbd5e1;
+  --color-slate-40: #a3afc0;
+  --color-slate-50: #8792a6;
+  --color-slate-60: #64748b;
+  --color-slate-70: #3a475c;
+  --color-slate-80: #263245;
+  --color-slate-90: #1a2335;
+  --color-slate-95: #121a29;
+  /* status fills keep their light-mode strength so white text on them stays readable */
+  --color-success: hsl(141 53% 40%);
+  --color-info: hsl(217 71% 55%);
+  --color-warning: hsl(38 93% 50%);
+  --color-danger: hsl(348 90% 55%);
+  /* semantic aliases are repeated so a `.dark` subtree re-resolves them */
+  --color-heading: var(--color-slate-5);
+  --color-body: var(--color-slate-30);
+  --color-label: var(--color-slate-40);
+  --color-muted: var(--color-slate-50);
+  --color-link: var(--color-slate-20);
+  --color-border-light: var(--color-slate-90);
+  --color-border: var(--color-slate-80);
+  --color-border-dark: var(--color-slate-70);
+  --color-sidebar: hsl(var(--primary-hue) 10% 6%);
+  --color-surface: #0c1220;
+  --color-surface-muted: #111827;
+  --color-surface-sunken: #080d18;
+  --color-ring: hsl(var(--primary-hue) var(--primary-saturation) 55% / 0.35);
+  --color-overlay: rgb(0 0 0 / 0.6);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3), 0 1px 3px 0 rgb(0 0 0 / 0.25);
+  --shadow-md: 0 2px 4px -1px rgb(0 0 0 / 0.3), 0 4px 10px -2px rgb(0 0 0 / 0.35);
+  --shadow-lg: 0 4px 6px -2px rgb(0 0 0 / 0.3), 0 12px 24px -4px rgb(0 0 0 / 0.45);
+  --shadow-xl: 0 0 0 1px rgb(255 255 255 / 0.06), 0 8px 16px -4px rgb(0 0 0 / 0.4), 0 24px 48px -12px rgb(0 0 0 / 0.6);
+  --shadow-button: inset 0 1px 0 0 rgb(255 255 255 / 0.1), 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --inset-shadow-xs: inset 0 1px 1px rgb(0 0 0 / 0.25);
 }
 
 @layer base {

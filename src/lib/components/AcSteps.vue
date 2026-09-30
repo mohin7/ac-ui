@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Check } from "lucide-vue-next";
+
 export interface Step {
   id: number;
   title: string;
@@ -36,23 +38,11 @@ defineProps<Props>();
           active > step.id
             ? 'bg-primary text-white shadow-button'
             : active === step.id
-              ? 'bg-white text-primary-20 ring-2 ring-primary shadow-[0_0_0_5px_var(--color-ring)]'
-              : 'bg-white text-muted ring-1 ring-border-dark'
+              ? 'bg-surface text-primary-20 ring-2 ring-primary shadow-[0_0_0_5px_var(--color-ring)]'
+              : 'bg-surface text-muted ring-1 ring-border-dark'
         "
       >
-        <svg
-          v-if="active > step.id"
-          class="size-3.5"
-          viewBox="0 0 12 12"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M2.5 6.5 5 9l4.5-6" />
-        </svg>
+        <Check v-if="active > step.id" class="size-3.5" :stroke-width="2.5" aria-hidden="true" />
         <span v-else>{{ step.id }}</span>
       </span>
       <p class="mt-3 text-base font-medium" :class="active >= step.id ? 'text-heading' : 'text-muted'">{{ step.title }}</p>

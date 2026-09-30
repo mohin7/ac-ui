@@ -1,5 +1,7 @@
 <script setup lang="ts" generic="V extends string | number">
 import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
+import { Check, ChevronDown, CircleAlert, RefreshCw, Search, X } from "lucide-vue-next";
+import AcSpinner from "./AcSpinner.vue";
 import type { SelectOption } from "./types";
 
 export interface Props<T extends string | number> {
@@ -303,7 +305,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
         :aria-invalid="!!errorMsg || undefined"
         :aria-required="required || undefined"
         :aria-activedescendant="open && !searchable && activeIndex >= 0 ? optionId(activeIndex) : undefined"
-        class="group flex w-full items-center gap-2 rounded-6 border bg-white pr-2 pl-3 text-left text-base text-heading shadow-xs transition-[border-color,box-shadow] duration-150 outline-none"
+        class="group flex w-full items-center gap-2 rounded-6 border bg-surface pr-2 pl-3 text-left text-base text-heading shadow-xs transition-[border-color,box-shadow] duration-150 outline-none"
         :class="[
           size === 'compact' ? 'min-h-8' : size === 'small' ? 'min-h-9' : 'min-h-10',
           multiple && hasValue ? 'py-1.5' : '',
@@ -334,9 +336,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
                 :disabled="disabled"
                 @click.stop="removeValue(o)"
               >
-                <svg class="size-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-                  <path d="M3 3l6 6M9 3 3 9" />
-                </svg>
+                <X class="size-2.5" :stroke-width="2.5" aria-hidden="true" />
               </button>
             </span>
           </template>
@@ -346,10 +346,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
 
         <!-- controls -->
         <span class="flex shrink-0 items-center gap-0.5 text-muted">
-          <svg v-if="loading" class="size-4 animate-spin text-primary" viewBox="0 0 16 16" fill="none" aria-label="Loading">
-            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" />
-            <path d="M14 8a6 6 0 0 0-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
+          <AcSpinner v-if="loading" class="text-primary" />
           <button
             v-else-if="refreshable"
             type="button"
@@ -358,9 +355,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
             :disabled="disabled"
             @click.stop="emit('refresh')"
           >
-            <svg class="size-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2.5v3h-3" />
-            </svg>
+            <RefreshCw class="size-3.5" aria-hidden="true" />
           </button>
           <button
             v-if="clearable && hasValue && !disabled && !loading"
@@ -369,23 +364,9 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
             aria-label="Clear selection"
             @click.stop="clear"
           >
-            <svg class="size-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-              <path d="M3 3l6 6M9 3 3 9" />
-            </svg>
+            <X class="size-3.5" aria-hidden="true" />
           </button>
-          <svg
-            class="size-4 transition-transform duration-200"
-            :class="open && 'rotate-180 text-heading'"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="m4 6 4 4 4-4" />
-          </svg>
+          <ChevronDown class="size-4 transition-transform duration-200" :class="open && 'rotate-180 text-heading'" aria-hidden="true" />
         </span>
       </div>
 
@@ -394,7 +375,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
         v-if="label"
         :id="labelId"
         :for="`${id}-trigger`"
-        class="pointer-events-none absolute left-2.5 rounded-2 bg-white px-1 transition-all duration-150 ease-out"
+        class="pointer-events-none absolute left-2.5 rounded-2 bg-surface px-1 transition-all duration-150 ease-out"
         :class="[
           hoisted ? 'top-0 -translate-y-1/2 text-xs font-medium' : 'top-1/2 -translate-y-1/2 text-base text-muted',
           hoisted && (errorMsg ? 'text-red-30' : open ? 'text-primary-20' : 'text-label'),
@@ -405,9 +386,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
     </div>
 
     <p v-if="errorMsg" class="mt-1.5 flex items-center gap-1 text-xs text-red-30">
-      <svg class="size-3.5 shrink-0" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm0-10a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-2.5A.75.75 0 0 1 8 5Zm0 6.5a.9.9 0 1 0 0-1.8.9.9 0 0 0 0 1.8Z" clip-rule="evenodd" />
-      </svg>
+      <CircleAlert class="size-3.5 shrink-0" aria-hidden="true" />
       {{ errorMsg }}
     </p>
     <p v-else-if="hint" class="mt-1.5 text-xs text-muted">{{ hint }}</p>
@@ -423,7 +402,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
         <div
           v-if="open"
           ref="panel"
-          class="fixed z-[90] flex flex-col overflow-hidden rounded-8 border border-border bg-white shadow-lg"
+          class="fixed z-[90] flex flex-col overflow-hidden rounded-8 border border-border bg-surface shadow-lg"
           :style="{
             top: placement.top !== undefined ? `${placement.top}px` : undefined,
             bottom: placement.bottom !== undefined ? `${placement.bottom}px` : undefined,
@@ -434,9 +413,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
         >
           <div v-if="searchable" class="border-b border-border-light p-1.5">
             <div class="relative">
-              <svg class="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-                <circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3 3" />
-              </svg>
+              <Search class="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted" aria-hidden="true" />
               <input
                 ref="searchInput"
                 v-model="query"
@@ -445,7 +422,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
                 aria-label="Search options"
                 :aria-controls="listId"
                 :aria-activedescendant="activeIndex >= 0 ? optionId(activeIndex) : undefined"
-                class="h-8 w-full rounded-4 bg-surface-muted pr-2 pl-8 text-base text-heading outline-none placeholder:text-muted focus:bg-white focus:ring-1 focus:ring-border"
+                class="h-8 w-full rounded-4 bg-surface-muted pr-2 pl-8 text-base text-heading outline-none placeholder:text-muted focus:bg-surface focus:ring-1 focus:ring-border"
                 @keydown="onKeydown"
               />
             </div>
@@ -484,12 +461,10 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
                 <span
                   v-if="multiple"
                   class="mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-4 border transition-colors"
-                  :class="isSelected(option) ? 'border-primary bg-primary text-white shadow-button' : 'border-border-dark bg-white'"
+                  :class="isSelected(option) ? 'border-primary bg-primary text-white shadow-button' : 'border-border-dark bg-surface'"
                   aria-hidden="true"
                 >
-                  <svg v-if="isSelected(option)" class="size-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2.5 6.5 5 9l4.5-6" />
-                  </svg>
+                  <Check v-if="isSelected(option)" class="size-3" :stroke-width="3" aria-hidden="true" />
                 </span>
                 <span class="min-w-0 flex-1">
                   <slot name="option" :option="option" :selected="isSelected(option)" :active="index === activeIndex">
@@ -497,19 +472,7 @@ const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?
                     <span v-if="option.description" class="block truncate text-xs text-muted">{{ option.description }}</span>
                   </slot>
                 </span>
-                <svg
-                  v-if="!multiple && isSelected(option)"
-                  class="mt-0.5 size-4 shrink-0 text-primary"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
-                </svg>
+                <Check v-if="!multiple && isSelected(option)" class="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               </li>
             </template>
             <li v-if="!filtered.length" role="presentation" class="px-3 py-6 text-center text-base text-muted">

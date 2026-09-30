@@ -36,7 +36,7 @@ onBeforeUnmount(() => {
     </button>
     <div
       v-if="open"
-      class="absolute right-0 z-50 mt-2 w-72 animate-pop-in rounded-10 border border-border bg-white p-4 shadow-xl"
+      class="absolute right-0 z-50 mt-2 w-72 animate-pop-in rounded-10 border border-border bg-surface p-4 shadow-xl"
       role="dialog"
       aria-label="Brand hue"
     >

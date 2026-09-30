@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ArrowLeft } from "lucide-vue-next";
 export interface Props {
   /** Page title. */
   title?: string;
@@ -29,7 +30,7 @@ defineSlots<{
 
 <template>
   <header
-    class="z-20 border-b border-border-light bg-white/90 backdrop-blur-md"
+    class="z-20 border-b border-border-light bg-surface/90 backdrop-blur-md"
     :class="sticky && 'sticky'"
     :style="sticky ? { top } : undefined"
     data-testid="ac-header"
@@ -39,14 +40,12 @@ defineSlots<{
         <button
           v-if="backButton"
           type="button"
-          class="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-6 border border-border bg-white text-label shadow-xs transition hover:border-border-dark hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+          class="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-6 border border-border bg-surface text-label shadow-xs transition hover:border-border-dark hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
           aria-label="Back"
           data-testid="ac-header-back"
           @click="emit('back')"
         >
-          <svg class="size-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M9.5 3.5 5 8l4.5 4.5" />
-          </svg>
+          <ArrowLeft class="size-4" aria-hidden="true" />
         </button>
         <div class="min-w-0">
           <div v-if="$slots.breadcrumb" class="mb-1 text-xs text-muted"><slot name="breadcrumb" /></div>

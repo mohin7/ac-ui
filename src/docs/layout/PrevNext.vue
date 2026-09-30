@@ -13,7 +13,7 @@ const next = computed(() => pages[i.value + 1]);
     <RouterLink
       v-if="prev"
       :to="prev.path"
-      class="group rounded-10 border border-border bg-white px-5 py-4 shadow-xs transition hover:border-border-dark hover:shadow-sm"
+      class="group rounded-10 border border-border bg-surface px-5 py-4 shadow-xs transition hover:border-border-dark hover:shadow-sm"
     >
       <span class="flex items-center gap-1 text-xs text-muted">
         <svg class="size-3 transition-transform group-hover:-translate-x-0.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M7.5 2.5 4 6l3.5 3.5" /></svg>
@@ -25,7 +25,7 @@ const next = computed(() => pages[i.value + 1]);
     <RouterLink
       v-if="next"
       :to="next.path"
-      class="group rounded-10 border border-border bg-white px-5 py-4 text-right shadow-xs transition hover:border-border-dark hover:shadow-sm"
+      class="group rounded-10 border border-border bg-surface px-5 py-4 text-right shadow-xs transition hover:border-border-dark hover:shadow-sm"
     >
       <span class="flex items-center justify-end gap-1 text-xs text-muted">
         Next

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useId } from "vue";
+import { CircleAlert, Eye, EyeOff } from "lucide-vue-next";
 
 export interface Props {
   /** Floating label. It rests inside the field and rises on focus or when filled. */
@@ -55,7 +56,7 @@ const describedBy = computed(() => (props.errorMsg || props.hint ? `${id}-msg` :
         :aria-invalid="!!errorMsg || undefined"
         :aria-describedby="describedBy"
         placeholder=" "
-        class="peer block w-full rounded-6 border bg-white px-3 text-base text-heading shadow-xs transition-[border-color,box-shadow] duration-150 outline-none placeholder:text-transparent disabled:cursor-not-allowed disabled:bg-surface-muted read-only:bg-surface-muted read-only:shadow-none"
+        class="peer block w-full rounded-6 border bg-surface px-3 text-base text-heading shadow-xs transition-[border-color,box-shadow] duration-150 outline-none placeholder:text-transparent disabled:cursor-not-allowed disabled:bg-surface-muted read-only:bg-surface-muted read-only:shadow-none"
         :class="[
           size === 'small' ? 'h-9' : 'h-10',
           type === 'password' && 'pr-9',
@@ -66,7 +67,7 @@ const describedBy = computed(() => (props.errorMsg || props.hint ? `${id}-msg` :
       />
       <label
         :for="id"
-        class="pointer-events-none absolute top-0 left-2.5 -translate-y-1/2 rounded-2 bg-white px-1 text-xs font-medium text-label transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-muted peer-focus:top-0 peer-focus:text-xs peer-focus:font-medium peer-focus:text-primary-20 peer-read-only:bg-linear-to-b peer-read-only:from-white peer-read-only:from-50% peer-read-only:to-surface-muted peer-read-only:to-50% peer-disabled:bg-linear-to-b peer-disabled:from-white peer-disabled:from-50% peer-disabled:to-surface-muted peer-disabled:to-50%"
+        class="pointer-events-none absolute top-0 left-2.5 -translate-y-1/2 rounded-2 bg-surface px-1 text-xs font-medium text-label transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-muted peer-focus:top-0 peer-focus:text-xs peer-focus:font-medium peer-focus:text-primary-20 peer-read-only:bg-linear-to-b peer-read-only:from-surface peer-read-only:from-50% peer-read-only:to-surface-muted peer-read-only:to-50% peer-disabled:bg-linear-to-b peer-disabled:from-surface peer-disabled:from-50% peer-disabled:to-surface-muted peer-disabled:to-50%"
         :class="errorMsg && 'text-red-30! peer-focus:text-red-30!'"
       >
         {{ label }}<span v-if="required" class="text-danger" aria-hidden="true"> *</span>
@@ -78,17 +79,11 @@ const describedBy = computed(() => (props.errorMsg || props.hint ? `${id}-msg` :
         :aria-label="showValue ? 'Hide value' : 'Show value'"
         @click="showValue = !showValue"
       >
-        <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M1.5 10S4.5 4 10 4s8.5 6 8.5 6-3 6-8.5 6-8.5-6-8.5-6Z" />
-          <circle cx="10" cy="10" r="2.5" />
-          <path v-if="showValue" d="M3 17 17 3" />
-        </svg>
+        <component :is="showValue ? EyeOff : Eye" class="size-4" aria-hidden="true" />
       </button>
     </div>
     <p v-if="errorMsg" :id="`${id}-msg`" class="mt-1.5 flex items-center gap-1 text-xs text-red-30">
-      <svg class="size-3.5 shrink-0" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm0-10a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-2.5A.75.75 0 0 1 8 5Zm0 6.5a.9.9 0 1 0 0-1.8.9.9 0 0 0 0 1.8Z" clip-rule="evenodd" />
-      </svg>
+      <CircleAlert class="size-3.5 shrink-0" aria-hidden="true" />
       {{ errorMsg }}
     </p>
     <p v-else-if="hint" :id="`${id}-msg`" class="mt-1.5 text-xs text-muted">{{ hint }}</p>

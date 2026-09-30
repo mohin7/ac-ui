@@ -65,14 +65,14 @@ const code = computed(() => {
 </script>
 
 <template>
-  <div class="mt-4 mb-8 overflow-hidden rounded-12 border border-border bg-white shadow-xs">
-    <div v-if="controls.length" class="flex flex-wrap items-center gap-x-5 gap-y-2.5 border-b border-border bg-white px-4 py-3">
+  <div class="mt-4 mb-8 overflow-hidden rounded-12 border border-border bg-surface shadow-xs">
+    <div v-if="controls.length" class="flex flex-wrap items-center gap-x-5 gap-y-2.5 border-b border-border bg-surface px-4 py-3">
       <label v-for="c in controls" :key="c.prop" class="inline-flex items-center gap-2 text-xs">
         <span class="font-mono text-[11.5px] text-muted">{{ c.prop }}</span>
         <span v-if="c.type === 'select'" class="relative">
           <select
             v-model="state[c.prop]"
-            class="h-7 cursor-pointer appearance-none rounded-6 border border-border bg-white pr-7 pl-2.5 text-xs font-medium text-heading shadow-xs transition hover:border-border-dark focus:focus-ring"
+            class="h-7 cursor-pointer appearance-none rounded-6 border border-border bg-surface pr-7 pl-2.5 text-xs font-medium text-heading shadow-xs transition hover:border-border-dark focus:focus-ring"
           >
             <option v-for="o in c.options" :key="o" :value="o">{{ o }}</option>
           </select>
@@ -88,7 +88,7 @@ const code = computed(() => {
           v-else
           v-model="state[c.prop]"
           type="text"
-          class="h-7 w-36 rounded-6 border border-border bg-white px-2.5 text-xs text-heading shadow-xs transition hover:border-border-dark focus:focus-ring"
+          class="h-7 w-36 rounded-6 border border-border bg-surface px-2.5 text-xs text-heading shadow-xs transition hover:border-border-dark focus:focus-ring"
         />
       </label>
     </div>

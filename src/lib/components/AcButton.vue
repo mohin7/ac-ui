@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import AcSpinner from "./AcSpinner.vue";
 import type { Tone, Variant } from "./types";
 
 export interface Props {
@@ -47,33 +48,33 @@ const tones: Record<Tone, Record<Variant, string>> = {
   primary: {
     solid: "bg-primary text-white border-primary-20/40 shadow-button hover:bg-primary-hover",
     light: "bg-primary-95 text-primary-20 border-transparent hover:bg-primary-93",
-    outlined: "bg-white text-primary-20 border-primary-70 shadow-xs hover:bg-primary-97 hover:border-primary-60",
+    outlined: "bg-surface text-primary-20 border-primary-70 shadow-xs hover:bg-primary-97 hover:border-primary-60",
   },
   info: {
     solid: "bg-info text-white border-blue-30/40 shadow-button hover:bg-blue-40",
     light: "bg-blue-95 text-blue-30 border-transparent hover:bg-blue-93",
-    outlined: "bg-white text-blue-30 border-blue-80 shadow-xs hover:bg-blue-97",
+    outlined: "bg-surface text-blue-30 border-blue-80 shadow-xs hover:bg-blue-97",
   },
   success: {
     solid: "bg-success text-white border-green-20/40 shadow-button hover:bg-green-30",
     light: "bg-green-95 text-green-20 border-transparent hover:bg-green-93",
-    outlined: "bg-white text-green-20 border-green-70 shadow-xs hover:bg-green-97",
+    outlined: "bg-surface text-green-20 border-green-70 shadow-xs hover:bg-green-97",
   },
   warning: {
     solid: "bg-warning text-yellow-5 border-yellow-40/40 shadow-button hover:bg-yellow-60",
     light: "bg-yellow-95 text-yellow-20 border-transparent hover:bg-yellow-93",
-    outlined: "bg-white text-yellow-20 border-yellow-70 shadow-xs hover:bg-yellow-97",
+    outlined: "bg-surface text-yellow-20 border-yellow-70 shadow-xs hover:bg-yellow-97",
   },
   danger: {
     solid: "bg-danger text-white border-red-20/40 shadow-button hover:bg-red-30",
     light: "bg-red-95 text-red-30 border-transparent hover:bg-red-93",
-    outlined: "bg-white text-red-30 border-red-80 shadow-xs hover:bg-red-97",
+    outlined: "bg-surface text-red-30 border-red-80 shadow-xs hover:bg-red-97",
   },
 };
 
 const colorClass = computed(() => {
   if (props.color === "white")
-    return "bg-white text-heading border-border shadow-xs hover:bg-surface-muted hover:border-border-dark";
+    return "bg-surface text-heading border-border shadow-xs hover:bg-surface-muted hover:border-border-dark";
   if (props.color === "ghost") return "bg-transparent text-body border-transparent hover:bg-surface-sunken hover:text-heading";
   return tones[props.color][props.variant];
 });
@@ -110,16 +111,11 @@ const handleClick = (e: MouseEvent) => {
     </span>
     <span v-if="title">{{ title }}</span>
     <slot />
-    <svg
+    <AcSpinner
       v-if="loading"
-      class="absolute inset-0 m-auto size-4 animate-spin"
+      class="absolute inset-0 m-auto"
       :class="variant === 'solid' && color !== 'white' && color !== 'ghost' ? 'text-white' : 'text-primary'"
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-    >
-      <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" />
-      <path d="M14 8a6 6 0 0 0-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-    </svg>
+      label=""
+    />
   </component>
 </template>

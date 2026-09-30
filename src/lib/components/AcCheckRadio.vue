@@ -32,7 +32,7 @@ const id = useId();
         :class="[
           option.disabled && 'cursor-not-allowed opacity-50',
           cards &&
-            'rounded-10 border border-border bg-white p-4 shadow-xs transition-[border-color,box-shadow,background-color] duration-150 hover:border-border-dark has-checked:border-primary has-checked:bg-primary-97/60 has-checked:shadow-[0_0_0_1px_var(--color-primary)] has-focus-visible:shadow-[0_0_0_3px_var(--color-ring)]',
+            'rounded-10 border border-border bg-surface p-4 shadow-xs transition-[border-color,box-shadow,background-color] duration-150 hover:border-border-dark has-checked:border-primary has-checked:bg-primary-97/60 has-checked:shadow-[0_0_0_1px_var(--color-primary)] has-focus-visible:shadow-[0_0_0_3px_var(--color-ring)]',
         ]"
       >
         <input
@@ -42,7 +42,7 @@ const id = useId();
           :name="`${name}-${id}`"
           :value="option.value"
           :disabled="option.disabled"
-          class="mt-0.5 size-4 shrink-0 cursor-pointer appearance-none rounded-full border border-border-dark bg-white shadow-xs transition-[border-color,border-width] duration-150 group-hover:border-slate-60 checked:border-[5px] checked:border-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed"
+          class="mt-0.5 size-4 shrink-0 cursor-pointer appearance-none rounded-full border border-border-dark bg-surface shadow-xs transition-[border-color,border-width] duration-150 group-hover:border-slate-60 checked:border-[5px] checked:border-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed"
         />
         <span class="flex flex-col">
           <span :class="cards && 'font-medium'">{{ option.label }}</span>

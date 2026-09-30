@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
+import { Trash2 } from "lucide-vue-next";
 import AcButton from "./AcButton.vue";
 import AcInput from "./AcInput.vue";
 import AcModal from "./AcModal.vue";
@@ -55,9 +56,7 @@ const cancel = () => {
   <AcModal v-model:open="open" :title="title" size="small" :closable="!loading" :close-on-outside-click="!loading" @close="emit('cancel')">
     <div class="flex gap-4">
       <span class="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-red-95 text-red-40 ring-8 ring-red-97" aria-hidden="true">
-        <svg class="size-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3.5 5.5h13M8 5.5V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5M5.5 5.5l.7 10.1a1.5 1.5 0 0 0 1.5 1.4h4.6a1.5 1.5 0 0 0 1.5-1.4l.7-10.1M8.5 9v4.5M11.5 9v4.5" />
-        </svg>
+        <Trash2 class="size-5" aria-hidden="true" />
       </span>
       <div class="min-w-0 flex-1 pt-0.5">
         <p class="text-lg leading-6 text-heading">

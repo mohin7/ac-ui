@@ -60,7 +60,7 @@ const themeSnippet = `@theme {
   <CodeBlock :code="themeSnippet" lang="css" filename="src/lib/theme.css (excerpt)" />
 
   <DocHeading id="token-mapping">Token → utility mapping</DocHeading>
-  <div class="my-4 overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+  <div class="my-4 overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
     <table class="w-full text-left text-base">
       <thead class="border-b border-border bg-surface-muted text-xs text-label">
         <tr>

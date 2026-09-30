@@ -64,7 +64,7 @@ const utils = `<!-- before (Bulma + AppsCode utilities) -->
   </div>
 
   <DocHeading id="props">Prop changes</DocHeading>
-  <div class="my-4 overflow-x-auto rounded-10 border border-border bg-white shadow-xs">
+  <div class="my-4 overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
     <table class="w-full text-left text-base">
       <thead class="border-b border-border bg-surface-muted text-xs text-label">
         <tr>
