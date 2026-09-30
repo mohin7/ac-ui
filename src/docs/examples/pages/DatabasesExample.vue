@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { Trash2 } from "lucide-vue-next";
 import {
   AcAlert,
   AcBadge,
@@ -175,7 +176,7 @@ const matches = (rows: Database[], q: string) =>
             <template #cell-actions="{ row }">
               <AcButton color="ghost" size="small" :aria-label="`Delete ${row.name}`" @click="askDelete(row as Database)">
                 <template #icon>
-                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.5 8.5h6l.5-8.5" /></svg>
+                  <Trash2 class="size-3.5" />
                 </template>
               </AcButton>
             </template>

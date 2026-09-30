@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { ListFilter } from "lucide-vue-next";
 import { useRoute } from "vue-router";
 import { pages, sections } from "../nav";
 
@@ -33,9 +34,7 @@ const tree = computed(() => {
     aria-label="Documentation"
   >
     <div class="relative mb-6">
-      <svg class="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-        <path d="M2.5 4h11M4.5 8h7M6.5 12h3" />
-      </svg>
+      <ListFilter class="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted" aria-hidden="true" />
       <input
         v-model="filter"
         type="search"

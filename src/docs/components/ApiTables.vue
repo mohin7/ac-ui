@@ -35,8 +35,8 @@ const propsRows = computed(() =>
   (m.value?.props ?? []).map((p) =>
     p.name === "modelValue"
       ? { ...p, name: "v-model", description: p.description || "The bound value." }
-      : ["open", "search"].includes(p.name) && m.value?.events.some((e) => e.name === `update:${p.name}`)
-        ? { ...p, name: `v-model:${p.name}` }
+      : m.value?.events.some((e) => e.name === `update:${p.name}`)
+        ? { ...p, name: `v-model:${kebab(p.name)}` }
         : p,
   ),
 );

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import { pages, type DocPage } from "../nav";
 
 const props = defineProps<{ page: DocPage }>();
@@ -16,7 +17,7 @@ const next = computed(() => pages[i.value + 1]);
       class="group rounded-10 border border-border bg-surface px-5 py-4 shadow-xs transition hover:border-border-dark hover:shadow-sm"
     >
       <span class="flex items-center gap-1 text-xs text-muted">
-        <svg class="size-3 transition-transform group-hover:-translate-x-0.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M7.5 2.5 4 6l3.5 3.5" /></svg>
+        <ChevronLeft class="size-3.5 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
         Previous
       </span>
       <span class="mt-1 block text-lg font-medium text-heading">{{ prev.title }}</span>
@@ -29,7 +30,7 @@ const next = computed(() => pages[i.value + 1]);
     >
       <span class="flex items-center justify-end gap-1 text-xs text-muted">
         Next
-        <svg class="size-3 transition-transform group-hover:translate-x-0.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m4.5 2.5 3.5 3.5-3.5 3.5" /></svg>
+        <ChevronRight class="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
       </span>
       <span class="mt-1 block text-lg font-medium text-heading">{{ next.title }}</span>
     </RouterLink>

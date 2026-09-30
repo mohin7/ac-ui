@@ -3,7 +3,7 @@ import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
-const deps = `npm install vue
+const deps = `npm install vue lucide-vue-next
 npm install -D tailwindcss @tailwindcss/vite`;
 
 const vite = `import { fileURLToPath, URL } from "node:url";
@@ -106,4 +106,11 @@ import { AcButton, AcBadge } from "@/lib";
     Every example on this site is a real file under <code class="prose-code">src/docs/examples</code>, so the code you
     copy is exactly what runs.
   </Callout>
+
+  <DocHeading id="next" :level="3">7. Optional: dark mode and toasts</DocHeading>
+  <ul>
+    <li>Add <RouterLink to="/components/theme-mode">AcThemeMode</RouterLink> and the no-flash snippet from <RouterLink to="/getting-started/dark-mode">Dark Mode</RouterLink>.</li>
+    <li>Mount <code class="prose-code">&lt;AcToaster /&gt;</code> once in your root component to use <RouterLink to="/components/toast">useToast()</RouterLink>.</li>
+    <li>Icons come from <code class="prose-code">lucide-vue-next</code> — see <RouterLink to="/foundations/icons">Icons</RouterLink>.</li>
+  </ul>
 </template>

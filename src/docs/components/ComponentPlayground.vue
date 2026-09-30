@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
+import { ChevronDown } from "lucide-vue-next";
 import CodeBlock from "./CodeBlock.vue";
 
 export interface Control {
@@ -76,7 +77,7 @@ const code = computed(() => {
           >
             <option v-for="o in c.options" :key="o" :value="o">{{ o }}</option>
           </select>
-          <svg class="pointer-events-none absolute top-1/2 right-2 size-3 -translate-y-1/2 text-muted" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m3 4.5 3 3 3-3" /></svg>
+          <ChevronDown class="pointer-events-none absolute top-1/2 right-2 size-3.5 -translate-y-1/2 text-muted" aria-hidden="true" />
         </span>
         <input
           v-else-if="c.type === 'boolean'"

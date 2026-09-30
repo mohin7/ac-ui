@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, type Component } from "vue";
+import { ChevronDown } from "lucide-vue-next";
 import CodeBlock from "./CodeBlock.vue";
 
 // Every example is a real SFC in src/docs/examples; the preview runs it and the code shows its exact source.
@@ -45,7 +46,7 @@ const long = computed(() => code.value.trim().split("\n").length > COLLAPSE_AT);
           :aria-expanded="expanded"
           @click="expanded = !expanded"
         >
-          <svg class="size-3 transition-transform" :class="expanded && 'rotate-180'" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" /></svg>
+          <ChevronDown class="size-3.5 transition-transform" :class="expanded && 'rotate-180'" aria-hidden="true" />
           {{ expanded ? "Collapse code" : "Expand code" }}
         </button>
       </div>

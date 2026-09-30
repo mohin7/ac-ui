@@ -46,27 +46,27 @@ defineSlots<{
 // refined with a top highlight on solid fills and hairline borders on the rest.
 const tones: Record<Tone, Record<Variant, string>> = {
   primary: {
-    solid: "bg-primary text-white border-primary-20/40 shadow-button hover:bg-primary-hover",
+    solid: "bg-primary text-white border-black/15 shadow-button hover:bg-primary-hover",
     light: "bg-primary-95 text-primary-20 border-transparent hover:bg-primary-93",
     outlined: "bg-surface text-primary-20 border-primary-70 shadow-xs hover:bg-primary-97 hover:border-primary-60",
   },
   info: {
-    solid: "bg-info text-white border-blue-30/40 shadow-button hover:bg-blue-40",
+    solid: "bg-info text-white border-black/15 shadow-button hover:bg-info-hover",
     light: "bg-blue-95 text-blue-30 border-transparent hover:bg-blue-93",
     outlined: "bg-surface text-blue-30 border-blue-80 shadow-xs hover:bg-blue-97",
   },
   success: {
-    solid: "bg-success text-white border-green-20/40 shadow-button hover:bg-green-30",
+    solid: "bg-success text-white border-black/15 shadow-button hover:bg-success-hover",
     light: "bg-green-95 text-green-20 border-transparent hover:bg-green-93",
     outlined: "bg-surface text-green-20 border-green-70 shadow-xs hover:bg-green-97",
   },
   warning: {
-    solid: "bg-warning text-yellow-5 border-yellow-40/40 shadow-button hover:bg-yellow-60",
+    solid: "bg-warning text-on-warning border-black/10 shadow-button hover:bg-warning-hover",
     light: "bg-yellow-95 text-yellow-20 border-transparent hover:bg-yellow-93",
     outlined: "bg-surface text-yellow-20 border-yellow-70 shadow-xs hover:bg-yellow-97",
   },
   danger: {
-    solid: "bg-danger text-white border-red-20/40 shadow-button hover:bg-red-30",
+    solid: "bg-danger text-white border-black/15 shadow-button hover:bg-danger-hover",
     light: "bg-red-95 text-red-30 border-transparent hover:bg-red-93",
     outlined: "bg-surface text-red-30 border-red-80 shadow-xs hover:bg-red-97",
   },

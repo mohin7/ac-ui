@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.app.json",
+  "include": ["env.d.ts", "src/lib/**/*", "src/lib/**/*.vue"],
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/lib",
+    "rootDir": "src/lib",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo"
+  }
+}

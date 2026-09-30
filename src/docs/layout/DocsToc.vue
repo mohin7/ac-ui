@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref, watch } from "vue";
+import { TextAlignStart } from "lucide-vue-next";
 import { useRoute } from "vue-router";
 
 interface Item {
@@ -39,9 +40,7 @@ defineExpose({ collect });
 <template>
   <nav v-if="items.length" aria-label="On this page">
     <p class="mb-3 flex items-center gap-2 text-xs font-semibold text-heading">
-      <svg class="size-3.5 text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-        <path d="M2.5 4h11M2.5 8h11M2.5 12h7" />
-      </svg>
+      <TextAlignStart class="size-3.5 text-muted" aria-hidden="true" />
       On this page
     </p>
     <ul class="space-y-0.5 border-l border-border-light">

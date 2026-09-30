@@ -119,7 +119,7 @@ const donts = [
   <Callout type="warning">
     White on <code class="prose-code">primary</code> is 3.7:1 and on <code class="prose-code">success</code> 3.5:1 —
     fine for short 13px/500 button labels, below WCAG 4.5:1 for body text. White on
-    <code class="prose-code">warning</code> is 2.1:1, so warning fills use <code class="prose-code">text-yellow-5</code>.
+    <code class="prose-code">warning</code> is 2.1:1, so warning fills use <code class="prose-code">text-on-warning</code>.
   </Callout>
   <Callout type="note">
     <code class="prose-code">border</code> (slate-80) is 1.2:1 on white — decorative only. Inputs get their edge from

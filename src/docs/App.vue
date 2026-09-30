@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import { AcToaster } from "@/lib";
 import DocsHeader from "./layout/DocsHeader.vue";
 import DocsSidebar from "./layout/DocsSidebar.vue";
 import DocsToc from "./layout/DocsToc.vue";
@@ -50,4 +51,5 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKey));
     </main>
   </div>
   <SearchPalette v-model="searchOpen" />
+  <AcToaster />
 </template>

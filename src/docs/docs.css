@@ -58,11 +58,11 @@
   }
   #doc-content > ul, #doc-content .prose > ul { list-style: disc; }
   #doc-content > ol, #doc-content .prose > ol { list-style: decimal; }
-  #doc-content li::marker { color: var(--color-slate-60); }
-  #doc-content li + li { margin-top: 6px; }
+  #doc-content li:not(.preview-canvas *)::marker { color: var(--color-slate-60); }
+  #doc-content li + li:not(.preview-canvas *) { margin-top: 6px; }
   #doc-content > p a,
-  #doc-content li a,
-  #doc-content td a {
+  #doc-content li a:not(.preview-canvas *),
+  #doc-content td a:not(.preview-canvas *) {
     color: var(--color-primary-20);
     font-weight: 500;
     text-decoration: underline;
@@ -71,7 +71,7 @@
     transition: text-decoration-color 0.15s;
   }
   #doc-content > p a:hover,
-  #doc-content li a:hover,
-  #doc-content td a:hover { text-decoration-color: var(--color-primary-20); }
+  #doc-content li a:not(.preview-canvas *):hover,
+  #doc-content td a:not(.preview-canvas *):hover { text-decoration-color: var(--color-primary-20); }
   #doc-content strong { color: var(--color-heading); font-weight: 600; }
 }

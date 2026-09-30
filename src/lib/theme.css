@@ -162,6 +162,12 @@
   --color-info: var(--color-blue-50);
   --color-warning: var(--color-yellow-50);
   --color-danger: var(--color-red-40);
+  /* Hover fills and text-on-warning are fixed values, not scale steps, so dark mode keeps them readable. */
+  --color-success-hover: hsl(141 53% 32%);
+  --color-info-hover: hsl(217 71% 42%);
+  --color-warning-hover: hsl(38 93% 58%);
+  --color-danger-hover: hsl(348 100% 33%);
+  --color-on-warning: hsl(38 93% 8%);
 
   /* slate: text and border ramp */
   --color-slate-5: #020617;
@@ -416,6 +422,10 @@
   --color-info: hsl(217 71% 55%);
   --color-warning: hsl(38 93% 50%);
   --color-danger: hsl(348 90% 55%);
+  --color-success-hover: hsl(141 53% 45%);
+  --color-info-hover: hsl(217 71% 60%);
+  --color-warning-hover: hsl(38 93% 56%);
+  --color-danger-hover: hsl(348 90% 60%);
   /* semantic aliases are repeated so a `.dark` subtree re-resolves them */
   --color-heading: var(--color-slate-5);
   --color-body: var(--color-slate-30);
@@ -486,4 +496,34 @@
   &::-webkit-scrollbar { width: 6px; height: 6px; }
   &::-webkit-scrollbar-thumb { background-color: var(--color-slate-70); border-radius: 50px; }
   &::-webkit-scrollbar-track { background: transparent; }
+}
+
+/* Keyframes for AcSkeleton's shimmer and AcProgress's indeterminate bar; kept here so the library ships no extra CSS file. */
+@keyframes ac-skeleton-shimmer {
+  from { background-position: 150% 0; }
+  to { background-position: -50% 0; }
+}
+.ac-skeleton-bone {
+  background-color: color-mix(in srgb, var(--color-slate-80) 55%, var(--color-slate-90));
+  background-image: linear-gradient(90deg, transparent 0%, var(--color-slate-95) 50%, transparent 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: ac-skeleton-shimmer 1.8s ease-in-out infinite;
+}
+:where(.dark, .is-dark-theme) .ac-skeleton-bone {
+  background-color: color-mix(in srgb, var(--color-slate-80) 55%, var(--color-slate-90));
+  background-image: linear-gradient(90deg, transparent 0%, var(--color-slate-80) 50%, transparent 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ac-skeleton-bone { animation: none; background-image: none; }
+}
+@keyframes ac-progress-slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+.ac-progress-indeterminate {
+  animation: ac-progress-slide 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ac-progress-indeterminate { animation: none; }
 }

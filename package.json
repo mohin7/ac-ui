@@ -1,19 +1,39 @@
 {
-  "name": "appscode-design-system-tw",
-  "version": "0.1.0",
+  "name": "@appscode/design-system",
+  "version": "3.0.0-alpha.0",
+  "description": "AppsCode design system: Tailwind CSS v4 theme and Vue 3 components.",
   "private": true,
   "type": "module",
+  "files": [
+    "dist/lib"
+  ],
+  "module": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lib/index.d.ts",
+      "import": "./dist/lib/index.js"
+    },
+    "./theme.css": "./dist/lib/theme.css"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "dev": "npm run meta && vite",
     "build": "npm run meta && vue-tsc --build --force && vite build",
     "preview": "vite preview",
     "type-check": "vue-tsc --build --force",
-    "meta": "node scripts/gen-meta.mjs"
+    "meta": "node scripts/gen-meta.mjs",
+    "build:lib": "vite build -c vite.lib.config.ts && vue-tsc -p tsconfig.lib.json && node scripts/copy-theme.mjs"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0",
+    "lucide-vue-next": "^1.0.0"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
-    "lucide-vue-next": "^1.0.0",
     "shiki": "^4.4.3",
     "vue": "^3.5.43",
     "vue-router": "^4.6.4"
@@ -28,6 +48,7 @@
     "typescript": "~5.9",
     "vite": "^8.3.1",
     "vue-component-meta": "^3.3.11",
-    "vue-tsc": "^3.3.11"
+    "vue-tsc": "^3.3.11",
+    "lucide-vue-next": "^1.0.0"
   }
 }

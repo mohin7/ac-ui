@@ -30,9 +30,9 @@ const recipes = {
   secondary: ["bg-secondary text-white", "bg-secondary-95 text-secondary-10 ring-secondary-40/20", "ring-secondary-70 text-secondary", "bg-secondary-40"],
   info: ["bg-info text-white", "bg-blue-95 text-blue-10 ring-blue-50/20", "ring-blue-80 text-blue-30", "bg-blue-50"],
   success: ["bg-success text-white", "bg-green-95 text-green-10 ring-green-40/25", "ring-green-70 text-green-20", "bg-green-40"],
-  warning: ["bg-warning text-yellow-5", "bg-yellow-95 text-yellow-10 ring-yellow-50/30", "ring-yellow-70 text-yellow-20", "bg-yellow-50"],
+  warning: ["bg-warning text-on-warning", "bg-yellow-95 text-yellow-10 ring-yellow-50/30", "ring-yellow-70 text-yellow-20", "bg-yellow-50"],
   danger: ["bg-danger text-white", "bg-red-95 text-red-10 ring-red-40/20", "ring-red-80 text-red-30", "bg-red-40"],
-  dark: ["bg-gray-20 text-white", "bg-gray-95 text-gray-10 ring-gray-40/20", "ring-gray-70 text-gray-20", "bg-gray-50"],
+  dark: ["bg-gray-20 text-surface", "bg-gray-95 text-gray-10 ring-gray-40/20", "ring-gray-70 text-gray-20", "bg-gray-50"],
   default: ["bg-surface-sunken text-heading", "bg-surface-muted text-heading ring-slate-50/20", "ring-border-dark text-heading", "bg-slate-50"],
 } as const;
 

@@ -1,13 +1,129 @@
 {
   "AcAccordion": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Lets several items be open at once. `v-model` becomes an array of values."
+      },
+      {
+        "name": "variant",
+        "type": "\"bordered\" | \"separated\" | \"flush\" | undefined",
+        "default": "\"bordered\"",
+        "required": false,
+        "description": "`bordered` one card with dividers, `separated` a card per item, `flush` dividers only, for use inside a card or form."
+      },
+      {
+        "name": "headingLevel",
+        "type": "3 | 2 | 4 | 5 | 6 | undefined",
+        "default": "3",
+        "required": false,
+        "description": "Heading level of each item's title, so the outline fits the page."
+      },
+      {
+        "name": "modelValue",
+        "type": "string | string[] | null | undefined",
+        "default": "null",
+        "required": false,
+        "description": "The open item's `value` (or an array of values with `multiple`). `null` when all are closed."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | string[] | null]",
+        "signature": "(event: \"update:modelValue\", value: string | string[] | null): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "AcAccordionItem children."
+      }
+    ]
   },
   "AcAccordionItem": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "value",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Identifies the item in the parent AcAccordion's `v-model`. Generated when left out."
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Header text. The `title` slot overrides it."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A muted line under the title, e.g. a summary of the settings inside (\"3 replicas · 10 GiB\")."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "The item can't be opened or closed."
+      },
+      {
+        "name": "headingLevel",
+        "type": "3 | 2 | 4 | 5 | 6 | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Heading level of the title. Defaults to the parent AcAccordion's, or 3."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the item is open. Use `v-model:open` for a single item outside an AcAccordion."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "toggle",
+        "type": "[open: boolean]",
+        "signature": "(event: \"toggle\", open: boolean): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The panel content, shown when open."
+      },
+      {
+        "name": "title",
+        "type": "any",
+        "description": "Replaces the `title` text. Keep it to text and inline badges; it sits inside the header button."
+      },
+      {
+        "name": "description",
+        "type": "any",
+        "description": "Replaces the `description` text."
+      },
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "A 16px icon before the title."
+      }
+    ]
   },
   "AcAlert": {
     "props": [
@@ -49,7 +165,57 @@
     ]
   },
   "AcAvatar": {
-    "props": [],
+    "props": [
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Person or organisation name. Gives the initials, the colour and the default accessible name."
+      },
+      {
+        "name": "imgUrl",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Image URL. Falls back to the initials when it's empty or fails to load."
+      },
+      {
+        "name": "alt",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Accessible name. Defaults to `name`; pass an empty string when the name is already written next to the avatar."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"xs\" | \"small\" | \"large\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Diameter: `xs` 20px, `small` 24px, `normal` 32px, `large` 48px."
+      },
+      {
+        "name": "shape",
+        "type": "\"circle\" | \"square\" | undefined",
+        "default": "\"circle\"",
+        "required": false,
+        "description": "`circle` for people, `square` (rounded corners) for organisations, teams and products."
+      },
+      {
+        "name": "status",
+        "type": "\"online\" | \"away\" | \"busy\" | \"offline\" | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Adds a presence dot in the bottom-right corner."
+      },
+      {
+        "name": "overflowCount",
+        "type": "number | undefined",
+        "default": "0",
+        "required": false,
+        "description": "Shows `+N` instead of a picture, as the last item of an avatar group."
+      }
+    ],
     "events": [],
     "slots": []
   },
@@ -101,9 +267,100 @@
     ]
   },
   "AcBanner": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "color",
+        "type": "\"info\" | \"primary\" | \"warning\" | \"danger\" | \"neutral\" | undefined",
+        "default": "\"info\"",
+        "required": false,
+        "description": "Colour of the strip. `danger` and `warning` are announced to screen readers as alerts."
+      },
+      {
+        "name": "variant",
+        "type": "\"solid\" | \"subtle\" | undefined",
+        "default": "\"subtle\"",
+        "required": false,
+        "description": "`subtle` tinted strip with a hairline, or `solid` full-colour fill for app-wide announcements."
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Bold lead-in before the message, e.g. \"Scheduled maintenance\"."
+      },
+      {
+        "name": "actionLabel",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text of the action after the message. Renders a link with `actionHref`, otherwise a button that emits `action`."
+      },
+      {
+        "name": "actionHref",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "URL for the action link."
+      },
+      {
+        "name": "dismissible",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a close button. Closing sets `v-model:open` to `false` and emits `close`."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon component to replace the colour's default icon."
+      },
+      {
+        "name": "hideIcon",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides the leading icon."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Whether the banner shows. Bind with `v-model:open` to remember a dismissal."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "close",
+        "type": "[]",
+        "signature": "(event: \"close\"): void"
+      },
+      {
+        "name": "action",
+        "type": "[]",
+        "signature": "(event: \"action\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The message. Keep it to one sentence."
+      },
+      {
+        "name": "action",
+        "type": "any",
+        "description": "Replaces the action link or button, e.g. with two buttons."
+      }
+    ]
   },
   "AcButton": {
     "props": [
@@ -185,9 +442,51 @@
     ]
   },
   "AcButtons": {
-    "props": [],
+    "props": [
+      {
+        "name": "attached",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Joins the buttons into one control with shared borders, like a toolbar. Old `class=\"has-addons\"`."
+      },
+      {
+        "name": "align",
+        "type": "\"start\" | \"center\" | \"end\" | \"between\" | undefined",
+        "default": "\"start\"",
+        "required": false,
+        "description": "Horizontal alignment of the row. `between` pushes the first and last button to the edges."
+      },
+      {
+        "name": "gap",
+        "type": "\"normal\" | \"small\" | \"large\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Space between buttons: `small` 4px, `normal` 8px, `large` 12px. Ignored when `attached`."
+      },
+      {
+        "name": "inline",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shrinks the group to its content instead of filling the row. Old `is-max-width`."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Accessible name for the group, e.g. \"Editor view\". Recommended for `attached` groups."
+      }
+    ],
     "events": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The buttons, usually `AcButton`s."
+      }
+    ]
   },
   "AcCard": {
     "props": [
@@ -557,49 +856,540 @@
     ]
   },
   "AcDivider": {
-    "props": [],
+    "props": [
+      {
+        "name": "orientation",
+        "type": "\"horizontal\" | \"vertical\" | undefined",
+        "default": "\"horizontal\"",
+        "required": false,
+        "description": "`horizontal` separates stacked content; `vertical` separates items in a row and stretches to its height."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text in the line, e.g. \"OR\" or a group name. The default slot overrides it."
+      },
+      {
+        "name": "align",
+        "type": "\"center\" | \"left\" | undefined",
+        "default": "\"center\"",
+        "required": false,
+        "description": "Where the label sits on a horizontal divider. Vertical labels are always centred."
+      }
+    ],
     "events": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Label content. Replaces `label`."
+      }
+    ]
   },
   "AcDropdown": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text of the default trigger button. Without it (and without a `trigger` slot) a ⋮ icon button is shown."
+      },
+      {
+        "name": "menuLabel",
+        "type": "string | undefined",
+        "default": "\"Actions\"",
+        "required": false,
+        "description": "Accessible name of the menu and of the ⋮ trigger, e.g. \"Actions for demo-postgres\"."
+      },
+      {
+        "name": "align",
+        "type": "\"start\" | \"end\" | undefined",
+        "default": "\"start\"",
+        "required": false,
+        "description": "Which edge of the trigger the menu lines up with. Use `end` for menus at the right of a row. Old `is-right`."
+      },
+      {
+        "name": "placement",
+        "type": "\"bottom\" | \"top\" | undefined",
+        "default": "\"bottom\"",
+        "required": false,
+        "description": "Preferred side. The menu flips when there isn't room. Old `is-up`."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the default trigger and stops the menu opening."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the menu is open. Bind with `v-model:open` to open or close it from code."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "trigger",
+        "type": "{ open: boolean; }",
+        "description": "Custom trigger, usually an `AcButton`. It gets the menu-button ARIA attributes and keys; don't add your own click toggle."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The menu: `AcDropdownItem`s and `AcDropdownDivider`s."
+      }
+    ]
   },
   "AcDropdownDivider": {
-    "props": [],
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Optional group heading shown under the line, e.g. \"Danger zone\". The line is hidden when the divider comes first."
+      }
+    ],
     "events": [],
     "slots": []
   },
   "AcDropdownItem": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Item text. You can also pass content through the default slot."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A second, muted line under the label."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "An icon component shown before the label, e.g. `:icon=\"Trash2\"` from lucide-vue-next. Or use the `icon` slot."
+      },
+      {
+        "name": "shortcut",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Keyboard shortcut hint shown at the right, e.g. \"⌘D\". Display only; bind the key yourself."
+      },
+      {
+        "name": "danger",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Red text for destructive actions such as Delete. Confirm them before acting."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the item; it's skipped by the arrow keys."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Renders a link to this URL instead of a button."
+      },
+      {
+        "name": "target",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Link target for `href`, e.g. `_blank`."
+      },
+      {
+        "name": "to",
+        "type": "string | Record<string, unknown> | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Renders a `RouterLink` to this route instead of a button. Needs vue-router in the app."
+      }
+    ],
+    "events": [
+      {
+        "name": "click",
+        "type": "[e: MouseEvent]",
+        "signature": "(event: \"click\", e: MouseEvent): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Item content, after the icon and `label`."
+      },
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "A 16px icon before the label."
+      }
+    ]
   },
   "AcEmptyState": {
-    "props": [],
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"search\" | \"empty\" | \"error\" | undefined",
+        "default": "\"empty\"",
+        "required": false,
+        "description": "`empty` for a list with nothing in it yet, `search` for a filter or search with no matches, `error` when loading failed. Sets the default icon and title."
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Heading. Defaults to \"Nothing here yet\", \"No results found\" or \"Something went wrong\"."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A sentence under the title: why it's empty and what to do next."
+      },
+      {
+        "name": "query",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "With `variant=\"search\"`, the search text, shown as `No results for “pg-prod”`."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon component to replace the variant's default icon."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | \"large\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "`small` for inside a table or card, `normal` for a list area, `large` for a whole page."
+      }
+    ],
     "events": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "Replaces the icon, e.g. with an illustration."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Replaces the description, e.g. to add a docs link."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Buttons under the text: the main next step, then a secondary one."
+      }
+    ]
   },
   "AcFileUpload": {
-    "props": [],
-    "events": [],
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Label above the field, e.g. \"Kubeconfig\". Also names the picker button for screen readers."
+      },
+      {
+        "name": "accept",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "File types to allow, as for the native input: `.yaml,.yml`, `image/*`, `application/json`."
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Allow several files. Without it, a new file replaces the current one."
+      },
+      {
+        "name": "maxSize",
+        "type": "number | undefined",
+        "default": "0",
+        "required": false,
+        "description": "Largest allowed file in bytes, e.g. `1024 * 1024` for 1 MB. `0` means no limit."
+      },
+      {
+        "name": "small",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Single-line field with a \"Choose file\" button instead of the drop zone. For tight forms."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Line under the prompt. Defaults to the allowed types and size, e.g. \".yaml, .yml · up to 1 MB\"."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Native `name` attribute of the file input."
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Marks the field required and adds a red asterisk to the label."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables picking, dropping and removing."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the field, e.g. from server-side validation. Type and size errors are shown automatically."
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Helper text under the field (hidden while there's an error)."
+      },
+      {
+        "name": "modelValue",
+        "type": "File[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "The chosen files. Always an array, even without `multiple`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: File[]]",
+        "signature": "(event: \"update:modelValue\", value: File[]): void"
+      },
+      {
+        "name": "add",
+        "type": "[files: File[]]",
+        "signature": "(event: \"add\", files: File[]): void"
+      },
+      {
+        "name": "remove",
+        "type": "[file: File]",
+        "signature": "(event: \"remove\", file: File): void"
+      },
+      {
+        "name": "reject",
+        "type": "[rejections: FileRejection[]]",
+        "signature": "(event: \"reject\", rejections: FileRejection[]): void"
+      }
+    ],
     "slots": []
   },
   "AcForm": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "width",
+        "type": "\"normal\" | \"narrow\" | \"wide\" | \"full\" | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Maximum width of the fields: `narrow` 640px, `normal` 800px (the old `.form-content`), `wide` 1000px, `full` no limit. Defaults to `wide` for the `aside` layout, `normal` otherwise."
+      },
+      {
+        "name": "layout",
+        "type": "\"stacked\" | \"aside\" | undefined",
+        "default": "\"stacked\"",
+        "required": false,
+        "description": "Default layout of every AcFormSection inside: `stacked` puts the title above the fields, `aside` puts it on the left from 768px up."
+      }
+    ],
+    "events": [
+      {
+        "name": "submit",
+        "type": "[event: SubmitEvent]",
+        "signature": "(event: \"submit\", event: SubmitEvent): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "AcFormSection groups, or fields directly."
+      },
+      {
+        "name": "footer",
+        "type": "any",
+        "description": "An AcFormFooter. It's placed after the fields and spans the whole form."
+      }
+    ]
   },
   "AcFormFooter": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "submitLabel",
+        "type": "string | undefined",
+        "default": "\"Save\"",
+        "required": false,
+        "description": "Text of the primary button. It's a `type=\"submit\"` button, so it submits the surrounding form."
+      },
+      {
+        "name": "cancelLabel",
+        "type": "string | undefined",
+        "default": "\"Cancel\"",
+        "required": false,
+        "description": "Text of the secondary button."
+      },
+      {
+        "name": "hideCancel",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides the Cancel button."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a spinner on the primary button and disables both buttons while a request runs."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the primary button, e.g. until the form is valid."
+      },
+      {
+        "name": "sticky",
+        "type": "\"container\" | \"viewport\" | \"none\" | undefined",
+        "default": "\"container\"",
+        "required": false,
+        "description": "`container` sticks to the bottom of the nearest scrolling area (the page, a side panel, a modal body) while the form is in view.\n`viewport` is always pinned to the bottom of the window, lined up with the form's column. `none` sits after the fields."
+      },
+      {
+        "name": "form",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "`id` of a `<form>` to submit when the footer is rendered outside it."
+      }
+    ],
+    "events": [
+      {
+        "name": "cancel",
+        "type": "[]",
+        "signature": "(event: \"cancel\"): void"
+      },
+      {
+        "name": "save",
+        "type": "[]",
+        "signature": "(event: \"save\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "left",
+        "type": "any",
+        "description": "Left side: a status line (\"Unsaved changes\"), a Reset or Delete button."
+      },
+      {
+        "name": "right",
+        "type": "any",
+        "description": "Right side. Replaces the default Cancel and Save buttons."
+      }
+    ]
   },
   "AcFormSection": {
-    "props": [],
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Heading of the group, e.g. \"Schedule\" or \"Retention\"."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A line or two under the title explaining the group."
+      },
+      {
+        "name": "layout",
+        "type": "\"stacked\" | \"aside\" | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "`stacked` puts the title above the fields; `aside` puts it in a left column from 768px up. Defaults to the AcForm's `layout`."
+      },
+      {
+        "name": "columns",
+        "type": "1 | 2 | undefined",
+        "default": "1",
+        "required": false,
+        "description": "Lays the fields out in two columns from 640px up. Use `class=\"sm:col-span-2\"` on a field to span both."
+      }
+    ],
     "events": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The fields. They're spaced 20px apart."
+      },
+      {
+        "name": "description",
+        "type": "any",
+        "description": "Replaces the description, e.g. to add a docs link."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Content at the right of the title, e.g. a \"Reset to defaults\" button. Only in the `stacked` layout."
+      }
+    ]
   },
   "AcHeader": {
     "props": [
@@ -692,9 +1482,65 @@
     ]
   },
   "AcInfoTable": {
-    "props": [],
+    "props": [
+      {
+        "name": "items",
+        "type": "InfoItem[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "The rows: `{ key?, label, value?, copyable?, mono? }`."
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Heading above the rows."
+      },
+      {
+        "name": "columns",
+        "type": "1 | 2 | undefined",
+        "default": "1",
+        "required": false,
+        "description": "Lays the rows out in two columns from 768px up."
+      },
+      {
+        "name": "layout",
+        "type": "\"horizontal\" | \"stacked\" | undefined",
+        "default": "\"horizontal\"",
+        "required": false,
+        "description": "`horizontal` puts the label to the left of the value; `stacked` puts it above, for narrow cards."
+      },
+      {
+        "name": "bordered",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Draws a bordered card around the table. Turn off inside an AcCard or panel."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows placeholder bars in place of the values while data loads."
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "default": "\"No details available\"",
+        "required": false,
+        "description": "Text shown when `items` is empty."
+      }
+    ],
     "events": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Content at the right of the title, e.g. an Edit button."
+      }
+    ]
   },
   "AcInput": {
     "props": [
@@ -778,9 +1624,37 @@
     "slots": []
   },
   "AcKbd": {
-    "props": [],
+    "props": [
+      {
+        "name": "keys",
+        "type": "string[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Keys of a shortcut, pressed together: `['mod', 'k']`. Names like `mod`, `shift`, `enter`, `up` become the platform's symbol or name. Leave empty to use the default slot for one key."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "`small` 18px for menus and tooltips, `normal` 22px for body text."
+      },
+      {
+        "name": "separator",
+        "type": "string | undefined",
+        "default": "\"+\"",
+        "required": false,
+        "description": "Shown between keys. Pass an empty string for the macOS style (⌘K)."
+      }
+    ],
     "events": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "A single key, when `keys` is empty."
+      }
+    ]
   },
   "AcModal": {
     "props": [
@@ -800,7 +1674,7 @@
       },
       {
         "name": "size",
-        "type": "\"normal\" | \"small\" | \"medium\" | \"large\" | \"full\" | undefined",
+        "type": "\"normal\" | \"small\" | \"large\" | \"medium\" | \"full\" | undefined",
         "default": "\"normal\"",
         "required": false,
         "description": "Width: `small` 440px, `normal` 520px, `medium` 800px, `large` 1000px, `full` viewport minus 64px."
@@ -836,14 +1710,14 @@
     ],
     "events": [
       {
-        "name": "close",
-        "type": "[]",
-        "signature": "(event: \"close\"): void"
-      },
-      {
         "name": "update:open",
         "type": "[value: boolean]",
         "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "close",
+        "type": "[]",
+        "signature": "(event: \"close\"): void"
       }
     ],
     "slots": [
@@ -875,27 +1749,329 @@
     ]
   },
   "AcNavbar": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "menuButton",
+        "type": "\"mobile\" | \"always\" | \"never\" | undefined",
+        "default": "\"mobile\"",
+        "required": false,
+        "description": "When the menu button shows: `mobile` below 768px, `always`, or `never`. It emits `menu`; wire it to the sidebar's `v-model:mobile-open` or its `toggle()`."
+      },
+      {
+        "name": "menuLabel",
+        "type": "string | undefined",
+        "default": "\"Open navigation\"",
+        "required": false,
+        "description": "Accessible name of the menu button."
+      },
+      {
+        "name": "productName",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Short product tag after the logo, e.g. `\"Console\"` or `\"DB\"`."
+      },
+      {
+        "name": "sticky",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Sticks to the top of its scroll container."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Primary\"",
+        "required": false,
+        "description": "Accessible name of the navigation that holds the default slot."
+      }
+    ],
+    "events": [
+      {
+        "name": "menu",
+        "type": "[]",
+        "signature": "(event: \"menu\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "brand",
+        "type": "any",
+        "description": "The logo, usually a link home."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Top-level links (`AcNavbarItem`). Hidden below 768px; put them in the sidebar for phones."
+      },
+      {
+        "name": "search",
+        "type": "any",
+        "description": "A search field, centred. Hidden below 640px."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Right side: icon actions, notifications, theme and `AcUserMenu` last."
+      }
+    ]
   },
   "AcNavbarItem": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "Text of the item. With `iconOnly` it becomes the tooltip and the accessible name."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon component, e.g. `:icon=\"Terminal\"`."
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows only the icon in a 32px square button, for navbar actions such as Terminal or Notifications."
+      },
+      {
+        "name": "to",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Route to link to. Renders `RouterLink` when vue-router is installed in the app, otherwise a plain link (string routes only)."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Plain URL, for pages outside the app."
+      },
+      {
+        "name": "active",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Marks the current section: highlighted and `aria-current=\"page\"`. With `to` and vue-router, an exact route match does this for you."
+      },
+      {
+        "name": "badge",
+        "type": "string | number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A count, e.g. unread notifications. Shown as a red bubble on icon-only items; above 999 it reads `999+`."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Greys the item out and blocks clicks."
+      }
+    ],
+    "events": [
+      {
+        "name": "click",
+        "type": "[e: MouseEvent]",
+        "signature": "(event: \"click\", e: MouseEvent): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Replaces the label text."
+      }
+    ]
   },
   "AcPagination": {
-    "props": [],
-    "events": [],
+    "props": [
+      {
+        "name": "total",
+        "type": "number",
+        "required": true,
+        "description": "Total number of items across all pages."
+      },
+      {
+        "name": "pageSizes",
+        "type": "number[] | undefined",
+        "default": "[10, 20, 50, 100]",
+        "required": false,
+        "description": "Choices in the page-size select."
+      },
+      {
+        "name": "hidePageSize",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides the \"Rows per page\" select."
+      },
+      {
+        "name": "siblings",
+        "type": "number | undefined",
+        "default": "1",
+        "required": false,
+        "description": "How many page numbers to show on each side of the current one before an ellipsis."
+      },
+      {
+        "name": "compact",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Always use the compact \"‹ 3 / 6 ›\" control. It's used automatically below 640px."
+      },
+      {
+        "name": "itemLabel",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Noun after the count: \"Showing 1–10 of 57 databases\"."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables every control, e.g. while a page loads."
+      },
+      {
+        "name": "page",
+        "type": "number | undefined",
+        "default": "1",
+        "required": false,
+        "description": "The current page, starting at 1. Bind with `v-model:page`."
+      },
+      {
+        "name": "pageSize",
+        "type": "number | undefined",
+        "default": "10",
+        "required": false,
+        "description": "Items per page. Bind with `v-model:page-size`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:page",
+        "type": "[value: number]",
+        "signature": "(event: \"update:page\", value: number): void"
+      },
+      {
+        "name": "update:pageSize",
+        "type": "[value: number]",
+        "signature": "(event: \"update:pageSize\", value: number): void"
+      },
+      {
+        "name": "range",
+        "type": "[range: { start: number; end: number; }]",
+        "signature": "(event: \"range\", range: { start: number; end: number; }): void"
+      }
+    ],
     "slots": []
   },
   "AcPreloader": {
-    "props": [],
+    "props": [
+      {
+        "name": "message",
+        "type": "string | undefined",
+        "default": "\"Loading…\"",
+        "required": false,
+        "description": "Text under the spinner, e.g. \"Fetching resource layout\". Also announced to screen readers."
+      },
+      {
+        "name": "showSpinner",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Shows the spinner. Turn off to show the message alone."
+      },
+      {
+        "name": "fullPage",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Covers the whole viewport on a plain surface, for app start-up and sign-in checks."
+      },
+      {
+        "name": "minHeight",
+        "type": "string | undefined",
+        "default": "\"240px\"",
+        "required": false,
+        "description": "CSS minimum height when not `fullPage`. The preloader also grows to fill its container."
+      }
+    ],
     "events": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Replaces the message, e.g. with a message and a Cancel button."
+      }
+    ]
   },
   "AcProgress": {
-    "props": [],
+    "props": [
+      {
+        "name": "value",
+        "type": "number | undefined",
+        "default": "0",
+        "required": false,
+        "description": "Current amount, from 0 to `max`. Ignored while `indeterminate`."
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "default": "100",
+        "required": false,
+        "description": "The amount that fills the bar."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text above the bar, e.g. \"Storage\". Also the bar's accessible name."
+      },
+      {
+        "name": "showValue",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows the value to the right of the label: the percentage, or `valueText` when set."
+      },
+      {
+        "name": "valueText",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Replaces the percentage, e.g. \"7.2 GiB of 10 GiB\". Also read by screen readers."
+      },
+      {
+        "name": "color",
+        "type": "\"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"auto\" | undefined",
+        "default": "\"primary\"",
+        "required": false,
+        "description": "Bar colour. `auto` is for quotas: primary, then warning from 80% and danger from 95%."
+      },
+      {
+        "name": "indeterminate",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "For work of unknown length: a sliding bar with no value."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | \"large\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Bar height: `small` 4px, `normal` 6px, `large` 10px."
+      }
+    ],
     "events": [],
     "slots": []
   },
@@ -1032,8 +2208,68 @@
     ]
   },
   "AcSegmentedControl": {
-    "props": [],
-    "events": [],
+    "props": [
+      {
+        "name": "options",
+        "type": "(V | SegmentedOption<V>)[]",
+        "required": true,
+        "description": "The choices, 2–5 of them: `{ value, label, icon?, disabled? }`. Plain strings are accepted too."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Accessible name for the group, e.g. \"Chart range\". Required when nothing nearby labels it."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Height: `small` 28px (toolbars, cards) or `normal` 32px."
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows only the icons; each option's `label` becomes its accessible name and hover title."
+      },
+      {
+        "name": "block",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Stretches to fill the row with equal-width segments."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables every segment."
+      },
+      {
+        "name": "modelValue",
+        "type": "V | null | undefined",
+        "default": "null",
+        "required": false,
+        "description": "The selected option's `value`."
+      }
+    ],
+    "events": [
+      {
+        "name": "change",
+        "type": "[value: V]",
+        "signature": "(evt: \"change\", value: V): void"
+      },
+      {
+        "name": "update:modelValue",
+        "type": "[value: V | null]",
+        "signature": "(event: \"update:modelValue\", value: V | null): void"
+      }
+    ],
     "slots": []
   },
   "AcSelect": {
@@ -1150,14 +2386,14 @@
         "signature": "(evt: \"search\", query: string): void"
       },
       {
-        "name": "select",
-        "type": "[option: SelectOption<V>]",
-        "signature": "(evt: \"select\", option: SelectOption<V>): void"
-      },
-      {
         "name": "remove",
         "type": "[option: SelectOption<V>]",
         "signature": "(evt: \"remove\", option: SelectOption<V>): void"
+      },
+      {
+        "name": "select",
+        "type": "[option: SelectOption<V>]",
+        "signature": "(evt: \"select\", option: SelectOption<V>): void"
       },
       {
         "name": "refresh",
@@ -1184,27 +2420,374 @@
     ]
   },
   "AcSidePanel": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Heading of the panel."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Optional line under the title."
+      },
+      {
+        "name": "side",
+        "type": "\"left\" | \"right\" | undefined",
+        "default": "\"right\"",
+        "required": false,
+        "description": "Edge the panel slides in from."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | \"large\" | \"full\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Width: `small` 400px, `normal` 520px, `large` 800px, `full` the whole viewport. Phones always get the full width."
+      },
+      {
+        "name": "closable",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Shows the close button and allows Escape to close. Turn off while a required action runs. Old `disable-modal-close` inverted."
+      },
+      {
+        "name": "closeOnOutsideClick",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Closes when the backdrop is clicked. Old `ignore-outside-click` inverted."
+      },
+      {
+        "name": "hideFooter",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides the footer bar. Old `hide-action-footer`."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the panel is open. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "close",
+        "type": "[]",
+        "signature": "(event: \"close\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Panel body. Scrolls when it's taller than the viewport. Old `#custom-message`."
+      },
+      {
+        "name": "header",
+        "type": "any",
+        "description": "Replaces the title and description."
+      },
+      {
+        "name": "header-actions",
+        "type": "any",
+        "description": "Buttons next to the close button, e.g. a docs link."
+      },
+      {
+        "name": "footer",
+        "type": "any",
+        "description": "Right-aligned footer buttons: Cancel, then the primary action. Old `#footer-button`."
+      },
+      {
+        "name": "footer-left",
+        "type": "any",
+        "description": "Left side of the footer, e.g. a status line."
+      }
+    ]
   },
   "AcSidebar": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Main\"",
+        "required": false,
+        "description": "Accessible name of the navigation landmark."
+      },
+      {
+        "name": "dark",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Dark sidebar on `bg-sidebar` in both themes, like the old library's default look. Everything inside uses the dark tokens."
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Shows a Collapse button at the bottom that toggles `v-model:collapsed`. It's hidden in the mobile drawer."
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Keeps the sidebar inside its parent instead of the viewport: the mobile drawer and backdrop use `absolute`, and the mobile layout follows the parent's width. Give the parent `relative`, `overflow-hidden` and a height. For previews and embedded shells."
+      },
+      {
+        "name": "breakpoint",
+        "type": "number | undefined",
+        "default": "768",
+        "required": false,
+        "description": "Width in px below which the sidebar becomes an off-canvas drawer: the window's width, or the parent's with `contained`. `0` keeps it docked."
+      },
+      {
+        "name": "top",
+        "type": "string | undefined",
+        "default": "\"0px\"",
+        "required": false,
+        "description": "Offset from the top of the viewport on desktop, e.g. `\"56px\"` under a full-width navbar. The height shrinks to match."
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Icon-only 56px rail on desktop. Bind with `v-model:collapsed`."
+      },
+      {
+        "name": "mobileOpen",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the off-canvas drawer is open (below `breakpoint`). Bind with `v-model:mobile-open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:collapsed",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:collapsed\", value: boolean): void"
+      },
+      {
+        "name": "update:mobileOpen",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:mobileOpen\", value: boolean): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "header",
+        "type": "{ collapsed: boolean; }",
+        "description": "The 56px top bar: logo or cluster switcher. Receives `collapsed` so you can show a small logo in the rail."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Sections (`AcSidebarSection`) and items (`AcSidebarItem`). Rendered inside a list."
+      },
+      {
+        "name": "footer",
+        "type": "{ collapsed: boolean; }",
+        "description": "Items pinned to the bottom, such as Help. Rendered inside a list, above the Collapse button."
+      }
+    ]
   },
   "AcSidebarItem": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "Text of the item. In the collapsed rail it becomes the tooltip and the accessible name."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon component, e.g. `:icon=\"Database\"`. The collapsed rail shows only the icon."
+      },
+      {
+        "name": "to",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Route to link to. Renders `RouterLink` when vue-router is installed in the app, otherwise a plain link (string routes only)."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Plain URL, for pages outside the app. Takes over from `to` when vue-router isn't installed."
+      },
+      {
+        "name": "active",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Marks the current page: highlighted and `aria-current=\"page\"`. With `to` and vue-router, an exact route match does this for you."
+      },
+      {
+        "name": "badge",
+        "type": "string | number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A count or short word after the label, e.g. `3` or `\"New\"`. Shown as a dot in the collapsed rail."
+      },
+      {
+        "name": "badgeColor",
+        "type": "\"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"neutral\" | undefined",
+        "default": "\"neutral\"",
+        "required": false,
+        "description": "Colour of the badge."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Greys the item out and blocks clicks."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the nested items are shown. Opens by itself when a nested item is the current page. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "click",
+        "type": "[e: MouseEvent]",
+        "signature": "(event: \"click\", e: MouseEvent): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Nested `AcSidebarItem`s. Turns this item into a group that expands and collapses."
+      },
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "A custom 16px icon, e.g. an `<img>` from the AppsCode CDN. Replaces `icon`."
+      }
+    ]
   },
   "AcSidebarSection": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Small uppercase heading above the items. Hidden in the collapsed rail, where a divider takes its place."
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Turns the heading into a button that shows and hides the items."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Whether the items are shown when `collapsible`. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The section's `AcSidebarItem`s."
+      }
+    ]
   },
   "AcSkeleton": {
-    "props": [],
+    "props": [
+      {
+        "name": "shape",
+        "type": "\"circle\" | \"text\" | \"rect\" | \"table\" | \"card\" | \"info-card\" | undefined",
+        "default": "\"text\"",
+        "required": false,
+        "description": "`text` lines, a `circle` or `rect`, or a preset: `table`, `card`, `info-card`."
+      },
+      {
+        "name": "lines",
+        "type": "number | undefined",
+        "default": "1",
+        "required": false,
+        "description": "Number of text lines. The last one is shorter so the block reads as a paragraph."
+      },
+      {
+        "name": "rows",
+        "type": "number | undefined",
+        "default": "5",
+        "required": false,
+        "description": "Rows of the `table` preset, not counting the header."
+      },
+      {
+        "name": "cols",
+        "type": "number | undefined",
+        "default": "4",
+        "required": false,
+        "description": "Columns of the `table` preset."
+      },
+      {
+        "name": "width",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "CSS width, e.g. `\"80%\"` or `\"240px\"`. Defaults to full width, or to `height` for a circle."
+      },
+      {
+        "name": "height",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "CSS height of a `rect`, the diameter of a `circle`, or the height of each `text` line."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Loading\"",
+        "required": false,
+        "description": "Hidden text for screen readers. Pass an empty string to hide the skeleton from them, e.g. when several are composed inside one `aria-busy` region."
+      }
+    ],
     "events": [],
     "slots": []
   },
@@ -1212,7 +2795,7 @@
     "props": [
       {
         "name": "size",
-        "type": "\"normal\" | \"small\" | \"large\" | \"xs\" | undefined",
+        "type": "\"normal\" | \"xs\" | \"small\" | \"large\" | undefined",
         "default": "\"small\"",
         "required": false,
         "description": "Diameter: `xs` 12px, `small` 16px, `normal` 20px, `large` 32px."
@@ -1410,13 +2993,170 @@
     ]
   },
   "AcTag": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text of the tag. The default slot overrides it."
+      },
+      {
+        "name": "color",
+        "type": "\"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"neutral\" | undefined",
+        "default": "\"neutral\"",
+        "required": false,
+        "description": "`neutral` for most labels; a tone to group filters by kind, e.g. environment or region."
+      },
+      {
+        "name": "rounded",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Pill shape (`rounded-50`) instead of the 6px control radius."
+      },
+      {
+        "name": "removable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a remove button that emits `remove`."
+      },
+      {
+        "name": "keyLabel",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Key of a key–value tag such as a Kubernetes label (`app=postgres`). Setting it switches to the two-part style."
+      },
+      {
+        "name": "valueLabel",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Value of a key–value tag. Shown after `keyLabel`, tinted with `color`."
+      }
+    ],
+    "events": [
+      {
+        "name": "remove",
+        "type": "[]",
+        "signature": "(event: \"remove\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Tag content. Replaces `label`, or the value in key–value mode."
+      },
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "A 14px icon before the text, e.g. a cloud provider or resource kind."
+      }
+    ]
   },
   "AcTextarea": {
-    "props": [],
-    "events": [],
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "Floating label. It rests on the first line and rises on focus or when filled."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Native `name` attribute."
+      },
+      {
+        "name": "rows",
+        "type": "number | undefined",
+        "default": "4",
+        "required": false,
+        "description": "Visible height in lines. With `autoResize` it's the starting (minimum) height."
+      },
+      {
+        "name": "autoResize",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Grows the field with its content instead of showing a scrollbar."
+      },
+      {
+        "name": "maxRows",
+        "type": "number | undefined",
+        "default": "0",
+        "required": false,
+        "description": "With `autoResize`, the height in lines after which the field scrolls. `0` means no limit."
+      },
+      {
+        "name": "maxlength",
+        "type": "number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Maximum number of characters. Shows a live `12 / 500` count under the field."
+      },
+      {
+        "name": "mono",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Monospace text, for certificates, keys, YAML and other pasted config."
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Marks the field required and adds a red asterisk."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the field."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Read-only field with a gray background."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the field. Turns the border and label red and sets `aria-invalid`."
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Helper text under the field (hidden while `errorMsg` is set)."
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]",
+        "signature": "(event: \"update:modelValue\", value: string): void"
+      }
+    ],
     "slots": []
   },
   "AcThemeMode": {
@@ -1439,25 +3179,184 @@
     "events": [
       {
         "name": "set:theme",
-        "type": "[theme: \"dark\" | \"light\"]",
-        "signature": "(event: \"set:theme\", theme: \"dark\" | \"light\"): void"
+        "type": "[theme: \"light\" | \"dark\"]",
+        "signature": "(event: \"set:theme\", theme: \"light\" | \"dark\"): void"
       }
     ],
     "slots": []
   },
   "AcToaster": {
-    "props": [],
+    "props": [
+      {
+        "name": "position",
+        "type": "\"bottom-right\" | \"bottom-center\" | \"top-right\" | \"top-center\" | undefined",
+        "default": "\"bottom-right\"",
+        "required": false,
+        "description": "Corner of the screen. On phones (under 640px) toasts span the width at the same top or bottom edge."
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "default": "5",
+        "required": false,
+        "description": "How many toasts show at once (phones show at most 3). Newer ones queue behind and their timers wait until they're shown."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Notifications\"",
+        "required": false,
+        "description": "Accessible name of the notification region."
+      }
+    ],
     "events": [],
     "slots": []
   },
   "AcTooltip": {
-    "props": [],
+    "props": [
+      {
+        "name": "content",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The hint text. Keep it to a few words; use the `content` slot for richer text."
+      },
+      {
+        "name": "placement",
+        "type": "\"left\" | \"bottom\" | \"top\" | \"right\" | undefined",
+        "default": "\"top\"",
+        "required": false,
+        "description": "Preferred side of the trigger. It flips to the opposite side when there isn't room."
+      },
+      {
+        "name": "delay",
+        "type": "number | undefined",
+        "default": "300",
+        "required": false,
+        "description": "Milliseconds to wait on hover before showing. Keyboard focus shows it immediately."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Turns the tooltip off, e.g. while a menu from the same button is open."
+      }
+    ],
     "events": [],
-    "slots": []
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The trigger: a button, icon button, link or any focusable element. It gets `aria-describedby`."
+      },
+      {
+        "name": "content",
+        "type": "any",
+        "description": "Tooltip content instead of the `content` prop. Text only; no links or buttons, since it can't be reached by Tab."
+      }
+    ]
   },
   "AcUserMenu": {
-    "props": [],
-    "events": [],
-    "slots": []
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "The person's name or username. The avatar shows its initials."
+      },
+      {
+        "name": "email",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Second line in the menu header, usually the email address."
+      },
+      {
+        "name": "avatarUrl",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Profile photo. Falls back to initials when it's missing or fails to load."
+      },
+      {
+        "name": "profileUrl",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Makes the menu header a link to the profile page."
+      },
+      {
+        "name": "items",
+        "type": "UserMenuItem[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Rows between the header and Sign out: `{ label, icon?, to?, href?, disabled? }`. Emits `select`. Use the default slot for anything custom."
+      },
+      {
+        "name": "showThemeMode",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds the Light / Dark / System switch (`AcThemeMode`)."
+      },
+      {
+        "name": "showName",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Shows the name next to the avatar in the trigger (from 640px up)."
+      },
+      {
+        "name": "logoutUrl",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Makes Sign out a link to this URL, e.g. `${accountsDomain}/user/logout`. `logout` is emitted either way."
+      },
+      {
+        "name": "logoutLabel",
+        "type": "string | undefined",
+        "default": "\"Sign out\"",
+        "required": false,
+        "description": "Text of the sign-out row."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the menu is open. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "select",
+        "type": "[item: UserMenuItem]",
+        "signature": "(event: \"select\", item: UserMenuItem): void"
+      },
+      {
+        "name": "set:theme",
+        "type": "[theme: \"light\" | \"dark\"]",
+        "signature": "(event: \"set:theme\", theme: \"light\" | \"dark\"): void"
+      },
+      {
+        "name": "logout",
+        "type": "[]",
+        "signature": "(event: \"logout\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{ close: () => void; itemClass: string; }",
+        "description": "Custom rows after `items`. Give each focusable row `role=\"menuitem\"`, `tabindex=\"-1\"` and the `itemClass` classes; call `close()` after an action."
+      }
+    ]
   }
 }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Check, X } from "lucide-vue-next";
 defineProps<{ dos: string[]; donts: string[] }>();
 </script>
 
@@ -7,7 +8,7 @@ defineProps<{ dos: string[]; donts: string[] }>();
     <div class="overflow-hidden rounded-10 border border-border bg-surface shadow-xs">
       <p class="flex items-center gap-2 border-b border-border-light bg-green-97 px-4 py-2.5 text-base font-semibold text-green-10">
         <span class="inline-flex size-4.5 items-center justify-center rounded-full bg-success text-white" aria-hidden="true">
-          <svg class="size-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5 5 9l4.5-6" /></svg>
+          <Check class="size-2.5" :stroke-width="3" aria-hidden="true" />
         </span>
         Do
       </p>
@@ -20,7 +21,7 @@ defineProps<{ dos: string[]; donts: string[] }>();
     <div class="overflow-hidden rounded-10 border border-border bg-surface shadow-xs">
       <p class="flex items-center gap-2 border-b border-border-light bg-red-97 px-4 py-2.5 text-base font-semibold text-red-10">
         <span class="inline-flex size-4.5 items-center justify-center rounded-full bg-danger text-white" aria-hidden="true">
-          <svg class="size-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 3l6 6M9 3 3 9" /></svg>
+          <X class="size-2.5" :stroke-width="3" aria-hidden="true" />
         </span>
         Don't
       </p>
