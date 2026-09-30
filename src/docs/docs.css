@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@import "../lib/theme.css";
+
+/* Docs-site only styles. The design system itself lives in src/lib/theme.css. */
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { background: var(--color-white); }
+}
+
+/* Code */
+.shiki,
+.shiki span { font-family: var(--font-mono); }
+.shiki { background-color: transparent !important; font-size: 12.5px; line-height: 1.7; }
+.shiki code { counter-reset: line; }
+
+/* Inline code in prose and tables */
+.prose-code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: var(--color-heading);
+  background-color: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  padding: 0.05em 0.35em;
+  white-space: nowrap;
+}
+
+/* Example previews sit on a faint dot grid so components read as objects on a canvas */
+.preview-canvas {
+  background-color: var(--color-white);
+  background-image: radial-gradient(circle at 1px 1px, var(--color-slate-80) 1px, transparent 0);
+  background-size: 16px 16px;
+  background-position: -8px -8px;
+}
+
+/* Prose inside doc pages */
+@layer components {
+  #doc-content > p,
+  #doc-content .prose > p {
+    margin-bottom: 14px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-body);
+    max-width: 720px;
+  }
+  #doc-content > ul,
+  #doc-content > ol,
+  #doc-content .prose > ul,
+  #doc-content .prose > ol {
+    margin: 0 0 18px 20px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-body);
+    max-width: 720px;
+  }
+  #doc-content > ul, #doc-content .prose > ul { list-style: disc; }
+  #doc-content > ol, #doc-content .prose > ol { list-style: decimal; }
+  #doc-content li::marker { color: var(--color-slate-60); }
+  #doc-content li + li { margin-top: 6px; }
+  #doc-content > p a,
+  #doc-content li a,
+  #doc-content td a {
+    color: var(--color-primary-20);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--color-primary-70);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.15s;
+  }
+  #doc-content > p a:hover,
+  #doc-content li a:hover,
+  #doc-content td a:hover { text-decoration-color: var(--color-primary-20); }
+  #doc-content strong { color: var(--color-heading); font-weight: 600; }
+}

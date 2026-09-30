@@ -1,0 +1,32 @@
+{
+  "name": "appscode-design-system-tw",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run meta && vite",
+    "build": "npm run meta && vue-tsc --build --force && vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --build --force",
+    "meta": "node scripts/gen-meta.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/geist-mono": "^5.3.0",
+    "shiki": "^4.4.3",
+    "vue": "^3.5.43",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@tsconfig/node22": "^22.0.6",
+    "@types/node": "^26.6.3",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "@vue/tsconfig": "^0.9.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9",
+    "vite": "^8.3.1",
+    "vue-component-meta": "^3.3.11",
+    "vue-tsc": "^3.3.11"
+  }
+}

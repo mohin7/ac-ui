@@ -1,0 +1,1257 @@
+{
+  "AcAlert": {
+    "props": [
+      {
+        "name": "color",
+        "type": "\"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"neutral\" | undefined",
+        "default": "\"info\"",
+        "required": false,
+        "description": "Status colour of the border, tint and icon."
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Optional bold first line above the message."
+      },
+      {
+        "name": "dismissible",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a close button that emits `close`."
+      }
+    ],
+    "events": [
+      {
+        "name": "close",
+        "type": "[]",
+        "signature": "(event: \"close\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The message. Links inside are underlined in primary."
+      }
+    ]
+  },
+  "AcBadge": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Default\"",
+        "required": false,
+        "description": "Text of the badge. The default slot overrides it."
+      },
+      {
+        "name": "color",
+        "type": "\"default\" | \"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"secondary\" | \"dark\" | undefined",
+        "default": "\"default\"",
+        "required": false,
+        "description": "Status or brand colour. Always pair a status colour with a word."
+      },
+      {
+        "name": "variant",
+        "type": "\"solid\" | \"light\" | \"outlined\" | undefined",
+        "default": "\"solid\"",
+        "required": false,
+        "description": "`solid` fill, `light` tint (-95 fill, -10 text, best contrast) or `outlined`."
+      },
+      {
+        "name": "rounded",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Pill shape (`rounded-50`) instead of the 6px control radius."
+      },
+      {
+        "name": "dot",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows an 8px status dot before the label."
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Badge content. Replaces `label`."
+      }
+    ]
+  },
+  "AcButton": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text label. You can also pass content through the default slot."
+      },
+      {
+        "name": "color",
+        "type": "\"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"white\" | \"ghost\" | undefined",
+        "default": "\"primary\"",
+        "required": false,
+        "description": "Colour of the button. `white` and `ghost` are neutral styles for secondary actions."
+      },
+      {
+        "name": "variant",
+        "type": "\"solid\" | \"light\" | \"outlined\" | undefined",
+        "default": "\"solid\"",
+        "required": false,
+        "description": "`solid` fill, `light` tinted fill (-95 background, -30 text) or `outlined` border."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | \"medium\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Height and padding: `small` 28px, `normal` 32px, `medium` 40px."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a spinner, hides the label and blocks clicks."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the button (50% opacity, no click events)."
+      },
+      {
+        "name": "type",
+        "type": "\"button\" | \"submit\" | \"reset\" | undefined",
+        "default": "\"button\"",
+        "required": false,
+        "description": "Native button type. Use `submit` inside forms."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Renders an <a> styled as the button instead of a <button>."
+      }
+    ],
+    "events": [
+      {
+        "name": "click",
+        "type": "[e: MouseEvent]",
+        "signature": "(event: \"click\", e: MouseEvent): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Button content, after the icon and `title`."
+      },
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "A 16px icon before the label (an inline SVG or icon component)."
+      }
+    ]
+  },
+  "AcCard": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Header title. The header only renders with a title or `actions` slot."
+      },
+      {
+        "name": "subtitle",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Small line under the title."
+      },
+      {
+        "name": "padded",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Adds 20px padding to the body. Turn off for flush tables."
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Card body."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Buttons on the right of the header."
+      }
+    ]
+  },
+  "AcCheckBox": {
+    "props": [
+      {
+        "name": "options",
+        "type": "Option<T>[]",
+        "required": true,
+        "description": "The checkboxes to render: `{ value, label, disabled? }`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "\"checkbox\"",
+        "required": false,
+        "description": "Native `name` shared by every checkbox."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the group."
+      },
+      {
+        "name": "modelValue",
+        "type": "T[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: T[]]",
+        "signature": "(event: \"update:modelValue\", value: T[]): void"
+      }
+    ],
+    "slots": []
+  },
+  "AcCheckRadio": {
+    "props": [
+      {
+        "name": "options",
+        "type": "Option<T>[]",
+        "required": true,
+        "description": "The radios to render: `{ value, label, description?, disabled? }`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "\"radio\"",
+        "required": false,
+        "description": "Base `name` for the radio group."
+      },
+      {
+        "name": "row",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Lays the options out horizontally."
+      },
+      {
+        "name": "cards",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Card style with each option's description, like the source's hasDescription."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the group."
+      },
+      {
+        "name": "modelValue",
+        "type": "T | undefined",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: T | undefined]",
+        "signature": "(event: \"update:modelValue\", value: T | undefined): void"
+      }
+    ],
+    "slots": []
+  },
+  "AcContentHeader": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Section title."
+      },
+      {
+        "name": "subtitle",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Line under the title."
+      },
+      {
+        "name": "bordered",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Draws a divider under the header."
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "Icon before the title."
+      },
+      {
+        "name": "title-actions",
+        "type": "any",
+        "description": "Right after the title, e.g. a count badge or info tooltip."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Right side: filters, search and actions."
+      }
+    ]
+  },
+  "AcContentLayout": {
+    "props": [
+      {
+        "name": "surface",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Draws the white bordered surface. Turn off to place the layout inside another card."
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "header",
+        "type": "any",
+        "description": "Usually an `AcContentHeader`."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The content under the header."
+      }
+    ]
+  },
+  "AcContentTable": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Title above the table."
+      },
+      {
+        "name": "subtitle",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Line under the title, e.g. a count."
+      },
+      {
+        "name": "searchable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a search box to the header. Its text is passed to the default slot as `searchText`."
+      },
+      {
+        "name": "searchPlaceholder",
+        "type": "string | undefined",
+        "default": "\"Search\"",
+        "required": false,
+        "description": "Placeholder of the search box."
+      },
+      {
+        "name": "hideHeader",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides the header entirely."
+      },
+      {
+        "name": "padded",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Pads the content area. Turn off when the slot is a flush table."
+      },
+      {
+        "name": "search",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The search text. Bind with `v-model:search` to control or read it."
+      }
+    ],
+    "events": [
+      {
+        "name": "search",
+        "type": "[value: string]",
+        "signature": "(event: \"search\", value: string): void"
+      },
+      {
+        "name": "update:search",
+        "type": "[value: string]",
+        "signature": "(event: \"update:search\", value: string): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "title-actions",
+        "type": "any",
+        "description": "Right after the title."
+      },
+      {
+        "name": "left-controls",
+        "type": "any",
+        "description": "Header controls before the search box, e.g. filters."
+      },
+      {
+        "name": "right-controls",
+        "type": "any",
+        "description": "Header controls after the search box, e.g. the Create button."
+      },
+      {
+        "name": "default",
+        "type": "{ searchText: string; }",
+        "description": "The table. Receives the current `searchText`."
+      }
+    ]
+  },
+  "AcDeleteModal": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"Delete\"",
+        "required": false,
+        "description": "Heading, e.g. \"Delete Database\"."
+      },
+      {
+        "name": "message",
+        "type": "string | undefined",
+        "default": "\"Are you sure you want to delete\"",
+        "required": false,
+        "description": "The question. The item name is shown in bold after it."
+      },
+      {
+        "name": "itemName",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Name of the thing being deleted, e.g. `demo-postgres`."
+      },
+      {
+        "name": "detail",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Extra consequence shown under the question, e.g. \"Backups are kept for 7 days.\""
+      },
+      {
+        "name": "confirmText",
+        "type": "string | undefined",
+        "default": "\"Delete\"",
+        "required": false,
+        "description": "Label of the destructive button."
+      },
+      {
+        "name": "confirmByTyping",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Requires typing `itemName` before the delete button enables. Use for irreversible deletes."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a spinner on the delete button and blocks closing while the request runs."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the dialog is open. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "confirm",
+        "type": "[itemName: string]",
+        "signature": "(event: \"confirm\", itemName: string): void"
+      },
+      {
+        "name": "cancel",
+        "type": "[]",
+        "signature": "(event: \"cancel\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Extra content under the message, e.g. a \"Also delete backups\" checkbox."
+      }
+    ]
+  },
+  "AcHeader": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Page title."
+      },
+      {
+        "name": "subtitle",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Line under the title."
+      },
+      {
+        "name": "backButton",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a back button that emits `back`."
+      },
+      {
+        "name": "sticky",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Sticks to the top while the page scrolls."
+      },
+      {
+        "name": "top",
+        "type": "string | undefined",
+        "default": "\"0px\"",
+        "required": false,
+        "description": "Distance from the top when sticky, e.g. `\"56px\"` under an app navbar."
+      }
+    ],
+    "events": [
+      {
+        "name": "back",
+        "type": "[]",
+        "signature": "(event: \"back\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "breadcrumb",
+        "type": "any",
+        "description": "Breadcrumb above the title."
+      },
+      {
+        "name": "title",
+        "type": "any",
+        "description": "Replaces the title and subtitle."
+      },
+      {
+        "name": "title-extra",
+        "type": "any",
+        "description": "Next to the title, e.g. a status badge."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Right side: the page's actions. The primary action goes last."
+      }
+    ]
+  },
+  "AcHeaderItem": {
+    "props": [],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "One control in a header row."
+      }
+    ]
+  },
+  "AcHeaderItems": {
+    "props": [],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "`AcHeaderItem`s or controls, laid out in a row with an 8px gap."
+      }
+    ]
+  },
+  "AcInput": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "Floating label. It rests inside the field and rises on focus or when filled."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Native `name` attribute."
+      },
+      {
+        "name": "type",
+        "type": "\"number\" | \"search\" | \"text\" | \"password\" | \"email\" | \"url\" | undefined",
+        "default": "\"text\"",
+        "required": false,
+        "description": "Native input type. `password` adds a show/hide toggle."
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Marks the field required and adds a red asterisk."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the field."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Read-only field with a gray background."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the field. Turns the border and label red and sets `aria-invalid`."
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Helper text under the field (hidden while `errorMsg` is set)."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | undefined",
+        "default": "\"small\"",
+        "required": false,
+        "description": "`small` 36px or `normal` 40px tall."
+      },
+      {
+        "name": "modelValue",
+        "type": "string | number | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | number]",
+        "signature": "(event: \"update:modelValue\", value: string | number): void"
+      }
+    ],
+    "slots": []
+  },
+  "AcModal": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Heading of the dialog."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Optional line under the title."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | \"medium\" | \"large\" | \"full\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Width: `small` 440px, `normal` 520px, `medium` 800px, `large` 1000px, `full` viewport minus 64px."
+      },
+      {
+        "name": "closable",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Shows the close button and allows Escape to close. Turn off while a required action runs."
+      },
+      {
+        "name": "closeOnOutsideClick",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Closes when the backdrop is clicked."
+      },
+      {
+        "name": "hideFooter",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides the footer bar."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the dialog is open. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "close",
+        "type": "[]",
+        "signature": "(event: \"close\"): void"
+      },
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Dialog body. Scrolls when it's taller than the viewport."
+      },
+      {
+        "name": "header",
+        "type": "any",
+        "description": "Replaces the title and description."
+      },
+      {
+        "name": "header-actions",
+        "type": "any",
+        "description": "Buttons next to the close button, e.g. a docs link."
+      },
+      {
+        "name": "footer",
+        "type": "any",
+        "description": "Right-aligned footer buttons: Cancel, then the primary action."
+      },
+      {
+        "name": "footer-left",
+        "type": "any",
+        "description": "Left side of the footer, e.g. a \"Don't show again\" checkbox."
+      }
+    ]
+  },
+  "AcSearchBar": {
+    "props": [
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "\"Search\"",
+        "required": false,
+        "description": "Placeholder text."
+      },
+      {
+        "name": "debounce",
+        "type": "number | undefined",
+        "default": "300",
+        "required": false,
+        "description": "Milliseconds to wait after typing before emitting `search`. `0` emits on every key."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | undefined",
+        "default": "\"small\"",
+        "required": false,
+        "description": "`small` 32px or `normal` 36px tall."
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The search text."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]",
+        "signature": "(event: \"update:modelValue\", value: string): void"
+      },
+      {
+        "name": "search",
+        "type": "[value: string]",
+        "signature": "(event: \"search\", value: string): void"
+      }
+    ],
+    "slots": []
+  },
+  "AcSectionContent": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Section title."
+      },
+      {
+        "name": "subtitle",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Line under the title."
+      },
+      {
+        "name": "backButton",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a back button that emits `back`."
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Lets people collapse the body with a chevron button."
+      },
+      {
+        "name": "padded",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Pads the body. Turn off for flush tables and lists."
+      },
+      {
+        "name": "plain",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Drops the card surface so the section blends into its parent."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Whether the body is shown. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "back",
+        "type": "[]",
+        "signature": "(event: \"back\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "header",
+        "type": "any",
+        "description": "Replaces the title area."
+      },
+      {
+        "name": "title-extra",
+        "type": "any",
+        "description": "Next to the title, e.g. a badge."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Buttons on the right of the header."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Section body."
+      }
+    ]
+  },
+  "AcSelect": {
+    "props": [
+      {
+        "name": "options",
+        "type": "SelectOption<V>[]",
+        "required": true,
+        "description": "The choices: `{ value, label, description?, disabled?, group? }`."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Floating label. It rests inside the field and rises when a value is chosen or the list opens."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "\"Select…\"",
+        "required": false,
+        "description": "Text shown in the field when there's no label and nothing is selected."
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Allow several values; `v-model` becomes an array."
+      },
+      {
+        "name": "searchable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a search box to the list. Emits `search` so you can load options from an API."
+      },
+      {
+        "name": "clearable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a clear button when a value is selected."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a spinner and blocks the field while options load."
+      },
+      {
+        "name": "refreshable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a refresh button that emits `refresh`."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the field."
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Marks the field required and adds a red asterisk."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the field."
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Helper text under the field (hidden while `errorMsg` is set)."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | \"compact\" | undefined",
+        "default": "\"small\"",
+        "required": false,
+        "description": "`compact` 32px (toolbars and filters, no label), `small` 36px (forms) or `normal` 40px."
+      },
+      {
+        "name": "noResultText",
+        "type": "string | undefined",
+        "default": "\"No results\"",
+        "required": false,
+        "description": "Text shown when no option matches the search."
+      },
+      {
+        "name": "modelValue",
+        "type": "V | V[] | null | undefined",
+        "default": "null",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "events": [
+      {
+        "name": "search",
+        "type": "[query: string]",
+        "signature": "(evt: \"search\", query: string): void"
+      },
+      {
+        "name": "select",
+        "type": "[option: SelectOption<V>]",
+        "signature": "(evt: \"select\", option: SelectOption<V>): void"
+      },
+      {
+        "name": "remove",
+        "type": "[option: SelectOption<V>]",
+        "signature": "(evt: \"remove\", option: SelectOption<V>): void"
+      },
+      {
+        "name": "refresh",
+        "type": "[]",
+        "signature": "(evt: \"refresh\"): void"
+      },
+      {
+        "name": "update:modelValue",
+        "type": "[value: V | V[] | null]",
+        "signature": "(event: \"update:modelValue\", value: V | V[] | null): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "option",
+        "type": "{ option: SelectOption<V>; selected: boolean; active: boolean; }",
+        "description": "Custom option row. Receives the option and whether it's selected or highlighted."
+      },
+      {
+        "name": "empty",
+        "type": "{ query: string; }",
+        "description": "Content shown when the list is empty or nothing matches."
+      }
+    ]
+  },
+  "AcSteps": {
+    "props": [
+      {
+        "name": "options",
+        "type": "Step[]",
+        "required": true,
+        "description": "The steps: `{ id, title, description? }`, with ids 1…n in order."
+      },
+      {
+        "name": "active",
+        "type": "number",
+        "required": true,
+        "description": "Id of the current step. Lower ids show a check mark."
+      }
+    ],
+    "events": [],
+    "slots": []
+  },
+  "AcSwitch": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Label shown to the left of the switch."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Native `name` attribute."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the switch."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the switch."
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:modelValue\", value: boolean): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "left",
+        "type": "any",
+        "description": "Content before the label."
+      },
+      {
+        "name": "middle",
+        "type": "any",
+        "description": "Content between the label and the switch, e.g. an info icon."
+      },
+      {
+        "name": "right",
+        "type": "any",
+        "description": "Content after the switch, e.g. a status badge."
+      }
+    ]
+  },
+  "AcTable": {
+    "props": [
+      {
+        "name": "columns",
+        "type": "Column[]",
+        "required": true,
+        "description": "Column definitions: `{ key, label, sortable?, align?, width? }`."
+      },
+      {
+        "name": "rows",
+        "type": "Row[]",
+        "required": true,
+        "description": "Row objects. Each column's `key` is read from the row."
+      },
+      {
+        "name": "rowKey",
+        "type": "string | undefined",
+        "default": "\"id\"",
+        "required": false,
+        "description": "Row property used as the Vue `key`."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows skeleton rows instead of data."
+      },
+      {
+        "name": "loaderRows",
+        "type": "number | undefined",
+        "default": "3",
+        "required": false,
+        "description": "Number of skeleton rows while loading."
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "default": "\"No data found\"",
+        "required": false,
+        "description": "Text shown when `rows` is empty (or use the `empty` slot)."
+      },
+      {
+        "name": "clickable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a pointer cursor and emits `row-click`."
+      }
+    ],
+    "events": [
+      {
+        "name": "sort",
+        "type": "[key: string, mode: \"asc\" | \"desc\"]",
+        "signature": "(evt: \"sort\", key: string, mode: \"asc\" | \"desc\"): void"
+      },
+      {
+        "name": "row-click",
+        "type": "[row: Row]",
+        "signature": "(evt: \"row-click\", row: Row): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "empty",
+        "type": "any",
+        "description": "Content shown when `rows` is empty."
+      }
+    ]
+  },
+  "AcTabs": {
+    "props": [
+      {
+        "name": "items",
+        "type": "TabItem[]",
+        "required": true,
+        "description": "The tabs: `{ key, label, count?, disabled? }`. `v-model` holds the active `key`."
+      },
+      {
+        "name": "modelValue",
+        "type": "string",
+        "required": true,
+        "description": ""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]",
+        "signature": "(event: \"update:modelValue\", value: string): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{ active: string; }",
+        "description": "Panel content, rendered under the tab list. Receives the active key."
+      }
+    ]
+  }
+}
