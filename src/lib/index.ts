@@ -4,6 +4,7 @@ export type { ColorMode } from "./composables/useColorMode";
 export { useToast } from "./composables/useToast";
 export type { Toast, ToastAction, ToastOptions, ToastTone } from "./composables/useToast";
 // Data shapes that components take as props
+export type { BreadcrumbItem } from "./components/AcBreadcrumb.vue";
 export type { FileRejection } from "./components/AcFileUpload.vue";
 export type { InfoItem } from "./components/AcInfoTable.vue";
 export type { SegmentedOption } from "./components/AcSegmentedControl.vue";

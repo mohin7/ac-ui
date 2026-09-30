@@ -4,6 +4,7 @@ export { default as AcAlert } from "./AcAlert.vue";
 export { default as AcAvatar } from "./AcAvatar.vue";
 export { default as AcBadge } from "./AcBadge.vue";
 export { default as AcBanner } from "./AcBanner.vue";
+export { default as AcBreadcrumb } from "./AcBreadcrumb.vue";
 export { default as AcButton } from "./AcButton.vue";
 export { default as AcButtons } from "./AcButtons.vue";
 export { default as AcCard } from "./AcCard.vue";

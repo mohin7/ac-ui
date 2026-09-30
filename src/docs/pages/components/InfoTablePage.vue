@@ -51,7 +51,7 @@ const donts = [
   <DocHeading id="basic" :level="3">Basic</DocHeading>
   <p><code class="prose-code">mono</code> shows the value in Geist Mono; <code class="prose-code">copyable</code> adds a copy button. Empty values show a dash.</p>
   <ComponentExample name="info-table/InfoTableBasic" />
-  <DocHeading id="slots" :level="3">Two columns, badges and links</DocHeading>
+  <DocHeading id="value-slots" :level="3">Two columns, badges and links</DocHeading>
   <p><code class="prose-code">:columns="2"</code> splits the rows into two columns from 768px up. Give a row a <code class="prose-code">key</code> and fill <code class="prose-code">#value-&lt;key&gt;</code> for a badge, link or list of tags. The <code class="prose-code">actions</code> slot sits next to the title.</p>
   <ComponentExample name="info-table/InfoTableSlots" />
   <DocHeading id="stacked" :level="3">Stacked, inside a card</DocHeading>

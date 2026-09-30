@@ -78,13 +78,15 @@ import { AcButton, AcBadge } from "@/lib";
 
   <DocHeading id="copy-lib" :level="3">3. Add the library</DocHeading>
   <p>
-    Copy <code class="prose-code">src/lib</code> (the theme and components) into your app. It has no dependencies
-    besides Vue.
+    Copy <code class="prose-code">src/lib</code> (the theme, components and composables) into your app. Its only
+    dependencies are Vue and <code class="prose-code">lucide-vue-next</code>.
   </p>
   <CodeBlock :code="copy" lang="bash" filename="Terminal" />
   <Callout type="note">
-    The library isn't published to npm yet. Once it is, this step becomes a package install and the import path
-    changes from <code class="prose-code">@/lib</code> to the package name.
+    The library isn't published to npm yet. <code class="prose-code">npm run build:lib</code> already produces the
+    package (<code class="prose-code">@appscode/design-system</code> 3.0.0-alpha) in <code class="prose-code">dist/lib</code>.
+    Once it's published, this step becomes a package install, and imports change from <code class="prose-code">@/lib</code>
+    to <code class="prose-code">@appscode/design-system</code> and <code class="prose-code">@appscode/design-system/theme.css</code>.
   </Callout>
 
   <DocHeading id="import-css" :level="3">4. Import the theme</DocHeading>

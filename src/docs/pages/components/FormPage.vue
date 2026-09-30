@@ -33,7 +33,7 @@ const donts = [
   <DocHeading id="sticky-viewport" :level="3">Pinned to the window</DocHeading>
   <p><code class="prose-code">sticky="viewport"</code> pins the bar to the bottom of the window, lined up with the footer's column, and keeps its space in the page so the last field isn't hidden. Use it when the form is the whole page.</p>
   <ComponentExample name="form/FormFooterViewport" />
-  <DocHeading id="footer-slots" :level="3">Footer slots, outside a form</DocHeading>
+  <DocHeading id="footer-outside-form" :level="3">Footer slots, outside a form</DocHeading>
   <p>The <code class="prose-code">left</code> slot takes a status or a secondary action; <code class="prose-code">right</code> replaces the buttons. Outside a <code class="prose-code">&lt;form&gt;</code> the primary button emits <code class="prose-code">save</code> instead — or pass <code class="prose-code">form="form-id"</code> to submit a form elsewhere on the page.</p>
   <ComponentExample name="form/FormFooterStandalone" />
 

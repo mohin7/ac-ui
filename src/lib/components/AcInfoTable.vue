@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from "vue";
-import { Check, Copy } from "lucide-vue-next";
+import { Check, Copy, Eye, EyeOff } from "lucide-vue-next";
 
 export interface InfoItem {
   /** Names the slots for this row: `#value-<key>` and `#label-<key>`. Defaults to `label`. */
@@ -13,10 +13,12 @@ export interface InfoItem {
   copyable?: boolean;
   /** Shows the value in the monospace font, for IDs, hashes, endpoints and resource names. */
   mono?: boolean;
+  /** Hides the value behind dots with a show/hide button, e.g. a password. Copy still copies the real value. */
+  secret?: boolean;
 }
 
 export interface Props {
-  /** The rows: `{ key?, label, value?, copyable?, mono? }`. */
+  /** The rows: `{ key?, label, value?, copyable?, mono?, secret? }`. */
   items?: InfoItem[];
   /** Heading above the rows. */
   title?: string;
@@ -54,6 +56,7 @@ defineSlots<{
 const PLACEHOLDER_WIDTHS = ["w-40", "w-28", "w-52", "w-32", "w-44", "w-24"];
 
 const copiedKey = ref<string | null>(null);
+const revealed = ref(new Set<string>());
 let copiedTimer: ReturnType<typeof setTimeout> | undefined;
 
 const rows = computed(() => props.items.map((item) => ({ item, key: item.key ?? item.label })));
@@ -69,6 +72,12 @@ const labelClass = computed(() => [
 
 function isEmpty(value: InfoItem["value"]) {
   return value === null || value === undefined || value === "";
+}
+
+function toggleReveal(key: string) {
+  const next = new Set(revealed.value);
+  if (!next.delete(key)) next.add(key);
+  revealed.value = next;
 }
 
 async function copy(key: string, value: InfoItem["value"]) {
@@ -119,7 +128,19 @@ onBeforeUnmount(() => clearTimeout(copiedTimer));
           <slot v-else :name="`value-${key}`" :item="item">
             <span v-if="isEmpty(item.value)" class="text-muted">—</span>
             <span v-else class="flex min-w-0 items-start gap-1.5">
-              <span class="min-w-0 [overflow-wrap:anywhere]" :class="item.mono && 'font-mono text-xs leading-5'">{{ item.value }}</span>
+              <span class="min-w-0 [overflow-wrap:anywhere]" :class="(item.mono || item.secret) && 'font-mono text-xs leading-5'">
+                {{ item.secret && !revealed.has(key) ? "••••••••••••" : item.value }}
+              </span>
+              <button
+                v-if="item.secret"
+                type="button"
+                class="-my-0.5 inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-4 text-muted transition hover:bg-surface-sunken hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+                :aria-label="revealed.has(key) ? `Hide ${item.label}` : `Show ${item.label}`"
+                :aria-pressed="revealed.has(key)"
+                @click="toggleReveal(key)"
+              >
+                <component :is="revealed.has(key) ? EyeOff : Eye" class="size-3.5" aria-hidden="true" />
+              </button>
               <button
                 v-if="item.copyable"
                 type="button"

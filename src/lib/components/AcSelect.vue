@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="V extends string | number">
-import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useId, watch } from "vue";
 import { Check, ChevronDown, CircleAlert, RefreshCw, Search, X } from "lucide-vue-next";
 import AcSpinner from "./AcSpinner.vue";
 import type { SelectOption } from "./types";
@@ -35,6 +35,8 @@ export interface Props<T extends string | number> {
   noResultText?: string;
 }
 
+defineOptions({ inheritAttrs: false });
+
 const props = withDefaults(defineProps<Props<V>>(), {
   label: "",
   placeholder: "Select…",
@@ -68,6 +70,13 @@ defineSlots<{
 const model = defineModel<V | V[] | null>({ default: null });
 
 const id = useId();
+const attrs = useAttrs();
+// class and style stay on the wrapper for layout; everything else (autocomplete, aria-*, data-*) goes to the control.
+const rootAttrs = computed(() => ({ class: attrs.class, style: attrs.style }));
+const controlAttrs = computed(() => {
+  const { class: _class, style: _style, ...rest } = attrs;
+  return rest;
+});
 const listId = `${id}-list`;
 const labelId = `${id}-label`;
 const root = ref<HTMLElement | null>(null);
@@ -286,14 +295,20 @@ onBeforeUnmount(unlisten);
 
 const hoisted = computed(() => !!props.label && (hasValue.value || open.value));
 const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?.label) || "");
+
+defineExpose({
+  /** Moves focus to the select. */
+  focus: () => trigger.value?.focus(),
+});
 </script>
 
 <template>
-  <div ref="root" class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-select">
+  <div ref="root" v-bind="rootAttrs" class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-select">
     <div class="relative">
       <div
         :id="`${id}-trigger`"
         ref="trigger"
+        v-bind="controlAttrs"
         role="combobox"
         :tabindex="disabled ? -1 : 0"
         aria-haspopup="listbox"

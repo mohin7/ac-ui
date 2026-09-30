@@ -30,7 +30,7 @@ const donts = ["Don't use a switch inside a form with a Save button.", "Don't us
   <DocHeading id="basic" :level="3">Basic</DocHeading>
   <p>Bind a boolean with <code class="prose-code">v-model</code>.</p>
   <ComponentExample name="switch/SwitchBasic" />
-  <DocHeading id="slots" :level="3">Slots</DocHeading>
+  <DocHeading id="side-slots" :level="3">Slots</DocHeading>
   <p>Use <code class="prose-code">left</code>, <code class="prose-code">middle</code> and <code class="prose-code">right</code> for extra content such as a status badge.</p>
   <ComponentExample name="switch/SwitchSlots" />
   <DocHeading id="settings-list" :level="3">Settings list</DocHeading>

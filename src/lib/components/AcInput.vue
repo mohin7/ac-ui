@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useId } from "vue";
+import { computed, ref, useAttrs, useId } from "vue";
 import { CircleAlert, Eye, EyeOff } from "lucide-vue-next";
 
 export interface Props {
@@ -23,6 +23,8 @@ export interface Props {
   size?: "small" | "normal";
 }
 
+defineOptions({ inheritAttrs: false });
+
 const props = withDefaults(defineProps<Props>(), {
   name: "",
   type: "text",
@@ -36,17 +38,32 @@ const props = withDefaults(defineProps<Props>(), {
 
 const model = defineModel<string | number>({ default: "" });
 const id = useId();
+const attrs = useAttrs();
+// class and style stay on the wrapper for layout; everything else (autocomplete, aria-*, data-*) goes to the control.
+const rootAttrs = computed(() => ({ class: attrs.class, style: attrs.style }));
+const controlAttrs = computed(() => {
+  const { class: _class, style: _style, ...rest } = attrs;
+  return rest;
+});
+const input = ref<HTMLInputElement | null>(null);
 const showValue = ref(false);
 const inputType = computed(() => (props.type === "password" && showValue.value ? "text" : props.type));
 const describedBy = computed(() => (props.errorMsg || props.hint ? `${id}-msg` : undefined));
+
+defineExpose({
+  /** Moves focus to the input. */
+  focus: () => input.value?.focus(),
+});
 </script>
 
 <template>
-  <div class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-input">
+  <div v-bind="rootAttrs" class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-input">
     <div class="relative">
       <!-- placeholder=" " lets the label float with :placeholder-shown, like .ac-label.show-label -->
       <input
         :id="id"
+        ref="input"
+        v-bind="controlAttrs"
         v-model="model"
         :name="name"
         :type="inputType"

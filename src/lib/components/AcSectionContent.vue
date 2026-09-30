@@ -15,6 +15,8 @@ export interface Props {
   padded?: boolean;
   /** Drops the card surface so the section blends into its parent. */
   plain?: boolean;
+  /** `danger` draws a red border and title, for irreversible actions like deleting a database. */
+  tone?: "default" | "danger";
 }
 
 withDefaults(defineProps<Props>(), {
@@ -24,6 +26,7 @@ withDefaults(defineProps<Props>(), {
   collapsible: false,
   padded: true,
   plain: false,
+  tone: "default",
 });
 
 const emit = defineEmits<{ back: [] }>();
@@ -45,10 +48,13 @@ const bodyId = useId();
 </script>
 
 <template>
-  <section :class="!plain && 'rounded-10 border border-border bg-surface shadow-xs'" data-testid="ac-section-content">
+  <section
+    :class="!plain && ['rounded-10 border bg-surface shadow-xs', tone === 'danger' ? 'border-red-80' : 'border-border']"
+    data-testid="ac-section-content"
+  >
     <header
       class="flex items-center justify-between gap-4"
-      :class="[plain ? 'mb-3' : 'px-5 py-3.5', !plain && open && 'border-b border-border-light']"
+      :class="[plain ? 'mb-3' : 'px-5 py-3.5', !plain && open && (tone === 'danger' ? 'border-b border-red-90' : 'border-b border-border-light')]"
     >
       <div class="flex min-w-0 items-center gap-2.5">
         <button
@@ -63,7 +69,7 @@ const bodyId = useId();
         <div class="min-w-0">
           <slot name="header">
             <div class="flex items-center gap-2">
-              <h5 class="truncate">{{ title }}</h5>
+              <h5 class="truncate" :class="tone === 'danger' && 'text-red-30'">{{ title }}</h5>
               <slot name="title-extra" />
             </div>
             <p v-if="subtitle" class="mt-0.5 truncate text-xs text-muted">{{ subtitle }}</p>

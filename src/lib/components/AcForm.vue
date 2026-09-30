@@ -6,11 +6,14 @@ export interface Props {
   width?: "narrow" | "normal" | "wide" | "full";
   /** Default layout of every AcFormSection inside: `stacked` puts the title above the fields, `aside` puts it on the left from 768px up. */
   layout?: "stacked" | "aside";
+  /** Lets the browser block submit on empty `required` fields. Off by default so `@submit` always fires and your own validation shows its messages. */
+  nativeValidation?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   width: undefined,
   layout: "stacked",
+  nativeValidation: false,
 });
 
 const emit = defineEmits<{
@@ -45,7 +48,7 @@ function onSubmit(e: Event) {
 </script>
 
 <template>
-  <form class="w-full" data-testid="ac-form" @submit.prevent="onSubmit">
+  <form class="w-full" :novalidate="!nativeValidation" data-testid="ac-form" @submit.prevent="onSubmit">
     <div class="flex w-full flex-col" :class="widthClass">
       <slot />
     </div>

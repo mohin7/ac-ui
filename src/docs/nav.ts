@@ -418,6 +418,15 @@ export const pages: DocPage[] = [
     load: () => import("./pages/components/AccordionPage.vue"),
   },
   {
+    path: "/components/breadcrumb",
+    title: "Breadcrumb",
+    description: "Shows where a page sits, with links back up the path.",
+    section: "Components",
+    group: "Navigation",
+    component: "AcBreadcrumb",
+    load: () => import("./pages/components/BreadcrumbPage.vue"),
+  },
+  {
     path: "/components/tabs",
     title: "Tabs",
     description: "Switches between sibling views of the same resource.",

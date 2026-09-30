@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useId } from "vue";
+import { computed, ref, useAttrs, useId } from "vue";
 
 export interface Props {
   /** Label shown to the left of the switch. */
@@ -11,6 +11,8 @@ export interface Props {
   /** Error text under the switch. */
   errorMsg?: string;
 }
+
+defineOptions({ inheritAttrs: false });
 
 withDefaults(defineProps<Props>(), { label: "", name: "", disabled: false, errorMsg: "" });
 
@@ -25,16 +27,31 @@ defineSlots<{
 
 const model = defineModel<boolean>({ default: false });
 const id = useId();
+const attrs = useAttrs();
+// class and style stay on the wrapper for layout; everything else (autocomplete, aria-*, data-*) goes to the control.
+const rootAttrs = computed(() => ({ class: attrs.class, style: attrs.style }));
+const controlAttrs = computed(() => {
+  const { class: _class, style: _style, ...rest } = attrs;
+  return rest;
+});
+const button = ref<HTMLButtonElement | null>(null);
+
+defineExpose({
+  /** Moves focus to the switch. */
+  focus: () => button.value?.focus(),
+});
 </script>
 
 <template>
-  <div data-testid="ac-switch">
+  <div v-bind="rootAttrs" data-testid="ac-switch">
     <div class="flex items-center gap-2">
       <slot name="left" />
       <label v-if="label" :for="id" class="cursor-pointer text-base text-heading">{{ label }}</label>
       <slot name="middle" />
       <button
         :id="id"
+        ref="button"
+        v-bind="controlAttrs"
         type="button"
         role="switch"
         :name="name"

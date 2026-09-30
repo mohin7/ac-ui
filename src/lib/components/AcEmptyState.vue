@@ -8,6 +8,8 @@ export interface Props {
   variant?: "empty" | "search" | "error";
   /** Heading. Defaults to "Nothing here yet", "No results found" or "Something went wrong". */
   title?: string;
+  /** A small label above the title, such as "Error 404". */
+  code?: string;
   /** A sentence under the title: why it's empty and what to do next. */
   description?: string;
   /** With `variant="search"`, the search text, shown as `No results for “pg-prod”`. */
@@ -21,6 +23,7 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   variant: "empty",
   title: "",
+  code: "",
   description: "",
   query: "",
   icon: undefined,
@@ -71,6 +74,7 @@ const heading = computed(() => {
       </span>
     </slot>
     <div class="flex flex-col items-center gap-1">
+      <p v-if="code" class="font-mono text-xs font-medium tracking-wide text-muted uppercase">{{ code }}</p>
       <p class="font-semibold tracking-[-0.01em] text-balance text-heading" :class="sizing.title">{{ heading }}</p>
       <div v-if="description || $slots.default" class="text-pretty text-muted [&_a]:font-medium [&_a]:text-primary-20 [&_a]:underline [&_a]:underline-offset-2" :class="sizing.text">
         <slot>{{ description }}</slot>

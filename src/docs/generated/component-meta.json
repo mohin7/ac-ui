@@ -362,6 +362,32 @@
       }
     ]
   },
+  "AcBreadcrumb": {
+    "props": [
+      {
+        "name": "items",
+        "type": "BreadcrumbItem[]",
+        "required": true,
+        "description": "The path, from the top level down. The last item is the current page and isn't a link."
+      },
+      {
+        "name": "homeIcon",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Replaces the first item's label with a house icon (the label stays as its accessible name)."
+      },
+      {
+        "name": "maxItems",
+        "type": "number | undefined",
+        "default": "4",
+        "required": false,
+        "description": "With more items than this, the middle ones collapse behind \"…\" until clicked."
+      }
+    ],
+    "events": [],
+    "slots": []
+  },
   "AcButton": {
     "props": [
       {
@@ -1069,6 +1095,13 @@
         "description": "Heading. Defaults to \"Nothing here yet\", \"No results found\" or \"Something went wrong\"."
       },
       {
+        "name": "code",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A small label above the title, such as \"Error 404\"."
+      },
+      {
         "name": "description",
         "type": "string | undefined",
         "default": "\"\"",
@@ -1242,6 +1275,13 @@
         "default": "\"stacked\"",
         "required": false,
         "description": "Default layout of every AcFormSection inside: `stacked` puts the title above the fields, `aside` puts it on the left from 768px up."
+      },
+      {
+        "name": "nativeValidation",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Lets the browser block submit on empty `required` fields. Off by default so `@submit` always fires and your own validation shows its messages."
       }
     ],
     "events": [
@@ -1488,7 +1528,7 @@
         "type": "InfoItem[] | undefined",
         "default": "[]",
         "required": false,
-        "description": "The rows: `{ key?, label, value?, copyable?, mono? }`."
+        "description": "The rows: `{ key?, label, value?, copyable?, mono?, secret? }`."
       },
       {
         "name": "title",
@@ -2163,6 +2203,13 @@
         "default": "false",
         "required": false,
         "description": "Drops the card surface so the section blends into its parent."
+      },
+      {
+        "name": "tone",
+        "type": "\"default\" | \"danger\" | undefined",
+        "default": "\"default\"",
+        "required": false,
+        "description": "`danger` draws a red border and title, for irreversible actions like deleting a database."
       },
       {
         "name": "open",
