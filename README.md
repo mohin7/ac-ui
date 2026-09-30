@@ -11,7 +11,8 @@ npm run build:lib    # build the publishable library into dist/lib (JS, .d.ts, t
 
 ## What's in it
 
-- **56 components** (counting sub-parts), grouped as Element, Feedback, Form, Overlay, Layout, Navigation and Data. The docs sidebar lists them all.
+- **58 components** (counting sub-parts), grouped as Element, Feedback, Form, Overlay, Layout, Navigation and Data. The docs sidebar lists them all.
+- **Code editor:** `AcCodeEditor` (CodeMirror 6) for YAML, JSON and scripts, with syntax and JSON Schema checks and a changes view. It has its own entry, `@appscode/design-system/editor`, so apps that don't use it don't bundle CodeMirror.
 - **Composables:** `useColorMode()` for light/dark/system, `useToast()` for notifications (mount `<AcToaster />` once).
 - **Dark mode:** class-based. Put `.dark` on `<html>`; the old library's `.is-dark-theme` works too. Every token has a dark value, so components need no dark-specific code.
 - **Icons:** `lucide-vue-next` first, Phosphor through unplugin-icons as fallback, simple-icons for brands. Components don't draw their own SVGs.
@@ -27,6 +28,7 @@ src/
   lib/                      ← the design system
     theme.css               tokens as a Tailwind @theme, plus the dark theme
     components/             AcButton.vue, AcInput.vue, AcTable.vue, …
+    editor/                 the editor entry, its CodeMirror theme and YAML/JSON Schema checks
     composables/            useColorMode.ts, useToast.ts
     index.ts                import { AcButton, useToast } from "@/lib"
   docs/                     ← the documentation site
@@ -45,6 +47,7 @@ scripts/copy-theme.mjs      ships theme.css with the library build
 
 ```ts
 import { AcButton } from "@appscode/design-system";
+import { AcCodeEditor } from "@appscode/design-system/editor";
 ```
 
 ```css
@@ -52,7 +55,7 @@ import { AcButton } from "@appscode/design-system";
 @import "@appscode/design-system/theme.css";
 ```
 
-`vue` and `lucide-vue-next` are peer dependencies.
+`vue` and `lucide-vue-next` are peer dependencies. CodeMirror, Ajv and `yaml` are regular dependencies; they're only bundled by apps that import the editor.
 
 ## Adding or changing a component
 

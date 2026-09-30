@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { computed, ref, type Component } from "vue";
+import { computed, defineAsyncComponent, ref, type Component } from "vue";
 import { ChevronDown } from "lucide-vue-next";
 import CodeBlock from "./CodeBlock.vue";
 
 // Every example is a real SFC in src/docs/examples; the preview runs it and the code shows its exact source.
-const components = import.meta.glob<Component>("../examples/**/*.vue", { eager: true, import: "default" });
+const components = import.meta.glob<Component>(["../examples/**/*.vue", "!../examples/*-editor/**"], { eager: true, import: "default" });
+// Editor examples load on demand so CodeMirror stays out of every other page's bundle.
+const lazyComponents = import.meta.glob<Component>("../examples/*-editor/**/*.vue", { import: "default" });
 const sources = import.meta.glob<string>("../examples/**/*.vue", { eager: true, query: "?raw", import: "default" });
 
 const props = withDefaults(defineProps<{ name: string; center?: boolean; padded?: boolean }>(), {
@@ -13,7 +15,10 @@ const props = withDefaults(defineProps<{ name: string; center?: boolean; padded?
 });
 
 const key = computed(() => `../examples/${props.name}.vue`);
-const component = computed(() => components[key.value]);
+const component = computed(() => {
+  const lazy = lazyComponents[key.value];
+  return lazy ? defineAsyncComponent(lazy) : components[key.value];
+});
 const expanded = ref(false);
 const COLLAPSE_AT = 16;
 

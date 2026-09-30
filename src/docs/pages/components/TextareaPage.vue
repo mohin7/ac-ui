@@ -17,7 +17,7 @@ const dos = [
 const donts = [
   "Don't use a textarea for a single value like a name or URL — use Input.",
   "Don't turn on `autoResize` without `max-rows` in a short form; a long paste would push the footer off screen.",
-  "Don't use it as a code editor for large YAML; use the editor component for syntax highlighting and validation.",
+  "Don't use it for manifests or long YAML; use Code Editor, which highlights syntax and checks the YAML as you type.",
 ];
 </script>
 

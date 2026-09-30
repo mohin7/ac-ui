@@ -8,6 +8,8 @@ export interface DocPage {
   group?: string;
   /** Component name in src/lib, for the API tables and the "Copy import" button. */
   component?: string;
+  /** Module the component is imported from, when it isn't the main entry. */
+  importFrom?: string;
   /** Source file shown in the page header. */
   source?: string;
   badge?: string;
@@ -245,6 +247,16 @@ export const pages: DocPage[] = [
     group: "Form",
     component: "AcTextarea",
     load: () => import("./pages/components/TextareaPage.vue"),
+  },
+  {
+    path: "/components/code-editor",
+    title: "Code Editor",
+    description: "YAML, JSON and script editing with validation, a JSON Schema check and a changes view.",
+    section: "Components",
+    group: "Form",
+    component: "AcCodeEditor",
+    importFrom: "@/lib/editor",
+    load: () => import("./pages/components/CodeEditorPage.vue"),
   },
   {
     path: "/components/select",

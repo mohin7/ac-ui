@@ -56,6 +56,10 @@ const rows = [
   ["AcPagination", 'hide-rows-per-page-selection', 'hide-page-size'],
   ["AcInfoTable", ':table-headers + #slot-0…', ':items="[{ key, label, value }]" + #value-<key>'],
   ["AcInfoTable", '<multi-info-table> / <DetailCard :fields>', ':columns="2" / title layout="stacked"'],
+  ["AcCodeEditor", '<Editor v-model :original-value :editor-height="40" :read-only>', 'v-model :original height="40vh" readonly, from @appscode/design-system/editor'],
+  ["AcCodeEditor", '<LightweightEditor :schema @validation-error> / <MonacoEditor :diff-editor>', ':schema @validate / readonly :original diff-layout="split"'],
+  ["AcCodeEditor", '<JsonShowModal :editor-content>', '<AcModal> + <AcCodeEditor language="json" readonly>'],
+  ["AcSkeleton", '<EditorLoader />', 'shape="editor"'],
   ["AcEmptyState", '<Banner> error block / <EmptyTableInfo />', 'variant="error" title description / size="small"'],
   ["AcBanner", 'Banner as an announcement', 'color title action-label action-href dismissible'],
   ["AcSidebar", '<Sidebar> + #sidebar-header / #sidebar-body / #sidebar-footer', '<AcSidebar dark> + #header / default / #footer'],
@@ -138,8 +142,9 @@ const utils = `<!-- before (Bulma + AppsCode utilities) -->
     <li>Toasts no longer need vue-toastification: mount <code class="prose-code">&lt;AcToaster /&gt;</code> once and call <code class="prose-code">useToast()</code>.</li>
   </ul>
   <Callout type="note">
-    Every commonly used component is ported (56, counting sub-parts). Domain cards (StatCard, UsageCard, DbCard…),
-    the code editor and specialised widgets such as MachineProfile and ScalingRules are not: keep importing those from
-    the old <code class="prose-code">@appscode/design-system</code> 2.x until they're needed.
+    Every commonly used component is ported (57, counting sub-parts, plus the code editor). Domain cards (StatCard, UsageCard, DbCard…),
+    the multi-file editors (FilteredFileEditor, ResourceKeyValueEditor) and specialised widgets such as MachineProfile and ScalingRules are not:
+    keep importing those from the old <code class="prose-code">@appscode/design-system</code> 2.x until they're needed.
+    <RouterLink to="/components/code-editor#migration">Code Editor</RouterLink> lists every old editor prop.
   </Callout>
 </template>

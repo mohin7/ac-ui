@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { Check, ChevronRight, Code, Copy } from "lucide-vue-next";
 import type { DocPage } from "../nav";
 import { useCopy } from "../composables/useCopy";
 
 const props = defineProps<{ page: DocPage }>();
 const { copied, copy } = useCopy();
-const copyImport = () => copy(`import { ${props.page.component} } from "@/lib";`);
+const importLine = computed(() => `import { ${props.page.component} } from "${props.page.importFrom ?? "@/lib"}"`);
+const copyImport = () => copy(`${importLine.value};`);
 </script>
 
 <template>
@@ -37,7 +39,7 @@ const copyImport = () => copy(`import { ${props.page.component} } from "@/lib";`
         {{ page.source }}
       </span>
       <span class="inline-flex h-6 items-center rounded-6 border border-border bg-surface-muted px-2 font-mono text-[11.5px] text-label">
-        import { {{ page.component }} } from "@/lib"
+        {{ importLine }}
       </span>
     </div>
   </header>

@@ -17,7 +17,7 @@ const donts = ["Don't show a skeleton for under about 300ms — it flashes. Dela
   <ComponentPlayground
     tag="AcSkeleton"
     :component="AcSkeleton"
-    :controls="[{'prop': 'shape', 'type': 'select', 'options': ['text', 'circle', 'rect', 'table', 'card', 'info-card']}, {'prop': 'lines', 'type': 'select', 'options': [1, 2, 3, 5]}, {'prop': 'rows', 'type': 'select', 'options': [3, 5, 8]}, {'prop': 'cols', 'type': 'select', 'options': [3, 4, 6]}, {'prop': 'width', 'type': 'text'}, {'prop': 'height', 'type': 'text'}]"
+    :controls="[{'prop': 'shape', 'type': 'select', 'options': ['text', 'circle', 'rect', 'table', 'card', 'info-card', 'editor']}, {'prop': 'lines', 'type': 'select', 'options': [1, 2, 3, 5]}, {'prop': 'rows', 'type': 'select', 'options': [3, 5, 8]}, {'prop': 'cols', 'type': 'select', 'options': [3, 4, 6]}, {'prop': 'width', 'type': 'text'}, {'prop': 'height', 'type': 'text'}]"
     :initial="{'shape': 'text', 'lines': 3, 'rows': 5, 'cols': 4, 'width': '', 'height': ''}"
     :defaults="{'shape': 'text', 'lines': 1, 'rows': 5, 'cols': 4, 'width': '', 'height': ''}"
   />
@@ -35,13 +35,15 @@ const donts = ["Don't show a skeleton for under about 300ms — it flashes. Dela
   <DocHeading id="cards" :level="3">Cards</DocHeading>
   <p><code class="prose-code">info-card</code> stands in for an overview card (icon, title, two key–value rows); <code class="prose-code">card</code> for a card with a title and a paragraph. Both bring their own border and surface.</p>
   <ComponentExample name="skeleton/SkeletonCards" />
+  <DocHeading id="editor" :level="3">Editor</DocHeading>
+  <p><code class="prose-code">shape="editor"</code> draws a line-number gutter and indented lines, 320px tall like <RouterLink to="/components/code-editor">Code Editor</RouterLink>. Show it while the editor's code downloads; set <code class="prose-code">height</code> to match the editor.</p>
   <DocHeading id="composed" :level="3">Composed layouts</DocHeading>
-  <p>Build anything else from lines and rects — here an editor with a file tree, which replaces the old <code class="prose-code">EditorLoader</code> and <code class="prose-code">SidebarLoader</code>.</p>
+  <p>Build anything else from lines and rects — here an editor with a file tree, which replaces the old <code class="prose-code">SidebarLoader</code>.</p>
   <ComponentExample name="skeleton/SkeletonComposed" />
   <DocHeading id="swap" :level="3">Swapping in content</DocHeading>
   <p>Render the skeleton while loading, then the real content in the same box, so nothing moves.</p>
   <ComponentExample name="skeleton/SkeletonSwap" />
-  <Callout type="tip">Replacing an old loader: <code class="prose-code">ResourceLoader</code> → <code class="prose-code">shape="table"</code>, <code class="prose-code">InfoCardLoader</code> and <code class="prose-code">SingleInfoCardLoader</code> → <code class="prose-code">shape="info-card"</code>, <code class="prose-code">ClusterSwitcherLoader</code> → <code class="prose-code">shape="rect" height="30px"</code>, <code class="prose-code">SidebarLoader</code> and <code class="prose-code">EditorLoader</code> → compose lines as above.</Callout>
+  <Callout type="tip">Replacing an old loader: <code class="prose-code">ResourceLoader</code> → <code class="prose-code">shape="table"</code>, <code class="prose-code">InfoCardLoader</code> and <code class="prose-code">SingleInfoCardLoader</code> → <code class="prose-code">shape="info-card"</code>, <code class="prose-code">ClusterSwitcherLoader</code> → <code class="prose-code">shape="rect" height="30px"</code>, <code class="prose-code">EditorLoader</code> → <code class="prose-code">shape="editor"</code>, <code class="prose-code">SidebarLoader</code> → compose lines as above.</Callout>
 
   <DocHeading id="guidelines">Guidelines</DocHeading>
   <DoDont :dos="dos" :donts="donts" />

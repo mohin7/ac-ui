@@ -12,6 +12,7 @@
  *   import "@fontsource-variable/geist"; import "@fontsource-variable/geist-mono";
  */
 @source "./components";
+@source "./editor";
 /* Dark mode is class-based: `.dark` (new) or `.is-dark-theme` (the old library's class) on <html> or any subtree. */
 @custom-variant dark (&:where(.dark, .dark *, .is-dark-theme, .is-dark-theme *));
 :root {

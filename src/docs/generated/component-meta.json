@@ -643,6 +643,163 @@
     ],
     "slots": []
   },
+  "AcCodeEditor": {
+    "props": [
+      {
+        "name": "language",
+        "type": "EditorLanguage | undefined",
+        "default": "\"yaml\"",
+        "required": false,
+        "description": "`yaml`, `json`, `shell` for install scripts, or `text` for plain text."
+      },
+      {
+        "name": "original",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "The saved version to compare against. Adds an Edit / Changes switch; with `readonly` only the diff shows."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Text can be selected, searched and copied but not changed."
+      },
+      {
+        "name": "height",
+        "type": "string | undefined",
+        "default": "\"320px\"",
+        "required": false,
+        "description": "Any CSS height, e.g. `320px` or `60vh`. `auto` grows with the content up to `max-height`."
+      },
+      {
+        "name": "maxHeight",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Where an `auto` editor stops growing and scrolls."
+      },
+      {
+        "name": "schema",
+        "type": "object | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "JSON Schema that YAML or JSON is checked against, e.g. a CRD's `openAPIV3Schema`."
+      },
+      {
+        "name": "validate",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Checks YAML and JSON as you type and underlines problems. Turn off for templates that aren't valid until rendered."
+      },
+      {
+        "name": "wrap",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Wraps long lines instead of scrolling sideways."
+      },
+      {
+        "name": "lineNumbers",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Shows the line-number and fold gutter."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text shown while the editor is empty."
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Header text, usually the file name."
+      },
+      {
+        "name": "copyable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a copy button to the header."
+      },
+      {
+        "name": "diffLayout",
+        "type": "\"unified\" | \"split\" | undefined",
+        "default": "\"unified\"",
+        "required": false,
+        "description": "`unified` shows changes in one column; `split` puts the saved version on the left."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Accessible name for the text area when there's no `title`, e.g. \"Custom values\"."
+      },
+      {
+        "name": "bordered",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Draws the border and rounded corners. Turn off inside a card or modal body that has its own."
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "view",
+        "type": "\"edit\" | \"changes\" | undefined",
+        "default": "\"edit\"",
+        "required": false,
+        "description": "Which pane shows when `original` is set: `edit` or `changes`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]",
+        "signature": "(event: \"update:modelValue\", value: string): void"
+      },
+      {
+        "name": "validate",
+        "type": "[problems: EditorProblem[]]",
+        "signature": "(event: \"validate\", problems: EditorProblem[]): void"
+      },
+      {
+        "name": "update:view",
+        "type": "[value: \"edit\" | \"changes\"]",
+        "signature": "(event: \"update:view\", value: \"edit\" | \"changes\"): void"
+      },
+      {
+        "name": "focus",
+        "type": "[]",
+        "signature": "(event: \"focus\"): void"
+      },
+      {
+        "name": "blur",
+        "type": "[]",
+        "signature": "(event: \"blur\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Buttons at the right of the header, e.g. a YAML/JSON switch or Reset."
+      }
+    ]
+  },
   "AcContentHeader": {
     "props": [
       {
@@ -1599,7 +1756,7 @@
       },
       {
         "name": "type",
-        "type": "\"number\" | \"search\" | \"text\" | \"password\" | \"email\" | \"url\" | undefined",
+        "type": "\"number\" | \"text\" | \"search\" | \"password\" | \"email\" | \"url\" | undefined",
         "default": "\"text\"",
         "required": false,
         "description": "Native input type. `password` adds a show/hide toggle."
@@ -2787,10 +2944,10 @@
     "props": [
       {
         "name": "shape",
-        "type": "\"circle\" | \"text\" | \"rect\" | \"table\" | \"card\" | \"info-card\" | undefined",
+        "type": "\"circle\" | \"text\" | \"editor\" | \"rect\" | \"table\" | \"card\" | \"info-card\" | undefined",
         "default": "\"text\"",
         "required": false,
-        "description": "`text` lines, a `circle` or `rect`, or a preset: `table`, `card`, `info-card`."
+        "description": "`text` lines, a `circle` or `rect`, or a preset: `table`, `card`, `info-card`, `editor`."
       },
       {
         "name": "lines",
@@ -2825,7 +2982,7 @@
         "type": "string | undefined",
         "default": "\"\"",
         "required": false,
-        "description": "CSS height of a `rect`, the diameter of a `circle`, or the height of each `text` line."
+        "description": "CSS height of a `rect` or `editor` (default `320px`, like AcCodeEditor), the diameter of a `circle`, or the height of each `text` line."
       },
       {
         "name": "label",
