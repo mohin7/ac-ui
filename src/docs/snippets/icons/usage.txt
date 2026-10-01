@@ -1,0 +1,16 @@
+<script setup lang="ts">
+import { Database, Plus } from "lucide-vue-next";
+import { AcButton } from "@appscode/design-system";
+</script>
+
+<template>
+  <!-- Decorative: the text already says what it is -->
+  <AcButton title="Create Database">
+    <template #icon><Plus class="size-4" /></template>
+  </AcButton>
+
+  <!-- Icon-only: needs a label -->
+  <button type="button" aria-label="Open databases">
+    <Database class="size-4" aria-hidden="true" />
+  </button>
+</template>

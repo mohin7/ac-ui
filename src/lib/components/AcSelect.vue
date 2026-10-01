@@ -425,6 +425,7 @@ defineExpose({
             width: `${placement.width}px`,
             maxHeight: `${placement.maxHeight}px`,
           }"
+          data-testid="ac-select-panel"
         >
           <div v-if="searchable" class="border-b border-border-light p-1.5">
             <div class="relative">

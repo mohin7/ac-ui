@@ -12,7 +12,8 @@ The guide to this codebase for coding agents and for people. Read it before chan
 - **Package:** `@appscode/design-system` 3.0.0-alpha, `"private": true`. It has three entries:
   - `.`: components, composables and types.
   - `./editor`: `AcCodeEditor` and `AcFileEditor`, which pull in CodeMirror.
-  - `./theme.css`
+  - `./theme.css`: tokens for apps that run Tailwind v4.
+  - `./compat.css`: precompiled, fenced-in styles for apps that still load the old Bulma/SCSS library. See "compat.css" below.
 - **Status:** every component the apps import from the old library has a replacement. The docs' Migration page (`src/docs/pages/getting-started/MigrationPage.vue`) holds the old → new mapping, about 115 rows.
   - Not ported, on purpose: MachineProfile, ScalingRules, NodeSelection, Inbox, ConfigSecret, and the recovery timeline charts.
 
@@ -23,7 +24,7 @@ npm run dev          # gen API data, then docs at http://localhost:5173 (.claude
 npm run type-check   # vue-tsc --build --force — must be clean
 npm run meta         # regenerate src/docs/generated/component-meta.json (API tables)
 npm run build        # meta + type-check + docs build into dist/
-npm run build:lib    # library into dist/lib (ES modules, .d.ts, theme.css)
+npm run build:lib    # library into dist/lib (ES modules, .d.ts, theme.css, compat.css)
 ```
 
 There are no tests, ESLint or Prettier config yet. The bar for every change:
@@ -48,10 +49,12 @@ src/docs/                     the docs site (never published)
   nav.ts                      every page: { path, title, description, section, group?, component?, importFrom?, load }
   pages/<section>/XPage.vue   one page per nav entry
   examples/<slug>/Name.vue    one runnable example per file; the docs render it and show its source
+  snippets/<page>/*.txt       code samples shown on pages, imported with ?raw
   components/                 ComponentPlayground, ComponentExample, ApiTables, DoDont, Callout, DocHeading, CodeBlock, InlineMd
   layout/                     header, sidebar, TOC, search, page header
   generated/component-meta.json   written by scripts/gen-meta.mjs — never edit by hand
 scripts/gen-meta.mjs          vue-component-meta over src/lib/components/*.vue → API tables
+scripts/build-compat.mjs      builds dist/lib/compat.css (see "compat.css")
 vite.lib.config.ts            library build: entries index + editor/index, preserveModules, externals
 ```
 
@@ -78,6 +81,26 @@ vite.lib.config.ts            library build: entries index + editor/index, prese
   - the `themeColor` key and the `HexToHSL` / `setThemeHSL` / `getThemeHSL` names;
   - `AcDeleteConfirmationModal` as an alias;
   - old prop names where they're reasonable.
+
+## compat.css
+
+The AppsCode apps load the old Bulma/SCSS library globally, and it defines the same class names with other meanings: `mt-4` is `4px !important` there. `scripts/build-compat.mjs` compiles the library's Tailwind CSS and fences it in:
+
+- **Scope:** every utility and base rule only matches elements under a `[data-testid^="ac-"]` root.
+- **Specificity:** utilities are `!important` inside `@layer ac-compat`, which beats the old unlayered `!important`.
+- **Roots:** outermost roots get the Geist font and the 20px line height, plus the body colour in dark mode only.
+- **Resets:** a few old element rules (`p`, `td`/`th`, `strong`, `code`, Bulma's `.block` margin) are reset inside components.
+- **Keyframes:** renamed `ac-*`, so they don't clash with the old `spin` and `pulse`.
+
+It was checked in kubedb-ui: old markup is pixel-identical with and without it. The docs page `getting-started/existing-apps` is the user guide.
+
+Every component must keep these rules, or it breaks inside the old apps:
+
+- **Mark every root**, including each element that is the first child of a `<Teleport>`, with `data-testid="ac-…"`. That marker is the scope.
+- **No `rem` in component styles.** Use px, and arbitrary values like `max-w-[320px]`. The old apps set `html { font-size: 13px }`, so rem values shrink by a fifth there. Container sizes are already px in theme.css.
+- **No `v-show` on an element with a display utility** (`flex`, `grid`, `block`…). Under compat the `!important` utility beats `v-show`'s inline `display: none`. Toggle classes instead: `:class="open ? 'flex' : 'hidden'"`.
+- **No inline `:style` for a property a utility on the same element also sets** (e.g. `w-full` with a `width` style). The `!important` utility would win.
+- **State alignment explicitly** on `th` (`text-left`) and other elements where the old CSS changes the browser default.
 
 ## Component pattern
 
@@ -202,7 +225,8 @@ Each component page is `src/docs/pages/components/XPage.vue`, registered in `nav
 **Pages:**
 
 - **Imports:** a component outside the main entry sets `importFrom` in `nav.ts` and `import-from` on the playground, e.g. `"@/lib/editor"`.
-- **Inline code:** in prose, use `<code class="prose-code">`, and escape `<` as `&lt;`. Inside a JS string in an SFC, write `<\/script>`.
+- **Inline code:** in prose, use `<code class="prose-code">`, and escape `<` as `&lt;`.
+- **Code samples:** a sample with `import` lines or a `<script>` tag goes in `src/docs/snippets/<page>/<name>.txt`, imported with `?raw`. Vite's dependency scanner reads those lines inside a JS string as real imports, and a failed scan makes the dev server reload pages.
 - **Heading ids:** keep them unique on a page, or the table of contents breaks.
 
 **Examples:**
@@ -244,7 +268,7 @@ Docs, JSDoc, labels and messages all use this voice:
 4. Add examples in `src/docs/examples/<slug>/`, the page in `src/docs/pages/components/`, and the entry in `nav.ts`.
 5. Add Migration page rows (`["AcX", 'old usage', 'new usage']`) in `MigrationPage.vue`.
 6. Run `npm run meta && npm run type-check`.
-7. Check the page in light, dark and at 375px with no console errors. Drive interactive states: open menus, keyboard, focus return.
+7. Check the page in light, dark and at 375px with no console errors. Check the component against the compat.css rules too. Drive interactive states: open menus, keyboard, focus return.
 8. Run `npm run build && npm run build:lib`. On a component-API change, bump `version` in `package.json`, because the apps pin versions.
 
 Browser checks can use headless Chrome when the browser pane isn't visible:
@@ -276,6 +300,7 @@ Add `--force-dark-mode` for dark (the docs follow the system theme), or use `--w
 - **Rebuilding:** don't build a component that already exists. There are 73. Reuse `AcDropdown`, `AcTooltip`, `AcSkeleton`, `AcEmptyState`, `AcSegmentedControl` and the rest.
 - **Breaking changes:** don't change a public prop, slot or event without keeping the old one working and adding a Migration row.
 - **Escape:** don't let an Escape a child handled also close the enclosing modal. Call `preventDefault()`.
+- **compat.css rules:** don't break the rules in "compat.css": roots marked, no `rem`, no `v-show` with display utilities, no inline style fighting a utility.
 - **Repos and releases:**
   - Don't modify the old library repo or the app repos.
   - Don't publish to npm. The package stays `private` until the team decides.
@@ -301,6 +326,11 @@ Readable code comes first; comments are the fallback.
 ## Known gaps
 
 These are worth knowing before you build on top of them:
+
+- **compat.css limits:**
+  - Utility classes an app puts on a new component only work if the library uses them too.
+  - Old markup in a new component's slots gets the new base styles.
+  - Both are documented on the Existing Apps page; wrapping components is the fix.
 
 - **Brand contrast:** white text on the default primary green is 3.7:1. That's below 4.5:1 for 13px text, and documented on the Theming page. Fixing it needs a team decision on `--primary-light`.
 - **AcDatePicker:** no typed date entry, one month at a time, 24-hour time only.

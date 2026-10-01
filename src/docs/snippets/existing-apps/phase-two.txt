@@ -1,0 +1,3 @@
+/* After the old styles are gone: the normal setup, and Tailwind classes everywhere */
+@import "tailwindcss";
+@import "@appscode/ds-next/theme.css";

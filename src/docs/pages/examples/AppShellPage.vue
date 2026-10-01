@@ -3,29 +3,7 @@ import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
 import ComponentExample from "../../components/ComponentExample.vue";
 import DocHeading from "../../components/DocHeading.vue";
-
-const app = `<script setup lang="ts">
-import { ref } from "vue";
-import { AcNavbar, AcSidebar } from "@/lib";
-
-const sidebar = ref<InstanceType<typeof AcSidebar> | null>(null);
-const collapsed = ref(false);
-const menuOpen = ref(false);
-<\/script>
-
-<template>
-  <div class="flex min-h-dvh">
-    <AcSidebar ref="sidebar" v-model:collapsed="collapsed" v-model:mobile-open="menuOpen" dark>
-      <!-- header, sections, items, footer -->
-    </AcSidebar>
-    <div class="flex min-w-0 flex-1 flex-col">
-      <AcNavbar @menu="menuOpen = true"><!-- search, actions --></AcNavbar>
-      <main class="flex-1 bg-surface-muted">
-        <RouterView />
-      </main>
-    </div>
-  </div>
-</template>`;
+import app from "../../snippets/app-shell/app.txt?raw";
 </script>
 
 <template>

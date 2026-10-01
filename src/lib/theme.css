@@ -245,6 +245,22 @@
   /* spacing: 1 unit = 4px, so p-4 = 16px like the source .p-16 */
   --spacing: 4px;
 
+  /* Container sizes in px, not Tailwind's rem: the old apps set html { font-size: 13px },
+     which would shrink every max-w-md and @container breakpoint by a fifth. */
+  --container-3xs: 256px;
+  --container-2xs: 288px;
+  --container-xs: 320px;
+  --container-sm: 384px;
+  --container-md: 448px;
+  --container-lg: 512px;
+  --container-xl: 576px;
+  --container-2xl: 672px;
+  --container-3xl: 768px;
+  --container-4xl: 896px;
+  --container-5xl: 1024px;
+  --container-6xl: 1152px;
+  --container-7xl: 1280px;
+
   /* radius: 6px on controls, 10px on surfaces; the source steps are kept for old classes */
   --radius-2: 2px;
   --radius-4: 4px;

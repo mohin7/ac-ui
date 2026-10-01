@@ -227,11 +227,11 @@ onBeforeUnmount(() => observer?.disconnect());
         />
       </button>
       <ul
-        v-show="open && !rail"
         :id="`${id}-list`"
         ref="list"
         role="list"
-        class="mt-0.5 ml-4.5 flex flex-col gap-0.5 border-l border-border pl-2"
+        class="mt-0.5 ml-4.5 flex-col gap-0.5 border-l border-border pl-2"
+        :class="open && !rail ? 'flex' : 'hidden'"
       >
         <slot />
       </ul>

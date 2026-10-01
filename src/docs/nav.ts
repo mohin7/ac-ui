@@ -36,6 +36,13 @@ export const pages: DocPage[] = [
     load: () => import("./pages/getting-started/InstallationPage.vue"),
   },
   {
+    path: "/getting-started/existing-apps",
+    title: "Existing Apps",
+    description: "Use the new components in apps that still load the old Bulma design system, then finish the move.",
+    section: "Getting Started",
+    load: () => import("./pages/getting-started/ExistingAppsPage.vue"),
+  },
+  {
     path: "/getting-started/theming",
     title: "Theming",
     description: "How tokens map to Tailwind utilities, and how to re-hue the brand at runtime.",

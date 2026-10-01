@@ -58,7 +58,7 @@ const lineWidths = computed(() => {
     :aria-busy="label ? 'true' : undefined"
     :aria-hidden="!label || undefined"
     class="max-w-full"
-    :class="shape === 'circle' ? 'shrink-0' : 'w-full'"
+    :class="shape === 'circle' ? 'shrink-0' : !rootStyle?.width && 'w-full'"
     :style="rootStyle"
     data-testid="ac-skeleton"
   >

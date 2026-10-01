@@ -55,7 +55,13 @@ const rail = computed(() => sidebar?.rail.value ?? false);
       </button>
       <p v-else class="h-7 truncate px-2.5 text-sm leading-7 font-medium tracking-wider text-muted uppercase">{{ label }}</p>
     </template>
-    <ul v-show="open || rail || !collapsible" :id="`${id}-items`" role="list" :aria-label="label || undefined" class="flex flex-col gap-0.5">
+    <ul
+      :id="`${id}-items`"
+      role="list"
+      :aria-label="label || undefined"
+      class="flex-col gap-0.5"
+      :class="open || rail || !collapsible ? 'flex' : 'hidden'"
+    >
       <slot />
     </ul>
   </li>

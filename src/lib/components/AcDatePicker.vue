@@ -793,6 +793,7 @@ defineExpose({
             left: `${placement.left}px`,
             maxHeight: `${placement.maxHeight}px`,
           }"
+          data-testid="ac-date-picker-panel"
           @keydown="onPanelKeydown"
         >
           <!-- presets -->

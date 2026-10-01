@@ -404,7 +404,7 @@ defineExpose({
                 >
                   {{ col.label }}
                 </th>
-                <th v-if="hasActionsColumn" scope="col" class="h-8 w-px border-b border-border bg-surface-muted px-3">
+                <th v-if="hasActionsColumn" scope="col" class="h-8 w-px border-b border-border bg-surface-muted px-3 text-right">
                   <span class="sr-only">Actions</span>
                 </th>
               </tr>

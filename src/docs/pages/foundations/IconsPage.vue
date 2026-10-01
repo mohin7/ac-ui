@@ -105,6 +105,9 @@ import CodeBlock from "../../components/CodeBlock.vue";
 import DocHeading from "../../components/DocHeading.vue";
 import DoDont from "../../components/DoDont.vue";
 import { useCopy } from "../../composables/useCopy";
+import usage from "../../snippets/icons/usage.txt?raw";
+import asProp from "../../snippets/icons/as-prop.txt?raw";
+import fallback from "../../snippets/icons/fallback.txt?raw";
 
 const groups = [
   { name: "Actions", icons: { Plus, Pencil, Trash2, Copy, Download, Upload, RefreshCw, RotateCcw, Save, Search, Funnel, Settings, ExternalLink, Link, Share2, Play, Pause, Square, Power, LogIn, LogOut, Undo2, Eye, EyeOff, Ellipsis, EllipsisVertical, X, Check } },
@@ -159,37 +162,6 @@ const sizes = [
 ];
 
 const install = "npm install lucide-vue-next";
-const usage = `<script setup lang="ts">
-import { Database, Plus } from "lucide-vue-next";
-import { AcButton } from "@appscode/design-system";
-<\/script>
-
-<template>
-  <!-- Decorative: the text already says what it is -->
-  <AcButton title="Create Database">
-    <template #icon><Plus class="size-4" /></template>
-  </AcButton>
-
-  <!-- Icon-only: needs a label -->
-  <button type="button" aria-label="Open databases">
-    <Database class="size-4" aria-hidden="true" />
-  </button>
-</template>`;
-const asProp = `<script setup lang="ts">
-import { Database } from "lucide-vue-next";
-<\/script>
-
-<template>
-  <!-- Components that show an icon take the component itself, not a name string -->
-  <AcSidebarItem label="Databases" :icon="Database" to="/databases" />
-</template>`;
-const fallback = `// vite.config.ts — only when Lucide has no icon, or for brand logos
-import Icons from "unplugin-icons/vite";
-export default defineConfig({ plugins: [vue(), tailwindcss(), Icons({ compiler: "vue3" })] });
-
-// npm install -D unplugin-icons @iconify-json/ph @iconify-json/simple-icons
-import IconPhCrosshair from "~icons/ph/crosshair";
-import IconSimpleIconsGithub from "~icons/simple-icons/github";`;
 
 const dos = ["Use size-4 next to 13px text and let the icon inherit the text colour.", "Give every icon-only button an aria-label."];
 const donts = ["Don't mix icon sets for the same concept on one screen.", "Don't draw new SVGs in components — pick a Lucide icon, or add a Phosphor one if Lucide has nothing."];

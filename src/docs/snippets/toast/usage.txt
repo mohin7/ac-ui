@@ -1,0 +1,12 @@
+import { useToast } from "@/lib";
+
+const { success, error } = useToast();
+
+async function createDatabase() {
+  try {
+    await api.create(spec);
+    success("Database created", { description: `${spec.name} is provisioning.` });
+  } catch (e) {
+    error("Couldn't create the database", { description: messageOf(e), duration: 0 });
+  }
+}

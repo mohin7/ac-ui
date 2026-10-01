@@ -73,7 +73,7 @@ const actionColor = computed(() => (props.color === "neutral" ? "white" : props.
       <slot name="icon"><component :is="glyph" /></slot>
     </span>
     <div class="flex min-w-0 flex-1 flex-wrap items-center gap-x-4 gap-y-2">
-      <div class="min-w-0 flex-[1_1_16rem]">
+      <div class="min-w-0 flex-[1_1_256px]">
         <p v-if="title" class="font-semibold" :class="tone.title">{{ title }}</p>
         <div :class="title && 'mt-0.5'"><slot /></div>
       </div>

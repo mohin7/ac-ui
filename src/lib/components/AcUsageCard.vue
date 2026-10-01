@@ -255,7 +255,7 @@ function onClick(e: MouseEvent) {
               :key="i"
               scope="col"
               class="h-9 px-4 font-medium whitespace-nowrap"
-              :class="i > 0 && 'text-right'"
+              :class="i > 0 ? 'text-right' : 'text-left'"
             >
               {{ h }}
             </th>

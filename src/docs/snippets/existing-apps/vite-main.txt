@@ -1,0 +1,5 @@
+// src/main.ts: the old styles first, then the fonts and compat.css
+import "./assets/styles/scss/main.scss";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import "@appscode/ds-next/compat.css";

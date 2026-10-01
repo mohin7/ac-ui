@@ -1,0 +1,8 @@
+<script setup lang="ts">
+import { AcThemeMode } from "@appscode/design-system";
+</script>
+
+<template>
+  <!-- Anywhere in the app: navbar, user menu or settings -->
+  <AcThemeMode default-mode="system" />
+</template>

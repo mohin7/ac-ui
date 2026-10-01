@@ -1,0 +1,8 @@
+import { useBrandColor } from "@appscode/design-system";
+
+// persist: saves to localStorage("themeColor"), the key the old apps used, and restores it on first use
+const { color, contrast, isReadable, setColor, reset } = useBrandColor({ persist: true });
+
+setColor("#1971bd");                          // re-hue every primary step
+setColor(customer.brand, { ensureContrast: true }); // darken until white text reaches 4.5:1
+reset();                                      // back to the theme's default

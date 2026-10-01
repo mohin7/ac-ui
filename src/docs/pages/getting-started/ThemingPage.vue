@@ -3,6 +3,8 @@ import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
 import ComponentExample from "../../components/ComponentExample.vue";
 import DocHeading from "../../components/DocHeading.vue";
+import brand from "../../snippets/theming/brand.txt?raw";
+import legacy from "../../snippets/theming/legacy.txt?raw";
 
 const mapping = [
   ["Colour scales", "bg-primary-95, text-red-10, border-blue-50", "$primary-95, $red-10, $blue-50"],
@@ -22,20 +24,6 @@ const root = document.documentElement.style;
 root.setProperty("--primary-hue", "208");
 root.setProperty("--primary-saturation", "77%");
 root.setProperty("--primary-light", "40%");`;
-
-const brand = `import { useBrandColor } from "@appscode/design-system";
-
-// persist: saves to localStorage("themeColor"), the key the old apps used, and restores it on first use
-const { color, contrast, isReadable, setColor, reset } = useBrandColor({ persist: true });
-
-setColor("#1971bd");                          // re-hue every primary step
-setColor(customer.brand, { ensureContrast: true }); // darken until white text reaches 4.5:1
-reset();                                      // back to the theme's default`;
-
-const legacy = `// Before
-import { HexToHSL, HSLToHex, getThemeHSL, setThemeHSL } from "@appscode/design-system/plugins/theme";
-// After: same names and return shapes, so only the path changes
-import { HexToHSL, HSLToHex, getThemeHSL, setThemeHSL } from "@appscode/design-system";`;
 
 const ranges = [
   ["Violets, purples (240–300)", "up to ~55%"],

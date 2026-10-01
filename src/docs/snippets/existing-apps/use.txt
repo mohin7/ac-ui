@@ -1,0 +1,7 @@
+<script setup lang="ts">
+import { defineAsyncComponent } from "vue";
+import { AcStatCard, AcTable } from "@appscode/ds-next";
+
+// The editor brings CodeMirror, so load it only where it's shown
+const AcCodeEditor = defineAsyncComponent(() => import("@appscode/ds-next/editor").then((m) => m.AcCodeEditor));
+</script>

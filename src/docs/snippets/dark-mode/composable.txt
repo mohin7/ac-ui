@@ -1,0 +1,4 @@
+import { useColorMode } from "@appscode/design-system";
+
+const { mode, isDark, setMode } = useColorMode({ defaultMode: "system" });
+setMode("dark"); // "light" | "dark" | "system"

@@ -5,28 +5,8 @@ import CodeBlock from "../../components/CodeBlock.vue";
 import ComponentExample from "../../components/ComponentExample.vue";
 import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
-
-const setup = `<script setup lang="ts">
-import { AcToaster } from "@/lib";
-<\/script>
-
-<template>
-  <RouterView />
-  <AcToaster />
-</template>`;
-
-const usage = `import { useToast } from "@/lib";
-
-const { success, error } = useToast();
-
-async function createDatabase() {
-  try {
-    await api.create(spec);
-    success("Database created", { description: \`\${spec.name} is provisioning.\` });
-  } catch (e) {
-    error("Couldn't create the database", { description: messageOf(e), duration: 0 });
-  }
-}`;
+import setup from "../../snippets/toast/setup.txt?raw";
+import usage from "../../snippets/toast/usage.txt?raw";
 
 const api = `const { toast, success, error, warning, info, dismiss, clear } = useToast();
 

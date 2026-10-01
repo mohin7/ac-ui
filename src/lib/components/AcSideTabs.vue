@@ -462,10 +462,10 @@ onBeforeUnmount(() => {
                     />
                   </button>
                   <ul
-                    v-show="isOpen(item) && !rail"
                     :id="`${id}-${item.key}`"
                     role="list"
-                    class="mt-0.5 ml-4.5 flex flex-col gap-0.5 border-l border-border pl-2"
+                    class="mt-0.5 ml-4.5 flex-col gap-0.5 border-l border-border pl-2"
+                    :class="isOpen(item) && !rail ? 'flex' : 'hidden'"
                   >
                     <li v-for="child in item.children" :key="child.key">
                       <component

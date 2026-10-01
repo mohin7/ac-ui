@@ -124,7 +124,7 @@ defineExpose({
         <!-- With a prefix the label stays raised, so it never sits on top of the prefix text. -->
         <label
           :for="id"
-          class="pointer-events-none absolute -top-px left-2.25 max-w-[calc(100%-1.25rem)] -translate-y-1/2 truncate rounded-2 bg-surface px-1 text-xs font-medium whitespace-nowrap text-label transition-all duration-150 ease-out peer-focus:text-primary-20 peer-read-only:bg-linear-to-b peer-read-only:from-surface peer-read-only:from-50% peer-read-only:to-surface-muted peer-read-only:to-50% peer-disabled:bg-linear-to-b peer-disabled:from-surface peer-disabled:from-50% peer-disabled:to-surface-muted peer-disabled:to-50%"
+          class="pointer-events-none absolute -top-px left-2.25 max-w-[calc(100%-20px)] -translate-y-1/2 truncate rounded-2 bg-surface px-1 text-xs font-medium whitespace-nowrap text-label transition-all duration-150 ease-out peer-focus:text-primary-20 peer-read-only:bg-linear-to-b peer-read-only:from-surface peer-read-only:from-50% peer-read-only:to-surface-muted peer-read-only:to-50% peer-disabled:bg-linear-to-b peer-disabled:from-surface peer-disabled:from-50% peer-disabled:to-surface-muted peer-disabled:to-50%"
           :class="[
             !$slots.prefix &&
               'peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-muted peer-focus:-top-px peer-focus:text-xs peer-focus:font-medium',
