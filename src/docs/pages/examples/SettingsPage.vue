@@ -14,7 +14,7 @@ import DocHeading from "../../components/DocHeading.vue";
 
   <DocHeading id="patterns">Patterns</DocHeading>
   <ul>
-    <li>The navigation is a vertical list when there's room and a select below 672px of width, so the page never scrolls sideways.</li>
+    <li>The navigation is a vertical list when there's room and a select below 640px of width (Side Tabs' default breakpoint), so the page never scrolls sideways.</li>
     <li>Save and Discard appear only once the profile has changed. Toggles save as they're flipped, so they need no button.</li>
     <li>A new token is shown exactly once, with a copy button and a warning. The table only ever shows its prefix.</li>
     <li>Revoking a token asks once; deleting the organisation also asks for its name to be typed.</li>
@@ -22,6 +22,7 @@ import DocHeading from "../../components/DocHeading.vue";
 
   <DocHeading id="uses">Components used</DocHeading>
   <ul>
+    <li><RouterLink to="/components/side-tabs">Side Tabs</RouterLink> for the section list, which turns into a select on phones</li>
     <li><RouterLink to="/components/avatar">Avatar</RouterLink>, <RouterLink to="/components/file-upload">FileUpload</RouterLink> (small), <RouterLink to="/components/input">Input</RouterLink> and <RouterLink to="/components/form">Form</RouterLink> with a FormFooter for the profile</li>
     <li><RouterLink to="/components/theme-mode">ThemeMode</RouterLink> with labels for appearance</li>
     <li><RouterLink to="/components/section">SectionContent</RouterLink> and <RouterLink to="/components/switch">Switch</RouterLink> rows for notifications</li>

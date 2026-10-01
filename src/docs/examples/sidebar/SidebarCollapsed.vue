@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Activity, Database, DatabaseBackup, LayoutDashboard, Settings } from "lucide-vue-next";
-import { AcSidebar, AcSidebarItem, AcSidebarSection } from "@/lib";
+import { AcLogo, AcSidebar, AcSidebarItem, AcSidebarSection } from "@/lib";
 
 const collapsed = ref(true);
 const current = ref("overview");
@@ -12,7 +12,7 @@ const current = ref("overview");
     <AcSidebar v-model:collapsed="collapsed" contained :breakpoint="0">
       <template #header="{ collapsed: rail }">
         <span class="flex items-center gap-2.5">
-          <img src="/logos/appscode-mark.png" alt="" class="size-6 rounded-6" />
+          <AcLogo variant="mark" label="" />
           <span v-if="!rail" class="text-lg font-semibold text-heading">KubeDB</span>
         </span>
       </template>

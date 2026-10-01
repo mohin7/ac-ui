@@ -8,8 +8,8 @@ import DocHeading from "../../components/DocHeading.vue";
 
 const script = "import { ref } from \"vue\";\n\nconst value = ref(\"\");";
 
-const dos = ["Use short Title Case labels: “Database Name”, “Namespace”.", "Put format rules in `hint`, not in the label.", "Show one clear error message per field."];
-const donts = ["Don't use the label as instructions.", "Don't disable a field without saying why.", "Don't show errors before the user has typed or submitted."];
+const dos = ["Use short Title Case labels: “Database Name”, “Namespace”.", "Put format rules in `hint`, not in the label.", "Show one clear error message per field.", "Use a suffix for a fixed unit (`Gi`, `%`) so people type only the number."];
+const donts = ["Don't use the label as instructions.", "Don't disable a field without saying why.", "Don't show errors before the user has typed or submitted.", "Don't attach more than one button; move extra actions next to the field."];
 </script>
 
 <template>
@@ -45,6 +45,20 @@ const donts = ["Don't use the label as instructions.", "Don't disable a field wi
   <DocHeading id="sizes" :level="3">Size</DocHeading>
   <p><code class="prose-code">small</code> (36px) is the default in forms; <code class="prose-code">normal</code> (44px) for spacious layouts.</p>
   <ComponentExample name="input/InputSizes" />
+  <DocHeading id="prefix-suffix" :level="3">Prefix and suffix</DocHeading>
+  <p>
+    The <code class="prose-code">#prefix</code> and <code class="prose-code">#suffix</code> slots put fixed text or a
+    16px icon inside the field. With a prefix, the label stays raised so it never covers the prefix.
+  </p>
+  <ComponentExample name="input/InputPrefixSuffix" />
+  <DocHeading id="addon" :level="3">Attached button</DocHeading>
+  <p>
+    <code class="prose-code">addon-label</code> attaches a button to the right edge that emits
+    <code class="prose-code">addon</code>: Generate, Copy, Browse. Add <code class="prose-code">addon-icon</code> for an
+    icon and <code class="prose-code">addon-icon-only</code> to hide the text. The button stays active on read-only
+    fields, so Copy works there.
+  </p>
+  <ComponentExample name="input/InputAddon" />
   <DocHeading id="form" :level="3">In a form</DocHeading>
   <p>A complete form with validation on submit.</p>
   <ComponentExample name="input/InputForm" />
@@ -57,6 +71,8 @@ const donts = ["Don't use the label as instructions.", "Don't disable a field wi
     <li>The label is a real <code class="prose-code">&lt;label for&gt;</code>, so clicking it focuses the input.</li>
     <li><code class="prose-code">error-msg</code> sets <code class="prose-code">aria-invalid</code> and links the message with <code class="prose-code">aria-describedby</code>.</li>
     <li>The password toggle is a button with an <code class="prose-code">aria-label</code>.</li>
+    <li>Prefix and suffix content is not part of the accessible name. If the unit matters, say it in the label or hint too.</li>
+    <li>The attached button is a real <code class="prose-code">&lt;button&gt;</code> after the input in tab order. With <code class="prose-code">addon-icon-only</code>, <code class="prose-code">addon-label</code> becomes its <code class="prose-code">aria-label</code>.</li>
   </ul>
 
   <ApiTables component="AcInput" />
@@ -69,10 +85,12 @@ const donts = ["Don't use the label as instructions.", "Don't disable a field wi
         <tr><th class="h-9 px-4 font-medium">Classes</th><th class="h-9 px-4 font-medium">Used for</th></tr>
       </thead>
       <tbody>
-        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-border / focus:focus-ring</code></td><td class="px-4 py-3">Resting / focused edge (primary border + soft halo)</td></tr>
+        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-border / focus-within:focus-ring</code></td><td class="px-4 py-3">Resting / focused edge (primary border + soft halo)</td></tr>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-red-60 text-red-30</code></td><td class="px-4 py-3">Error</td></tr>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">read-only:bg-surface-muted</code></td><td class="px-4 py-3">Read-only</td></tr>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">h-9 rounded-6 text-base</code></td><td class="px-4 py-3">Small size</td></tr>
+        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">text-muted [&amp;_svg]:size-4</code></td><td class="px-4 py-3">Prefix and suffix</td></tr>
+        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">bg-surface-muted border-border rounded-r-6</code></td><td class="px-4 py-3">Attached button</td></tr>
       </tbody>
     </table>
   </div>

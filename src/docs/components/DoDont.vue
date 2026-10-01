@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Check, X } from "lucide-vue-next";
+import InlineMd from "./InlineMd.vue";
 defineProps<{ dos: string[]; donts: string[] }>();
 </script>
 
@@ -14,7 +15,7 @@ defineProps<{ dos: string[]; donts: string[] }>();
       </p>
       <ul class="space-y-2.5 px-4 py-4">
         <li v-for="d in dos" :key="d" class="flex gap-2.5 text-lg leading-6 text-body">
-          <span class="mt-2.5 size-1 shrink-0 rounded-full bg-success" aria-hidden="true" />{{ d }}
+          <span class="mt-2.5 size-1 shrink-0 rounded-full bg-success" aria-hidden="true" /><span><InlineMd :text="d" /></span>
         </li>
       </ul>
     </div>
@@ -27,7 +28,7 @@ defineProps<{ dos: string[]; donts: string[] }>();
       </p>
       <ul class="space-y-2.5 px-4 py-4">
         <li v-for="d in donts" :key="d" class="flex gap-2.5 text-lg leading-6 text-body">
-          <span class="mt-2.5 size-1 shrink-0 rounded-full bg-danger" aria-hidden="true" />{{ d }}
+          <span class="mt-2.5 size-1 shrink-0 rounded-full bg-danger" aria-hidden="true" /><span><InlineMd :text="d" /></span>
         </li>
       </ul>
     </div>

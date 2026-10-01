@@ -34,5 +34,12 @@ export function useBrandHue() {
     saturation.value = p.saturation;
     light.value = p.light;
   };
-  return { hue, saturation, light, apply };
+  // Other code (useBrandColor on the Theming page) can change the variables, so re-read them before showing the sliders.
+  const sync = () => {
+    const style = getComputedStyle(document.documentElement);
+    const read = (name: string) => parseFloat(style.getPropertyValue(name));
+    const [h, s, l] = [read("--primary-hue"), read("--primary-saturation"), read("--primary-light")];
+    if ([h, s, l].every(Number.isFinite)) apply({ name: "", hue: h, saturation: s, light: l });
+  };
+  return { hue, saturation, light, apply, sync };
 }

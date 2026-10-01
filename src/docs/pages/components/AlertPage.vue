@@ -6,8 +6,8 @@ import ComponentPlayground from "../../components/ComponentPlayground.vue";
 import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
-const dos = ["Say what happened and what to do next.", "Write in sentence case with at most one exclamation mark.", "Put the alert near what it's about — top of the page or form."];
-const donts = ["Don't use an alert for transient success feedback after a click; use a toast.", "Don't stack more than two or three alerts.", "Don't write “Oops!!” — be specific."];
+const dos = ["Say what happened and what to do next.", "Label the action with the verb that fixes it: “Upgrade”, “Retry”.", "Write in sentence case with at most one exclamation mark.", "Put the alert near what it's about — top of the page or form."];
+const donts = ["Don't give an alert more than two buttons; link to a page instead.", "Don't use an alert for transient success feedback after a click; use a toast.", "Don't stack more than two or three alerts.", "Don't write “Oops!!” — be specific."];
 </script>
 
 <template>
@@ -16,9 +16,9 @@ const donts = ["Don't use an alert for transient success feedback after a click;
   <ComponentPlayground
     tag="AcAlert"
     :component="AcAlert"
-    :controls="[{'prop': 'color', 'type': 'select', 'options': ['primary', 'info', 'success', 'warning', 'danger', 'neutral']}, {'prop': 'title', 'type': 'text'}, {'prop': 'dismissible', 'type': 'boolean'}]"
-    :initial="{'color': 'warning', 'title': '', 'dismissible': false}"
-    :defaults="{'color': 'info', 'title': '', 'dismissible': false}"
+    :controls="[{'prop': 'color', 'type': 'select', 'options': ['primary', 'info', 'success', 'warning', 'danger', 'neutral']}, {'prop': 'title', 'type': 'text'}, {'prop': 'actionLabel', 'type': 'text'}, {'prop': 'dismissible', 'type': 'boolean'}, {'prop': 'hideIcon', 'type': 'boolean'}]"
+    :initial="{'color': 'warning', 'title': '', 'actionLabel': '', 'dismissible': false, 'hideIcon': false}"
+    :defaults="{'color': 'info', 'title': '', 'actionLabel': '', 'dismissible': false, 'hideIcon': false}"
     slot-text="You have used 90% of your monthly quota."
   />
 
@@ -36,6 +36,17 @@ const donts = ["Don't use an alert for transient success feedback after a click;
   <p>Links inside the message are underlined in primary. Link to the fix.</p>
   <ComponentExample name="alert/AlertLink" />
 
+  <DocHeading id="action" :level="3">Action</DocHeading>
+  <p>
+    <code class="prose-code">action-label</code> adds a small button on the right that emits
+    <code class="prose-code">action</code>. For more than one button, or your own, use the
+    <code class="prose-code">#actions</code> slot. Actions wrap under the message on narrow screens.
+  </p>
+  <ComponentExample name="alert/AlertAction" />
+  <DocHeading id="icon" :level="3">Icon</DocHeading>
+  <p>Swap the status icon with <code class="prose-code">icon</code> (or the <code class="prose-code">#icon</code> slot), or remove it with <code class="prose-code">hide-icon</code>.</p>
+  <ComponentExample name="alert/AlertIcon" />
+
   <DocHeading id="guidelines">Guidelines</DocHeading>
   <DoDont :dos="dos" :donts="donts" />
 
@@ -44,6 +55,7 @@ const donts = ["Don't use an alert for transient success feedback after a click;
     <li><code class="prose-code">danger</code> and <code class="prose-code">warning</code> use <code class="prose-code">role="alert"</code> (announced immediately); others use <code class="prose-code">role="status"</code>.</li>
     <li>The icon is decorative; the text carries the meaning.</li>
     <li>The close button has <code class="prose-code">aria-label="Dismiss"</code>.</li>
+    <li>Action buttons follow the message in tab order. Their label should make sense alone (“Retry backup”, not “Click here”).</li>
   </ul>
 
   <ApiTables component="AcAlert" />
@@ -59,6 +71,7 @@ const donts = ["Don't use an alert for transient success feedback after a click;
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-yellow-80 bg-yellow-97 text-yellow-20</code></td><td class="px-4 py-3">Warning</td></tr>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-red-90 bg-red-97 text-red-20</code></td><td class="px-4 py-3">Danger</td></tr>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">rounded-10 px-4 py-3</code></td><td class="px-4 py-3">Shape and padding</td></tr>
+        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">AcButton variant="outlined" size="small"</code></td><td class="px-4 py-3">Action, in the alert's colour (<code class="prose-code">white</code> for neutral)</td></tr>
       </tbody>
     </table>
   </div>

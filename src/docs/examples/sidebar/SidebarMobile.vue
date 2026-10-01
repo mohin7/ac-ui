@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Activity, Database, DatabaseBackup, LayoutDashboard, Settings } from "lucide-vue-next";
-import { AcNavbar, AcSidebar, AcSidebarItem, AcSidebarSection } from "@/lib";
+import { AcLogo, AcNavbar, AcSidebar, AcSidebarItem, AcSidebarSection } from "@/lib";
 
 const menuOpen = ref(false);
 const current = ref("postgres");
@@ -13,7 +13,7 @@ const current = ref("postgres");
     <AcSidebar v-model:mobile-open="menuOpen" contained>
       <template #header>
         <span class="flex items-center gap-2.5">
-          <img src="/logos/appscode-mark.png" alt="" class="size-6 rounded-6" />
+          <AcLogo variant="mark" label="" />
           <span class="text-lg font-semibold text-heading">KubeDB</span>
         </span>
       </template>

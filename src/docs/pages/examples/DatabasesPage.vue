@@ -15,6 +15,7 @@ import DocHeading from "../../components/DocHeading.vue";
   <DocHeading id="uses">Components used</DocHeading>
   <ul>
     <li><RouterLink to="/components/button">Button</RouterLink>, <RouterLink to="/components/alert">Alert</RouterLink>, <RouterLink to="/components/card">Card</RouterLink> and <RouterLink to="/components/badge">Badge</RouterLink> for the page frame and status</li>
+    <li><RouterLink to="/components/stat-card">Stat Card</RouterLink> for the summary row</li>
     <li><RouterLink to="/components/tabs">Tabs</RouterLink> and <RouterLink to="/components/table">Table</RouterLink> for the filtered list</li>
     <li><RouterLink to="/components/steps">Steps</RouterLink>, <RouterLink to="/components/input">Input</RouterLink>, <RouterLink to="/components/check-radio">CheckRadio</RouterLink>, <RouterLink to="/components/checkbox">CheckBox</RouterLink> and <RouterLink to="/components/switch">Switch</RouterLink> for the wizard</li>
   </ul>

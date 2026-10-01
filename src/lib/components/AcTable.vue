@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="Row extends Record<string, unknown>">
 import { computed, ref } from "vue";
 import { ArrowUp, ChevronsUpDown } from "lucide-vue-next";
+import AcCellValue from "./AcCellValue.vue";
+import type { CellType, ResourceCell, ResourceColumn } from "./AcCellValue.vue";
 
 export interface Column {
   key: string;
@@ -8,10 +10,14 @@ export interface Column {
   sortable?: boolean;
   align?: "left" | "center" | "right";
   width?: string;
+  /** Shows values with AcCellValue as this type (`auto`, `date`, `labels`, `status`…): dashes for empty values, relative dates, label chips. */
+  type?: CellType;
+  /** A server-side column descriptor. Shows values with AcCellValue; a row value may be a server cell `{ data, link, color }`. */
+  descriptor?: ResourceColumn;
 }
 
 export interface Props<R> {
-  /** Column definitions: `{ key, label, sortable?, align?, width? }`. */
+  /** Column definitions: `{ key, label, sortable?, align?, width?, type?, descriptor? }`. `type` or `descriptor` shows values with AcCellValue. */
   columns: Column[];
   /** Row objects. Each column's `key` is read from the row. */
   rows: R[];
@@ -61,8 +67,16 @@ const sortedRows = computed(() => {
   if (!sortKey.value) return props.rows;
   const k = sortKey.value;
   const dir = sortMode.value === "asc" ? 1 : -1;
-  return [...props.rows].sort((a, b) => String(a[k] ?? "").localeCompare(String(b[k] ?? ""), undefined, { numeric: true }) * dir);
+  return [...props.rows].sort((a, b) => String(sortValue(a[k]) ?? "").localeCompare(String(sortValue(b[k]) ?? ""), undefined, { numeric: true }) * dir);
 });
+
+function isCell(v: unknown): v is ResourceCell {
+  return v !== null && typeof v === "object" && !Array.isArray(v) && "data" in v;
+}
+
+function sortValue(v: unknown) {
+  return isCell(v) ? (v.sort ?? v.data) : v;
+}
 
 const alignClass = (col: Column) => ({ left: "text-left", center: "text-center", right: "text-right" })[col.align ?? "left"];
 </script>
@@ -118,7 +132,17 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
                 class="h-12 border-b border-border-light px-4 whitespace-nowrap text-body tabular-nums group-last:border-0"
                 :class="alignClass(col)"
               >
-                <slot :name="`cell-${col.key}`" :row="row" :value="row[col.key]">{{ row[col.key] }}</slot>
+                <slot :name="`cell-${col.key}`" :row="row" :value="row[col.key]">
+                  <AcCellValue
+                    v-if="col.type || col.descriptor"
+                    :value="isCell(row[col.key]) ? undefined : row[col.key]"
+                    :cell="isCell(row[col.key]) ? (row[col.key] as ResourceCell) : undefined"
+                    :column="col.descriptor"
+                    :type="col.type"
+                    :title="col.label"
+                  />
+                  <template v-else>{{ row[col.key] }}</template>
+                </slot>
               </td>
             </tr>
           </template>

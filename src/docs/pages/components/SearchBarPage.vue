@@ -8,8 +8,8 @@ import DocHeading from "../../components/DocHeading.vue";
 
 const script = "import { ref } from \"vue\";\n\nconst query = ref(\"\");";
 
-const dos = ["Say what's searched in the placeholder: “Search databases”."];
-const donts = ["Don't add a Search button — results update as people type."];
+const dos = ["Say what's searched in the placeholder: “Search databases”.", "Start the filter with an “All …” option so nothing is hidden by default."];
+const donts = ["Don't add a Search button — results update as people type.", "Don't use the filter for more than about eight options; use a filter menu or AcSelect."];
 </script>
 
 <template>
@@ -31,12 +31,21 @@ const donts = ["Don't add a Search button — results update as people type."];
   <p><code class="prose-code">v-model</code> updates on every key; <code class="prose-code">search</code> fires once typing pauses. Set <code class="prose-code">:debounce="0"</code> to emit immediately.</p>
   <ComponentExample name="search-bar/SearchBarBasic" />
 
+  <DocHeading id="filter" :level="3">With a filter</DocHeading>
+  <p>
+    Pass <code class="prose-code">filter-options</code> to attach a filter select, and bind the choice with
+    <code class="prose-code">v-model:filter</code>. It starts on the first option. Name it with
+    <code class="prose-code">filter-label</code>.
+  </p>
+  <ComponentExample name="search-bar/SearchBarFilter" />
+
   <DocHeading id="guidelines">Guidelines</DocHeading>
   <DoDont :dos="dos" :donts="donts" />
 
   <DocHeading id="accessibility">Accessibility</DocHeading>
   <ul>
     <li>Escape clears the text; the clear button is labelled.</li>
+    <li>The filter is a native <code class="prose-code">&lt;select&gt;</code>, so it has the platform's keyboard and screen reader support. <code class="prose-code">filter-label</code> is its accessible name.</li>
   </ul>
 
   <ApiTables component="AcSearchBar" />
@@ -51,6 +60,7 @@ const donts = ["Don't add a Search button — results update as people type."];
       <tbody>
         <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">h-8 rounded-6 border-border shadow-xs</code></td><td class="px-4 py-3">Field</td></tr>
         <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">focus:focus-ring</code></td><td class="px-4 py-3">Focus</td></tr>
+        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">bg-surface-muted rounded-r-6 -ml-px</code></td><td class="px-4 py-3">Attached filter</td></tr>
       </tbody>
     </table>
   </div>

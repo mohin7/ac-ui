@@ -70,6 +70,54 @@ const rows = [
   ["AcNavbarItem", '<NavbarItem> + icon svg / <Notification :unread-notification>', ':icon="Bell" icon-only :badge="n"'],
   ["AcUserMenu", '<User :user :accounts-domain @on-logout show-theme-mode>', ':name :email :avatar-url :logout-url @logout show-theme-mode'],
   ["AcThemeMode", 'ThemeMode @set:theme', 'same event; also useColorMode()'],
+  ["AcFileEditor", "<FilteredFileEditor> / <ResourceKeyValueEditor :preview-yamls> / ui-modules <PreviewYamlEditor>", "<AcFileEditor v-model:files> (from @appscode/design-system/editor)"],
+  ["AcFileEditor", "cluster-ui / kubedb-ui <MultiFileEditor :files :schemas>", "<AcFileEditor v-model:files format-switch>, schema on each file"],
+  ["AcFileEditor", "PreviewYamlType { uid, name, content, initContent, type, isSecret }", "{ name, content, original, language, secret }"],
+  ["AcFileEditor", ":show-hide-btn + atob()/btoa()", "secret: true + encoding: \"base64\" on the file"],
+  ["AcFileEditor", "@active-key / :is-preview-loading / :is-editor-read-only", "v-model:active / loading / readonly"],
+  ["AcCellValue", "<generic-cell :cell-descriptor=\"col\" :cell-value=\"cell\" />", "<AcCellValue :column=\"col\" :cell=\"cell\" :resolve-link=\"fillRouteParams\" />"],
+  ["AcCellValue", "<cell-value :value :cell-title :tooltip :is-loader-active> / <object-cell> / <array-cell>", "<AcCellValue :value :title :tooltip loading> (objects and arrays detected)"],
+  ["AcCellValue", "<value-with-modal> / <json-show-modal>", "built-in { } button opens the JSON in a read-only editor"],
+  ["AcTable", "<table-cell> / <fake-table-cell> with server table descriptors", "columns[].type or columns[].descriptor render cells with AcCellValue"],
+  ["AcCellValue", "types/table AcTableCol / AcTableCell / AcTableRow", "ResourceColumn / ResourceCell / ResourceRow (old names kept as aliases)"],
+  ["AcModal", "<status-modal :status-array v-model:is-modal-open>", "<AcModal v-model:open> + one <AcAlert :color=\"s.type\"> per status"],
+  ["AcFormArray", "<single-step-form-array v-model :table-headers :label :form-label :button-label>", "<AcFormArray v-model :columns label form-title add-label>"],
+  ["AcFormArray", "#create-form + #edit-form, save-new-item / save-edited-item / on-delete-item", "#form=\"{ item, errors, isNew }\", validate, before-save, before-remove"],
+  ["AcFormArray", "is-required / is-collapsible / initially-hidden / is-button-loader-active", "required / collapsible / default-collapsed / loading"],
+  ["AcSlider", "<UsageThreshold v-model title subtitle :min-range :max-range />", "<AcSlider v-model label description :min :max />"],
+  ["AcSlider", "form-builder threshold-input (% bubble + number box)", "<AcSlider v-model unit=\"%\" :marks=\"[0, 50, 100]\" show-input />"],
+  ["AcDatePicker", "<AcInput input-type=\"date\" :min-date placeholder-text>", "<AcDatePicker v-model label :min-date /> (value \"YYYY-MM-DD\")"],
+  ["AcDatePicker", "<AcInput input-type=\"datetime-local\"> + convertToUTC", "<AcDatePicker v-model mode=\"datetime\" time-zone=\"UTC\" /> (value is UTC ISO)"],
+  ["AcDatePicker", "form-builder time-picker / AcDuration / AcDurationNew (\"26h30m\")", "<AcDatePicker v-model mode=\"duration\" :presets />"],
+  ["AcInput", "<AcSingleInput> + #label + <input class=\"ac-input\"> + #error", "<AcInput v-model label=\"\u2026\" :error-msg=\"\u2026\" required />"],
+  ["AcInput", "AcSingleInput #button (Copy / Generate)", "<AcInput addon-label=\"Copy\" :addon-icon=\"Copy\" addon-icon-only @addon=\"copy\" />"],
+  ["AcInput", "AcSingleInput :has-modifier-btn (\u00b1 counter)", "type=\"number\" v-model.number, unit in #suffix"],
+  ["AcAlert", "<AlertBox notification-type=\"error\" :content=\"html\" />", "<AcAlert color=\"danger\"> with sanitized HTML in the default slot"],
+  ["AcAlert", "AlertBox :hide-icon / :action-button=\"{ show, title, iconClass, action }\"", "hide-icon / action-label :action-icon @action"],
+  ["AcAlert", "<AlertMessage modifier-classes=\"is-warning\" :has-cross-icon>", "<AcAlert v-if=\"show\" color=\"warning\" dismissible @close=\"show = false\">"],
+  ["AcAlert", "AlertMessage #buttons / #custom-switch", "#actions slot"],
+  ["AcSearchBar", "<FilterableSearchBar @handle-search>", "<AcSearchBar :debounce=\"0\" @search>"],
+  ["AcSearchBar", "FilterableSearchBar :is-filter :filter-options=\"[{ value, text }]\" @handle-filter", ":filter-options=\"[{ value, label }]\" v-model:filter"],
+  ["useBrandColor", "import { HexToHSL, setThemeHSL, getThemeHSL } from \"@appscode/design-system/plugins/theme\"", "same names from \"@appscode/design-system\"; or useBrandColor({ persist: true }).setColor(hex)"],
+  ["AcEmptyState", "<Message message=\"\u2026\"> + #thumbnail", "<AcEmptyState :title=\"message\" size=\"small\"> + #icon"],
+  ["AcSideTabs", "<SidebarTabsLayout> + #sidebar-tabs <SidebarTabs> + #tabs-content", "<AcSideTabs :items=\"[{ key, label, icon?, to }]\"><RouterView /></AcSideTabs>"],
+  ["AcSideTabs", "router-link :class=\"{ 'is-active' }\" / li.is-open + nested ul / is-disabled / is-danger", "items with to (active follows the route), children, disabled, tone=\"danger\""],
+  ["AcSideTabs", ":is-sidebar-visible=\"false\" / :offset-selectors", "hide-tabs / top=\"56px\" or :offset-selectors"],
+  ["AcStatusBar", "<FooterArea> #footer-left / #footer-right + FooterItems / FooterItem", "<AcStatusBar :items> (align: \"right\") + #left / #right"],
+  ["AcStatusBar", "<Info :info-data> / <Status :status-info> / <Usage :usages>", "items: { label, value, mono } / { label, status } / { label, icon, value, meter }"],
+  ["AcAppSwitcher", "<Appdrawer current-app=\"db\" :base-url :root-domain :active-organization :active-org-type :is-offline-installer />", "<AcAppSwitcher> with the same props; the current app is marked (hide-current for the old behaviour)"],
+  ["AcClusterSwitcher", "<ClusterSwitcher v-model :cluster-options :sidebar-collapsed :mouse-hover />", "<AcClusterSwitcher v-model :cluster-options /> (follows the sidebar rail; mouse-hover dropped)"],
+  ["AcClusterSwitcher", "<ClusterSwitcherLoader v-if=\"pending\" /> + <ClusterSwitcher v-else>", "<AcClusterSwitcher :loading=\"pending\">"],
+  ["AcNotificationMenu", "<Notification :notifications :unread-notification @is-active>", "<AcNotificationMenu :notifications :unread-count v-model:open />"],
+  ["AcStatCard", "<StatCard label value suffix :progress> / <Counter>", "<AcStatCard label value suffix :progress> / <AcStatCard :icon :to>"],
+  ["AcStatCard", "<SummaryCard title tag :items> / <OverviewCards> + <OverviewCard>", "<AcCard :title> + grid of <AcStatCard size=\"small\" :status> / <AcStatCard inline>"],
+  ["AcResourceCard", "<Cluster :cluster-data=\"{ name, providerIcon, tags, details }\" :show-options>", "<AcResourceCard :name :logo :status :tags :details> + #menu"],
+  ["AcResourceCard", "<DetailCard :fields> / <InfoCard :row-data> / <SessionCard>", "<AcResourceCard :name :details :columns> (+ #detail-<key>, #actions)"],
+  ["AcFeatureCard", "<FeatureCard :is-required> + #card-logo #card-title #card-sub-title", "<AcFeatureCard :required :logo :title :description :status>"],
+  ["AcFeatureCard", "<CheckItemCard v-model:checked> / <Vendor title logo>", "<AcFeatureCard selectable v-model:checked> / <AcFeatureCard centered>"],
+  ["AcCheckRadio", "<RadioCard v-model value label description>", "<AcCheckRadio cards v-model :options>"],
+  ["AcUsageCard", "<UsageCard :usages> / <UsageTableCard :thead :tbody :is-loader-active>", "<AcUsageCard :breakdown> / <AcUsageCard :breakdown-headers :breakdown :loading>"],
+  ["AcCard", "<TableCard title :columns :rows> / <OrgCard no-cluster-available>", "<AcCard :padded=\"false\"> + <AcTable> / <AcEmptyState title=\"No cluster available\">"],
 ];
 
 const before = `<AcButton
@@ -142,9 +190,10 @@ const utils = `<!-- before (Bulma + AppsCode utilities) -->
     <li>Toasts no longer need vue-toastification: mount <code class="prose-code">&lt;AcToaster /&gt;</code> once and call <code class="prose-code">useToast()</code>.</li>
   </ul>
   <Callout type="note">
-    Every commonly used component is ported (57, counting sub-parts, plus the code editor). Domain cards (StatCard, UsageCard, DbCard…),
-    the multi-file editors (FilteredFileEditor, ResourceKeyValueEditor) and specialised widgets such as MachineProfile and ScalingRules are not:
-    keep importing those from the old <code class="prose-code">@appscode/design-system</code> 2.x until they're needed.
-    <RouterLink to="/components/code-editor#migration">Code Editor</RouterLink> lists every old editor prop.
+    Every component the apps import is now ported, including the code and file editors, the cards, the app menus and the table cell
+    renderers. Still in the old <code class="prose-code">@appscode/design-system</code> 2.x only: specialised widgets no app imports today
+    (MachineProfile, ScalingRules, NodeSelection, Inbox, ConfigSecret) and the recovery timeline charts on the
+    <code class="prose-code">recovery-workflows-ui</code> branch. <RouterLink to="/components/code-editor#migration">Code Editor</RouterLink> lists every
+    old editor prop.
   </Callout>
 </template>

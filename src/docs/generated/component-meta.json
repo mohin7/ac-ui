@@ -147,6 +147,41 @@
         "default": "false",
         "required": false,
         "description": "Shows a close button that emits `close`."
+      },
+      {
+        "name": "hideIcon",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides the status icon, for dense inline messages."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon component to replace the colour's default icon."
+      },
+      {
+        "name": "actionLabel",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text of a small button on the right that emits `action`, such as \"Retry\" or \"Upgrade\"."
+      },
+      {
+        "name": "actionIcon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon component shown in the action button, before `action-label`."
+      },
+      {
+        "name": "actionLoading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a spinner in the action button and blocks clicks while the action runs."
       }
     ],
     "events": [
@@ -154,13 +189,128 @@
         "name": "close",
         "type": "[]",
         "signature": "(event: \"close\"): void"
+      },
+      {
+        "name": "action",
+        "type": "[event: MouseEvent]",
+        "signature": "(event: \"action\", event: MouseEvent): void"
       }
     ],
     "slots": [
       {
         "name": "default",
         "type": "any",
-        "description": "The message. Links inside are underlined in primary."
+        "description": "The message. Links inside are underlined in the alert's colour."
+      },
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "Replaces the status icon, e.g. with a custom SVG."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Buttons on the right of the message (wrapping below it on narrow screens). Use `AcButton size=\"small\"`. Replaces `action-label`."
+      }
+    ]
+  },
+  "AcAppSwitcher": {
+    "props": [
+      {
+        "name": "currentApp",
+        "type": "\"platform\" | \"console\" | \"db\" | \"id\" | \"billing\" | \"selfhost\" | \"learn\" | \"grafana\" | \"observe\" | (string & {}) | undefined",
+        "default": "\"platform\"",
+        "required": false,
+        "description": "The app this is rendered in. It's marked as current (or hidden with `hideCurrent`). `id` is accepted as `platform`."
+      },
+      {
+        "name": "baseUrl",
+        "type": "string | undefined",
+        "default": "\"https://appscode.com\"",
+        "required": false,
+        "description": "Origin the app URLs are built on, e.g. `https://appscode.com`. `localhost` and `bb.test` use each app's dev port. Any other origin counts as self-hosted."
+      },
+      {
+        "name": "activeOrganization",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Organization to open Grafana in; written to the `gorg` cookie when Grafana is clicked."
+      },
+      {
+        "name": "rootDomain",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Cookie domain for `gorg`, e.g. `.appscode.com`."
+      },
+      {
+        "name": "activeOrgType",
+        "type": "number | undefined",
+        "default": "0",
+        "required": false,
+        "description": "Type of the active organization. Type `3` (client org) has no Console; type `6` keeps Billing on an offline installer."
+      },
+      {
+        "name": "isOfflineInstaller",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Air-gapped offline installer: on a self-hosted origin, Billing stays in the list for org type `6`."
+      },
+      {
+        "name": "apps",
+        "type": "AppSwitcherApp[] | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Replaces the built-in AppsCode list. Entries without `url` get one built from `baseUrl`; the self-host and org-type rules aren't applied."
+      },
+      {
+        "name": "hideCurrent",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Leaves the current app out of the grid, as the old component did."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"AppsCode apps\"",
+        "required": false,
+        "description": "Accessible name of the grid button, and the panel heading."
+      },
+      {
+        "name": "align",
+        "type": "\"end\" | \"start\" | undefined",
+        "default": "\"end\"",
+        "required": false,
+        "description": "Which edge of the button the panel lines up with. `end` suits the right side of the navbar."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the panel is open. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "select",
+        "type": "[app: AppSwitcherApp & { url: string; }]",
+        "signature": "(event: \"select\", app: AppSwitcherApp & { url: string; }): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "footer",
+        "type": "{ close: () => void; }",
+        "description": "Content under the grid, e.g. a link to all products."
       }
     ]
   },
@@ -478,7 +628,7 @@
       },
       {
         "name": "align",
-        "type": "\"start\" | \"center\" | \"end\" | \"between\" | undefined",
+        "type": "\"end\" | \"start\" | \"center\" | \"between\" | undefined",
         "default": "\"start\"",
         "required": false,
         "description": "Horizontal alignment of the row. `between` pushes the first and last button to the edges."
@@ -551,6 +701,145 @@
         "description": "Buttons on the right of the header."
       }
     ]
+  },
+  "AcCellValue": {
+    "props": [
+      {
+        "name": "value",
+        "type": "unknown",
+        "default": "undefined",
+        "required": false,
+        "description": "The value to show: text, a number, a boolean, a date, a map, a list, or null for a dash."
+      },
+      {
+        "name": "type",
+        "type": "CellType | undefined",
+        "default": "\"auto\"",
+        "required": false,
+        "description": "How to show it. `auto` detects booleans, numbers, ISO dates, lists and maps (a map of plain values becomes label chips)."
+      },
+      {
+        "name": "cell",
+        "type": "ResourceCell | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A server-side cell `{ data, link, tooltip, icon, color, isBold }` (the old `cellValue`). Its fields fill in the props of the same meaning."
+      },
+      {
+        "name": "column",
+        "type": "ResourceColumn | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A server-side column `{ name, type, format, textAlign, shape }` (the old `cellDescriptor`). Fills in `type`, `title` and `align`."
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "What the value is, e.g. the column name. Titles the JSON viewer and labels its button."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Makes the value a link. `http(s)` links open in a new tab; paths starting with `/` use `RouterLink` when vue-router is installed."
+      },
+      {
+        "name": "resolveLink",
+        "type": "((link: string) => string) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Turns a link template into a URL, e.g. to fill `${username}` and `${clustername}` from the current route."
+      },
+      {
+        "name": "color",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Status colour. Shows the value as a badge. Accepts the old Bulma names too (`is-success`, `light`, `dark`)."
+      },
+      {
+        "name": "tooltip",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Hover and focus text. Truncated values show their full text when this is empty."
+      },
+      {
+        "name": "icon",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "URL of a 16px image before the value, e.g. a cloud provider logo."
+      },
+      {
+        "name": "bold",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows the value in bold heading colour, e.g. a resource name."
+      },
+      {
+        "name": "mono",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows text in the monospace font, for IDs, images and hashes."
+      },
+      {
+        "name": "align",
+        "type": "\"center\" | \"left\" | \"right\" | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Alignment inside a wider container. Tables align through their column instead."
+      },
+      {
+        "name": "maxWidth",
+        "type": "string | undefined",
+        "default": "\"280px\"",
+        "required": false,
+        "description": "CSS max width. Longer text is cut with an ellipsis and a tooltip shows it in full."
+      },
+      {
+        "name": "maxItems",
+        "type": "number | undefined",
+        "default": "3",
+        "required": false,
+        "description": "How many label or list chips show before a “+N more” button."
+      },
+      {
+        "name": "unit",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text after a number, e.g. `%` or ` GiB`."
+      },
+      {
+        "name": "relative",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Shows dates as “3d ago” with the exact time on hover. Turn off to show the exact time."
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "default": "\"—\"",
+        "required": false,
+        "description": "Shown for null, empty text, empty lists and maps, and the server's `<none>` / `<unknown>`."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a placeholder bar while the value loads."
+      }
+    ],
+    "events": [],
+    "slots": []
   },
   "AcCheckBox": {
     "props": [
@@ -642,6 +931,133 @@
       }
     ],
     "slots": []
+  },
+  "AcClusterSwitcher": {
+    "props": [
+      {
+        "name": "clusterOptions",
+        "type": "SwitchCluster[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "The clusters to choose from."
+      },
+      {
+        "name": "sidebarCollapsed",
+        "type": "boolean | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Shows only the provider icon, for the collapsed sidebar rail. Inside `AcSidebar` it follows the rail on its own."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a skeleton while the cluster list loads. Old `ClusterSwitcherLoader`."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Blocks opening the list, e.g. on pages where the cluster can't change."
+      },
+      {
+        "name": "searchable",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Adds a search box above the list."
+      },
+      {
+        "name": "searchPlaceholder",
+        "type": "string | undefined",
+        "default": "\"Search clusters\"",
+        "required": false,
+        "description": "Placeholder of the search box."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "\"Select a cluster\"",
+        "required": false,
+        "description": "Text in the trigger when no cluster is selected."
+      },
+      {
+        "name": "importLabel",
+        "type": "string | undefined",
+        "default": "\"Import cluster\"",
+        "required": false,
+        "description": "Text of the footer action. Pass an empty string to hide it. Emits `import`."
+      },
+      {
+        "name": "importUrl",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Makes the footer action a link, e.g. to the import-cluster page. `import` is emitted either way."
+      },
+      {
+        "name": "providerIconBase",
+        "type": "string | undefined",
+        "default": "\"https://cdn.appscode.com/images/cloud-provider-icons\"",
+        "required": false,
+        "description": "Base URL of the provider PNGs: `${providerIconBase}/${provider}.png`. Pass an empty string (offline installers) to use a generic icon."
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Name of the active cluster."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the list is open. Bind with `v-model:open`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]",
+        "signature": "(event: \"update:modelValue\", value: string): void"
+      },
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "select",
+        "type": "[cluster: SwitchCluster]",
+        "signature": "(event: \"select\", cluster: SwitchCluster): void"
+      },
+      {
+        "name": "import",
+        "type": "[]",
+        "signature": "(event: \"import\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "option",
+        "type": "{ cluster: SwitchCluster; selected: boolean; active: boolean; }",
+        "description": "Custom row content."
+      },
+      {
+        "name": "footer",
+        "type": "{ close: () => void; }",
+        "description": "Replaces the footer action, e.g. with several links. Receives `close`."
+      },
+      {
+        "name": "empty",
+        "type": "{ query: string; }",
+        "description": "Shown when no cluster matches the search, or the list is empty."
+      }
+    ]
   },
   "AcCodeEditor": {
     "props": [
@@ -772,6 +1188,11 @@
         "signature": "(event: \"update:modelValue\", value: string): void"
       },
       {
+        "name": "focus",
+        "type": "[]",
+        "signature": "(event: \"focus\"): void"
+      },
+      {
         "name": "validate",
         "type": "[problems: EditorProblem[]]",
         "signature": "(event: \"validate\", problems: EditorProblem[]): void"
@@ -780,11 +1201,6 @@
         "name": "update:view",
         "type": "[value: \"edit\" | \"changes\"]",
         "signature": "(event: \"update:view\", value: \"edit\" | \"changes\"): void"
-      },
-      {
-        "name": "focus",
-        "type": "[]",
-        "signature": "(event: \"focus\"): void"
       },
       {
         "name": "blur",
@@ -954,6 +1370,170 @@
       }
     ]
   },
+  "AcDatePicker": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Floating label. It rests inside the field and rises when a value is chosen or the popover opens."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text shown in the field when there's no label and no value."
+      },
+      {
+        "name": "mode",
+        "type": "\"date\" | \"datetime\" | \"duration\" | undefined",
+        "default": "\"date\"",
+        "required": false,
+        "description": "`date` for a calendar day (`YYYY-MM-DD`), `datetime` for an instant with hours and minutes (UTC ISO 8601), or `duration` for a Go/Kubernetes duration such as `26h30m`."
+      },
+      {
+        "name": "range",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Pick a start and an end; `v-model` becomes `[start, end]`. Works with `date` and `datetime`."
+      },
+      {
+        "name": "minDate",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Earliest choosable day or instant (`YYYY-MM-DD` or ISO 8601). A bare date as `maxDate` means the end of that day."
+      },
+      {
+        "name": "maxDate",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Latest choosable day or instant (`YYYY-MM-DD` or ISO 8601)."
+      },
+      {
+        "name": "isDateDisabled",
+        "type": "((day: string) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Return `true` to block a day. It receives the day as `YYYY-MM-DD`."
+      },
+      {
+        "name": "presets",
+        "type": "DatePickerPreset[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Quick picks shown beside the calendar, such as “Last 24 hours”. Choosing one applies it at once."
+      },
+      {
+        "name": "timeZone",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "IANA time zone used to show and pick times, e.g. `UTC` or `Asia/Dhaka`. Defaults to the browser's. Values are always stored in UTC."
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "BCP 47 locale for month names, weekdays and the field text. Defaults to the browser's."
+      },
+      {
+        "name": "weekStartsOn",
+        "type": "0 | 3 | 1 | 2 | 4 | 5 | 6 | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "First column of the calendar, 0 = Sunday … 6 = Saturday. Defaults to the locale's."
+      },
+      {
+        "name": "showSeconds",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a seconds box to the time in `datetime` mode."
+      },
+      {
+        "name": "clearable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a clear button when there is a value."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the field."
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Marks the field required and adds a red asterisk."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the field."
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Helper text under the field (hidden while `errorMsg` is set)."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | undefined",
+        "default": "\"small\"",
+        "required": false,
+        "description": "`small` 36px or `normal` 40px tall."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Adds a hidden input with this name so plain form posts include the value. A range posts as `start/end`."
+      },
+      {
+        "name": "modelValue",
+        "type": "string | [string, string] | null | undefined",
+        "default": "null",
+        "required": false,
+        "description": "`date`: `\"2026-09-30\"`. `datetime`: `\"2026-09-30T14:05:00Z\"` (UTC). `duration`: `\"26h30m\"`. With `range`: `[start, end]`. `null` when empty."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the popover is open."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | [string, string] | null]",
+        "signature": "(event: \"update:modelValue\", value: string | [string, string] | null): void"
+      },
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      }
+    ],
+    "slots": []
+  },
   "AcDeleteModal": {
     "props": [
       {
@@ -1089,7 +1669,7 @@
       },
       {
         "name": "align",
-        "type": "\"start\" | \"end\" | undefined",
+        "type": "\"end\" | \"start\" | undefined",
         "default": "\"start\"",
         "required": false,
         "description": "Which edge of the trigger the menu lines up with. Use `end` for menus at the right of a row. Old `is-right`."
@@ -1306,6 +1886,301 @@
       }
     ]
   },
+  "AcFeatureCard": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "description": "Name of the feature, product or option. Also the card's accessible name."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "One or two sentences on what it does. Clamped to three lines. Old `card-sub-title` slot."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon, shown in a tinted tile. Or use the `icon` slot."
+      },
+      {
+        "name": "logo",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Logo image URL, e.g. a product or cloud-provider logo. Takes the place of `icon`."
+      },
+      {
+        "name": "logoAlt",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Alt text for `logo`. Leave empty when the title already names it."
+      },
+      {
+        "name": "status",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A short status shown as a badge, e.g. \"Enabled\" or \"Not installed\"."
+      },
+      {
+        "name": "statusColor",
+        "type": "\"default\" | \"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | undefined",
+        "default": "\"default\"",
+        "required": false,
+        "description": "Colour of the `status` badge."
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a \"Required\" badge. Old `isRequired`."
+      },
+      {
+        "name": "centered",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Logo on top and centred text, for picking a provider or database type from a grid. Replaces the old Vendor card."
+      },
+      {
+        "name": "selectable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Makes the card a checkbox. Bind `v-model:checked`. Old CheckItemCard."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Greys the card out and turns off its link, click and checkbox."
+      },
+      {
+        "name": "to",
+        "type": "string | Record<string, unknown> | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Makes the card a `RouterLink` to this route. Needs vue-router in the app; without it a string is used as `href`."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Makes the card a plain link."
+      },
+      {
+        "name": "target",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Link target for `href`, e.g. `_blank`. `_blank` shows an external-link arrow."
+      },
+      {
+        "name": "checked",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether a `selectable` card is ticked. Bind with `v-model:checked`."
+      }
+    ],
+    "events": [
+      {
+        "name": "click",
+        "type": "[e: MouseEvent]",
+        "signature": "(event: \"click\", e: MouseEvent): void"
+      },
+      {
+        "name": "update:checked",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:checked\", value: boolean): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Extra content under the description, e.g. \"2 unaligned clusters\"."
+      },
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "Replaces the icon or logo."
+      },
+      {
+        "name": "status",
+        "type": "any",
+        "description": "Replaces the `status` badge, e.g. with several badges."
+      },
+      {
+        "name": "footer",
+        "type": "any",
+        "description": "A row at the bottom of the card, e.g. a version or \"Covers 4 topologies\"."
+      }
+    ]
+  },
+  "AcFileEditor": {
+    "props": [
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a skeleton list and editor while the files load."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "No file can be edited. Files with an `original` then show only their changes."
+      },
+      {
+        "name": "height",
+        "type": "string | undefined",
+        "default": "\"480px\"",
+        "required": false,
+        "description": "Any CSS height for the whole editor, e.g. `480px` or `calc(100vh - 240px)`."
+      },
+      {
+        "name": "searchable",
+        "type": "boolean | \"auto\" | undefined",
+        "default": "\"auto\"",
+        "required": false,
+        "description": "Shows a search box above the list. `auto` shows it once there are more than 8 files."
+      },
+      {
+        "name": "formatSwitch",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a YAML / JSON switch to the header. Edits in the other format are converted back; YAML comments don't survive that."
+      },
+      {
+        "name": "validate",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Checks YAML and JSON files as you type, against their `schema` too. Turn off for templates that aren't valid until rendered."
+      },
+      {
+        "name": "copyable",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Adds a copy button to the header."
+      },
+      {
+        "name": "wrap",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Wraps long lines instead of scrolling sideways."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Files\"",
+        "required": false,
+        "description": "Accessible name for the file list, e.g. \"Secret keys\"."
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "default": "\"No files to show\"",
+        "required": false,
+        "description": "Title shown when there are no files."
+      },
+      {
+        "name": "files",
+        "type": "F[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "The files: `{ name, content, original?, language?, schema?, secret?, encoding?, readonly?, kind?, description? }`. Edits replace the edited file with a copy, so extra fields such as `gvr` are kept."
+      },
+      {
+        "name": "active",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The `name` of the open file. When it's empty or doesn't match a file, the first file opens."
+      },
+      {
+        "name": "search",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The list's search text. Bind it to drive the search from your own search box."
+      },
+      {
+        "name": "format",
+        "type": "\"yaml\" | \"json\" | undefined",
+        "default": "\"yaml\"",
+        "required": false,
+        "description": "With `format-switch`, which format YAML and JSON files are shown in."
+      },
+      {
+        "name": "view",
+        "type": "\"edit\" | \"changes\" | undefined",
+        "default": "\"edit\"",
+        "required": false,
+        "description": "For a file with an `original`, whether its text or its changes show."
+      }
+    ],
+    "events": [
+      {
+        "name": "validate",
+        "type": "[problems: Record<string, EditorProblem[]>]",
+        "signature": "(evt: \"validate\", problems: Record<string, EditorProblem[]>): void"
+      },
+      {
+        "name": "update:view",
+        "type": "[value: \"edit\" | \"changes\"]",
+        "signature": "(event: \"update:view\", value: \"edit\" | \"changes\"): void"
+      },
+      {
+        "name": "update:search",
+        "type": "[value: string]",
+        "signature": "(event: \"update:search\", value: string): void"
+      },
+      {
+        "name": "update:files",
+        "type": "[value: F[]]",
+        "signature": "(event: \"update:files\", value: F[]): void"
+      },
+      {
+        "name": "update:active",
+        "type": "[value: string]",
+        "signature": "(event: \"update:active\", value: string): void"
+      },
+      {
+        "name": "update:format",
+        "type": "[value: \"yaml\" | \"json\"]",
+        "signature": "(event: \"update:format\", value: \"yaml\" | \"json\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "actions",
+        "type": "{ file: F; }",
+        "description": "Buttons at the right of the editor header, e.g. Save or Delete for the open file."
+      },
+      {
+        "name": "empty",
+        "type": "any",
+        "description": "Replaces the empty state shown when there are no files."
+      }
+    ]
+  },
   "AcFileUpload": {
     "props": [
       {
@@ -1458,6 +2333,213 @@
         "name": "footer",
         "type": "any",
         "description": "An AcFormFooter. It's placed after the fields and spans the whole form."
+      }
+    ]
+  },
+  "AcFormArray": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "Name of the field, e.g. “Quotas” or “Environment Variables”."
+      },
+      {
+        "name": "columns",
+        "type": "FormArrayColumn<T>[]",
+        "required": true,
+        "description": "Columns of the item table: `{ key, label, type?, format?, width? }`."
+      },
+      {
+        "name": "itemName",
+        "type": "string | undefined",
+        "default": "\"item\"",
+        "required": false,
+        "description": "Singular name of one item, used in buttons and screen-reader text: “Add quota”, “Edit quota cpu-limit”."
+      },
+      {
+        "name": "newItem",
+        "type": "(() => T) | undefined",
+        "default": "({}) as T",
+        "required": false,
+        "description": "Creates the starting value of a new item."
+      },
+      {
+        "name": "mode",
+        "type": "\"inline\" | \"form\" | undefined",
+        "default": "\"form\"",
+        "required": false,
+        "description": "`form` opens a panel under the row for the `form` slot; `inline` edits in the row itself through `field-<key>` slots."
+      },
+      {
+        "name": "validate",
+        "type": "((item: T, index: number) => string | void | Record<string, string> | null | undefined) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Checks an item before it's saved. Return errors by field key, or one message. `index` is -1 for a new item."
+      },
+      {
+        "name": "beforeSave",
+        "type": "((item: T, index: number) => boolean | void | Promise<boolean | void>) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Runs after validation and before the list changes, e.g. to save to the API. Return `false` (or throw) to keep the form open."
+      },
+      {
+        "name": "beforeRemove",
+        "type": "((item: T, index: number) => boolean | void | Promise<boolean | void>) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Runs before an item is removed, e.g. to ask for confirmation. Return `false` to keep it."
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Marks the field required and adds a red asterisk. Show `errorMsg` when it's empty."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables adding, editing and removing."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides every action and shows the items only."
+      },
+      {
+        "name": "editable",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Shows the Edit button on each row."
+      },
+      {
+        "name": "addDisabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the Add button only, e.g. until a namespace is chosen."
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Most items allowed. The Add button disables at the limit."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a spinner on Save and blocks the actions, e.g. while you save outside `beforeSave`."
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Lets people collapse the field to its header."
+      },
+      {
+        "name": "defaultCollapsed",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Starts collapsed. Needs `collapsible`."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | string[] | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error for the whole field, e.g. “Add at least one quota”. A list shows one per line."
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Helper text under the label (hidden while `errorMsg` is set)."
+      },
+      {
+        "name": "addLabel",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text of the Add button. Defaults to “Add <itemName>”."
+      },
+      {
+        "name": "formTitle",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Heading of the form. Defaults to “New <itemName>” or “Edit <itemName>”."
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "default": "\"Nothing added yet.\"",
+        "required": false,
+        "description": "Text shown when there are no items (or use the `empty` slot)."
+      },
+      {
+        "name": "modelValue",
+        "type": "T[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "The items. Bind with `v-model`; it's replaced with a new array on every change."
+      }
+    ],
+    "events": [
+      {
+        "name": "add",
+        "type": "[item: T]",
+        "signature": "(evt: \"add\", item: T): void"
+      },
+      {
+        "name": "remove",
+        "type": "[item: T, index: number]",
+        "signature": "(evt: \"remove\", item: T, index: number): void"
+      },
+      {
+        "name": "update",
+        "type": "[item: T, index: number]",
+        "signature": "(evt: \"update\", item: T, index: number): void"
+      },
+      {
+        "name": "update:modelValue",
+        "type": "[value: T[]]",
+        "signature": "(event: \"update:modelValue\", value: T[]): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "form",
+        "type": "{ item: T; index: number; errors: Record<string, string>; isNew: boolean; }",
+        "description": "The editor in `form` mode. Bind fields to `item` (a copy, saved on Save) and show `errors[key]` under them. `index` is -1 for a new item."
+      },
+      {
+        "name": "details",
+        "type": "{ item: T; index: number; }",
+        "description": "More about an item, shown under its row behind a toggle button."
+      },
+      {
+        "name": "row-actions",
+        "type": "{ item: T; index: number; }",
+        "description": "Extra buttons before Edit and Remove on each row."
+      },
+      {
+        "name": "empty",
+        "type": "any",
+        "description": "Replaces the empty text, e.g. to explain what to add."
       }
     ]
   },
@@ -1745,7 +2827,7 @@
         "name": "label",
         "type": "string",
         "required": true,
-        "description": "Floating label. It rests inside the field and rises on focus or when filled."
+        "description": "Floating label. It rests inside the field and rises on focus or when filled. With a `prefix`, it always sits on the top edge."
       },
       {
         "name": "name",
@@ -1804,6 +2886,27 @@
         "description": "`small` 36px or `normal` 40px tall."
       },
       {
+        "name": "addonLabel",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Text of a button attached to the right edge, such as \"Copy\", \"Generate\" or \"Browse\". It emits `addon` when clicked. Also its accessible name when `addon-icon-only` is set."
+      },
+      {
+        "name": "addonIcon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon component shown in the attached button, before `addon-label`."
+      },
+      {
+        "name": "addonIconOnly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows only `addon-icon` in the attached button; `addon-label` becomes its `aria-label` and tooltip."
+      },
+      {
         "name": "modelValue",
         "type": "string | number | undefined",
         "default": "\"\"",
@@ -1816,9 +2919,25 @@
         "name": "update:modelValue",
         "type": "[value: string | number]",
         "signature": "(event: \"update:modelValue\", value: string | number): void"
+      },
+      {
+        "name": "addon",
+        "type": "[event: MouseEvent]",
+        "signature": "(event: \"addon\", event: MouseEvent): void"
       }
     ],
-    "slots": []
+    "slots": [
+      {
+        "name": "prefix",
+        "type": "any",
+        "description": "Content inside the field before the value: a 16px icon or fixed text such as `https://`."
+      },
+      {
+        "name": "suffix",
+        "type": "any",
+        "description": "Content inside the field after the value: a unit such as `Gi` or `%`, or a status icon."
+      }
+    ]
   },
   "AcKbd": {
     "props": [
@@ -1852,6 +2971,40 @@
         "description": "A single key, when `keys` is empty."
       }
     ]
+  },
+  "AcLogo": {
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"full\" | \"mark\" | undefined",
+        "default": "\"full\"",
+        "required": false,
+        "description": "`full` is the mark and the AppsCode wordmark; `mark` is the square icon alone, for favicons, rails and avatars."
+      },
+      {
+        "name": "tone",
+        "type": "\"white\" | \"auto\" | undefined",
+        "default": "\"auto\"",
+        "required": false,
+        "description": "`auto` draws \"Apps\" in navy, or near-white in dark mode. `white` keeps it white, for dark surfaces such as a dark sidebar."
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "default": "24",
+        "required": false,
+        "description": "Height in px; the width follows. A height class such as `h-8` overrides it."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"AppsCode\"",
+        "required": false,
+        "description": "Accessible name. Pass an empty string when text next to the logo already names it."
+      }
+    ],
+    "events": [],
+    "slots": []
   },
   "AcModal": {
     "props": [
@@ -2086,6 +3239,119 @@
       }
     ]
   },
+  "AcNotificationMenu": {
+    "props": [
+      {
+        "name": "notifications",
+        "type": "NotificationItem[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Recent events, newest first."
+      },
+      {
+        "name": "unreadCount",
+        "type": "number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Number on the bell. Defaults to the items without `read: true`. Old `unreadNotification`."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows skeleton rows in the panel."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Notifications\"",
+        "required": false,
+        "description": "Accessible name of the bell, and the panel heading."
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "default": "\"You're all caught up\"",
+        "required": false,
+        "description": "Heading of the empty state."
+      },
+      {
+        "name": "viewAllLabel",
+        "type": "string | undefined",
+        "default": "\"View all\"",
+        "required": false,
+        "description": "Text of the footer link."
+      },
+      {
+        "name": "viewAllHref",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Plain URL of the full notifications page. Shows the footer link."
+      },
+      {
+        "name": "viewAllTo",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Route of the full notifications page; rendered as `RouterLink` when vue-router is installed. Shows the footer link."
+      },
+      {
+        "name": "align",
+        "type": "\"end\" | \"start\" | undefined",
+        "default": "\"end\"",
+        "required": false,
+        "description": "Which edge of the bell the panel lines up with."
+      },
+      {
+        "name": "open",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Whether the panel is open. Bind with `v-model:open`; watch it to mark items read when the panel opens. Old `isActive` event."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:open",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:open\", value: boolean): void"
+      },
+      {
+        "name": "select",
+        "type": "[item: NotificationItem]",
+        "signature": "(event: \"select\", item: NotificationItem): void"
+      },
+      {
+        "name": "markAllRead",
+        "type": "[]",
+        "signature": "(event: \"markAllRead\"): void"
+      },
+      {
+        "name": "viewAll",
+        "type": "[]",
+        "signature": "(event: \"viewAll\"): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "item",
+        "type": "{ item: NotificationItem; }",
+        "description": "Custom row content."
+      },
+      {
+        "name": "empty",
+        "type": "any",
+        "description": "Replaces the empty state."
+      },
+      {
+        "name": "footer",
+        "type": "{ close: () => void; }",
+        "description": "Replaces the footer link. Receives `close`."
+      }
+    ]
+  },
   "AcPagination": {
     "props": [
       {
@@ -2153,6 +3419,11 @@
     ],
     "events": [
       {
+        "name": "range",
+        "type": "[range: { start: number; end: number; }]",
+        "signature": "(event: \"range\", range: { start: number; end: number; }): void"
+      },
+      {
         "name": "update:page",
         "type": "[value: number]",
         "signature": "(event: \"update:page\", value: number): void"
@@ -2161,11 +3432,6 @@
         "name": "update:pageSize",
         "type": "[value: number]",
         "signature": "(event: \"update:pageSize\", value: number): void"
-      },
-      {
-        "name": "range",
-        "type": "[range: { start: number; end: number; }]",
-        "signature": "(event: \"range\", range: { start: number; end: number; }): void"
       }
     ],
     "slots": []
@@ -2272,6 +3538,167 @@
     "events": [],
     "slots": []
   },
+  "AcResourceCard": {
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Name of the cluster, database, node or organization. Also the card's accessible name. Old `clusterData.name`."
+      },
+      {
+        "name": "subtitle",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A muted line under the name, e.g. \"Postgres 16.1 · demo\" or \"Last active 2 days ago\"."
+      },
+      {
+        "name": "logo",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Logo image URL, e.g. the cloud provider or database engine. Old `clusterData.providerIcon`."
+      },
+      {
+        "name": "logoAlt",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Alt text for `logo`. Leave empty when `subtitle` or a detail already names it."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon to show instead of a logo."
+      },
+      {
+        "name": "status",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Status shown as a badge before the tags, e.g. \"Ready\" or \"Provisioning\"."
+      },
+      {
+        "name": "statusColor",
+        "type": "\"default\" | \"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | undefined",
+        "default": "\"default\"",
+        "required": false,
+        "description": "Colour of the `status` badge."
+      },
+      {
+        "name": "statusLoading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a spinner in the status badge while the status is being worked out."
+      },
+      {
+        "name": "tags",
+        "type": "(string | ResourceTag)[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Tags after the status: `{ label, key?, color?, loading? }`, or plain strings. Old `clusterData.tags`."
+      },
+      {
+        "name": "details",
+        "type": "ResourceDetail[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Key facts as label–value pairs: `{ label, value?, key?, mono? }`. Keep it to about four. Old `clusterData.details`."
+      },
+      {
+        "name": "columns",
+        "type": "3 | 1 | 2 | 4 | undefined",
+        "default": "2",
+        "required": false,
+        "description": "Columns of the details grid. Three and four drop to two on phones."
+      },
+      {
+        "name": "mono",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Sets `name` in Geist Mono, for Kubernetes object names."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a skeleton card while the resource loads."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Greys the card out and turns off its link and click, e.g. for a cluster that isn't active yet."
+      },
+      {
+        "name": "to",
+        "type": "string | Record<string, unknown> | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Makes the card a `RouterLink` to this route. Needs vue-router in the app; without it a string is used as `href`."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Makes the card a plain link."
+      },
+      {
+        "name": "target",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Link target for `href`, e.g. `_blank`."
+      }
+    ],
+    "events": [
+      {
+        "name": "click",
+        "type": "[e: MouseEvent]",
+        "signature": "(event: \"click\", e: MouseEvent): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "logo",
+        "type": "any",
+        "description": "Replaces the logo or icon."
+      },
+      {
+        "name": "tags",
+        "type": "any",
+        "description": "Replaces the status badge and tags."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Buttons at the top right, e.g. a \"Trigger drill\" button. Old `custom-option` / `header-right`."
+      },
+      {
+        "name": "menu",
+        "type": "any",
+        "description": "`AcDropdownItem`s for the ⋮ actions menu. The card renders the menu. Old `options` with `showOptions`."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Extra content under the details."
+      },
+      {
+        "name": "footer",
+        "type": "any",
+        "description": "A row at the bottom, above a divider, e.g. a compliance note and a link."
+      }
+    ]
+  },
   "AcSearchBar": {
     "props": [
       {
@@ -2296,11 +3723,32 @@
         "description": "`small` 32px or `normal` 36px tall."
       },
       {
+        "name": "filterOptions",
+        "type": "SearchFilterOption[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Options for a filter select attached to the right of the field, such as cluster status. Bind the choice with `v-model:filter`. No options, no filter."
+      },
+      {
+        "name": "filterLabel",
+        "type": "string | undefined",
+        "default": "\"Filter\"",
+        "required": false,
+        "description": "Accessible name of the filter select."
+      },
+      {
         "name": "modelValue",
         "type": "string | undefined",
         "default": "\"\"",
         "required": false,
         "description": "The search text."
+      },
+      {
+        "name": "filter",
+        "type": "string | number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "The selected filter value. Starts at the first option when unset."
       }
     ],
     "events": [
@@ -2313,6 +3761,11 @@
         "name": "search",
         "type": "[value: string]",
         "signature": "(event: \"search\", value: string): void"
+      },
+      {
+        "name": "update:filter",
+        "type": "[value: string | number | undefined]",
+        "signature": "(event: \"update:filter\", value: string | number | undefined): void"
       }
     ],
     "slots": []
@@ -2585,6 +4038,11 @@
     ],
     "events": [
       {
+        "name": "select",
+        "type": "[option: SelectOption<V>]",
+        "signature": "(evt: \"select\", option: SelectOption<V>): void"
+      },
+      {
         "name": "search",
         "type": "[query: string]",
         "signature": "(evt: \"search\", query: string): void"
@@ -2593,11 +4051,6 @@
         "name": "remove",
         "type": "[option: SelectOption<V>]",
         "signature": "(evt: \"remove\", option: SelectOption<V>): void"
-      },
-      {
-        "name": "select",
-        "type": "[option: SelectOption<V>]",
-        "signature": "(evt: \"select\", option: SelectOption<V>): void"
       },
       {
         "name": "refresh",
@@ -2719,6 +4172,124 @@
         "name": "footer-left",
         "type": "any",
         "description": "Left side of the footer, e.g. a status line."
+      }
+    ]
+  },
+  "AcSideTabs": {
+    "props": [
+      {
+        "name": "items",
+        "type": "SideTabItem[]",
+        "required": true,
+        "description": "The sections: `{ key, label, icon?, to?, href?, badge?, tone?, disabled?, group?, children? }`."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Sections\"",
+        "required": false,
+        "description": "Accessible name of the navigation, and the label of the select on phones."
+      },
+      {
+        "name": "sticky",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Sticks the list to the top while the page scrolls."
+      },
+      {
+        "name": "top",
+        "type": "string | undefined",
+        "default": "\"0px\"",
+        "required": false,
+        "description": "Sticky offset from the top of the scroll area, e.g. `\"56px\"` under a navbar."
+      },
+      {
+        "name": "bottom",
+        "type": "string | undefined",
+        "default": "\"0px\"",
+        "required": false,
+        "description": "Space kept free at the bottom while sticky, e.g. `\"28px\"` above a status bar."
+      },
+      {
+        "name": "offsetSelectors",
+        "type": "string[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "CSS selectors of fixed bars (navbar, page header) whose measured heights are added to `top`. For bars whose height changes."
+      },
+      {
+        "name": "width",
+        "type": "string | undefined",
+        "default": "\"220px\"",
+        "required": false,
+        "description": "Width of the list."
+      },
+      {
+        "name": "hideTabs",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Hides the list so the content takes the full width, e.g. on an edit page that needs the room."
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a Collapse button that toggles `v-model:collapsed` (an icon-only rail)."
+      },
+      {
+        "name": "breakpoint",
+        "type": "number | undefined",
+        "default": "640",
+        "required": false,
+        "description": "Width in px below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. `0` keeps it vertical."
+      },
+      {
+        "name": "mobile",
+        "type": "\"select\" | \"scroll\" | undefined",
+        "default": "\"select\"",
+        "required": false,
+        "description": "Phone layout: a `select`, or a horizontal row of tabs that `scroll`s."
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The active item's `key`. With router links it follows the current route."
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Icon-only rail. Bind with `v-model:collapsed`."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]",
+        "signature": "(event: \"update:modelValue\", value: string): void"
+      },
+      {
+        "name": "select",
+        "type": "[item: SideTabItem]",
+        "signature": "(event: \"select\", item: SideTabItem): void"
+      },
+      {
+        "name": "update:collapsed",
+        "type": "[value: boolean]",
+        "signature": "(event: \"update:collapsed\", value: boolean): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{ active: string; compact: boolean; }",
+        "description": "Page content, placed beside the list (below it on phones). Receives the active key and whether the phone layout is on."
       }
     ]
   },
@@ -2995,6 +4566,135 @@
     "events": [],
     "slots": []
   },
+  "AcSlider": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Label above the slider. It also names the thumbs for screen readers, so set it even when the context seems obvious."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A second line under the label, like the old `subtitle`: what the value controls."
+      },
+      {
+        "name": "min",
+        "type": "number | undefined",
+        "default": "0",
+        "required": false,
+        "description": "Smallest value."
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "default": "100",
+        "required": false,
+        "description": "Largest value."
+      },
+      {
+        "name": "step",
+        "type": "number | undefined",
+        "default": "1",
+        "required": false,
+        "description": "Distance between allowed values. Decimals such as `0.5` work."
+      },
+      {
+        "name": "range",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Two thumbs; `v-model` becomes `[from, to]`. The thumbs can meet but not cross."
+      },
+      {
+        "name": "marks",
+        "type": "(number | SliderMark)[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Ticks with labels under the track. Pass numbers, or `{ value, label }` for custom text. Clicking a label jumps there."
+      },
+      {
+        "name": "unit",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Unit shown after every value, e.g. `%` or `GiB`. Words get a space before them; symbols don't."
+      },
+      {
+        "name": "formatValue",
+        "type": "((value: number) => string) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Formats a value for the bubble, marks, header and `aria-valuetext`. Overrides `unit`."
+      },
+      {
+        "name": "showInput",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a number input for typing an exact value (two for `range`)."
+      },
+      {
+        "name": "tooltip",
+        "type": "\"auto\" | \"always\" | \"never\" | undefined",
+        "default": "\"auto\"",
+        "required": false,
+        "description": "Value bubble over the thumb: `auto` on hover, focus and drag; `always`; or `never`."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Disables the slider and its inputs."
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a red asterisk to the label."
+      },
+      {
+        "name": "errorMsg",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Error text under the slider. Turns the track red and sets `aria-invalid`."
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Helper text under the slider (hidden while `errorMsg` is set)."
+      },
+      {
+        "name": "modelValue",
+        "type": "number | [number, number] | null | undefined",
+        "default": "null",
+        "required": false,
+        "description": "The value: a number, or `[from, to]` with `range`. Out-of-range values are shown clamped."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: number | [number, number] | null]",
+        "signature": "(event: \"update:modelValue\", value: number | [number, number] | null): void"
+      },
+      {
+        "name": "change",
+        "type": "[value: number | [number, number]]",
+        "signature": "(event: \"change\", value: number | [number, number]): void"
+      }
+    ],
+    "slots": []
+  },
   "AcSpinner": {
     "props": [
       {
@@ -3014,6 +4714,216 @@
     ],
     "events": [],
     "slots": []
+  },
+  "AcStatCard": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "What the number measures, in sentence case: \"Databases\", \"Data RPO\". Also the card's accessible name when it's a link."
+      },
+      {
+        "name": "value",
+        "type": "string | number | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The number or short text to show. Format it yourself, e.g. `\"1,284\"` or `\"41s\"`."
+      },
+      {
+        "name": "suffix",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Unit or context after the value, e.g. `GiB` or `/ 1m target`. Old `suffix`."
+      },
+      {
+        "name": "delta",
+        "type": "string | number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Change since a previous period. A number is shown as a signed percentage (`12` → `+12%`); pass a string for other units, e.g. `\"+19s\"`."
+      },
+      {
+        "name": "deltaLabel",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The period `delta` compares with, e.g. \"vs last week\"."
+      },
+      {
+        "name": "trend",
+        "type": "\"flat\" | \"up\" | \"down\" | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Direction of `delta`. Worked out from its sign when not set; set it for text such as \"2m margin\"."
+      },
+      {
+        "name": "invertTrend",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "A rise is bad, e.g. error rate, latency or cost, so up is shown in red and down in green."
+      },
+      {
+        "name": "status",
+        "type": "\"default\" | \"info\" | \"success\" | \"warning\" | \"danger\" | undefined",
+        "default": "\"default\"",
+        "required": false,
+        "description": "Colours the value, and tints the whole card for `warning` and `danger`. Old SummaryCard item `type`."
+      },
+      {
+        "name": "sparkline",
+        "type": "number[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Recent values, oldest first, drawn as a small line next to the value. About 7 to 30 points."
+      },
+      {
+        "name": "progress",
+        "type": "number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Adds a bar under the value, from 0 to 100."
+      },
+      {
+        "name": "progressColor",
+        "type": "\"primary\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"auto\" | undefined",
+        "default": "\"primary\"",
+        "required": false,
+        "description": "Colour of the `progress` bar. `auto` turns it warning from 80 and danger from 95."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon shown in a tinted tile at the top right. Or use the `icon` slot."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "`small` for dense grids and summaries (14px value); `normal` for overview rows (24px value)."
+      },
+      {
+        "name": "inline",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Label on the left and value on the right, in one compact row. Replaces the old OverviewCard."
+      },
+      {
+        "name": "mono",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Sets the value in Geist Mono, for IDs, timestamps and durations."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows a placeholder bar instead of the value while it loads."
+      },
+      {
+        "name": "to",
+        "type": "string | Record<string, unknown> | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Makes the card a `RouterLink` to this route. Needs vue-router in the app; without it a string is used as `href`."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Makes the card a plain link."
+      },
+      {
+        "name": "target",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Link target for `href`, e.g. `_blank`."
+      }
+    ],
+    "events": [
+      {
+        "name": "click",
+        "type": "[e: MouseEvent]",
+        "signature": "(event: \"click\", e: MouseEvent): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Replaces the value, e.g. a status badge or two lines of text."
+      },
+      {
+        "name": "badge",
+        "type": "any",
+        "description": "A badge or tag at the top right, e.g. \"Optimal\"."
+      },
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "Replaces the `icon` tile."
+      },
+      {
+        "name": "footer",
+        "type": "any",
+        "description": "A row of small text under the value, after the delta. Old StatCard `footer`."
+      }
+    ]
+  },
+  "AcStatusBar": {
+    "props": [
+      {
+        "name": "items",
+        "type": "StatusBarItem[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "The items: `{ label?, value?, icon?, status?, dot?, meter?, align?, priority?, mono?, iconOnly?, to?, href?, onClick? }`."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "\"Status bar\"",
+        "required": false,
+        "description": "Accessible name of the bar."
+      },
+      {
+        "name": "dark",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Dark bar on `bg-sidebar` in both themes, like the old footer. Everything inside uses the dark tokens."
+      },
+      {
+        "name": "sticky",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Sticks the bar to the bottom of its scroll area."
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "left",
+        "type": "any",
+        "description": "Extra content at the left end, after the left items."
+      },
+      {
+        "name": "right",
+        "type": "any",
+        "description": "Extra content at the right end, after the right items: a badge or small buttons."
+      }
+    ]
   },
   "AcSteps": {
     "props": [
@@ -3102,7 +5012,7 @@
         "name": "columns",
         "type": "Column[]",
         "required": true,
-        "description": "Column definitions: `{ key, label, sortable?, align?, width? }`."
+        "description": "Column definitions: `{ key, label, sortable?, align?, width?, type?, descriptor? }`. `type` or `descriptor` shows values with AcCellValue."
       },
       {
         "name": "rows",
@@ -3374,7 +5284,7 @@
       },
       {
         "name": "display",
-        "type": "\"icons\" | \"labels\" | undefined",
+        "type": "\"labels\" | \"icons\" | undefined",
         "default": "\"icons\"",
         "required": false,
         "description": "`icons` is a compact 3-icon switch; `labels` adds the words, for menus and settings pages."
@@ -3427,7 +5337,7 @@
       },
       {
         "name": "placement",
-        "type": "\"left\" | \"bottom\" | \"top\" | \"right\" | undefined",
+        "type": "\"left\" | \"right\" | \"bottom\" | \"top\" | undefined",
         "default": "\"top\"",
         "required": false,
         "description": "Preferred side of the trigger. It flips to the opposite side when there isn't room."
@@ -3458,6 +5368,157 @@
         "name": "content",
         "type": "any",
         "description": "Tooltip content instead of the `content` prop. Text only; no links or buttons, since it can't be reached by Tab."
+      }
+    ]
+  },
+  "AcUsageCard": {
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "description": "What is measured, e.g. \"Storage\", \"CPU\" or \"Billable usage\". Also the meter's accessible name."
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "A muted line under the title, e.g. \"Across 6 databases in demo\"."
+      },
+      {
+        "name": "period",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "The period the numbers cover, shown at the top right, e.g. \"Sep 2026\" or \"This billing cycle\"."
+      },
+      {
+        "name": "icon",
+        "type": "Component | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "A Lucide icon shown in a tinted tile before the title. Or use the `icon` slot."
+      },
+      {
+        "name": "used",
+        "type": "number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Amount used, in `unit`. Leave unset for a card that only shows a breakdown."
+      },
+      {
+        "name": "limit",
+        "type": "number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "The quota or limit, in `unit`. Without it there's no meter and the card reads \"No limit\"."
+      },
+      {
+        "name": "unit",
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
+        "description": "Unit after the numbers, e.g. \"GiB\", \"cores\" or \"databases\"."
+      },
+      {
+        "name": "format",
+        "type": "((value: number) => string) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Formats every number on the card. Defaults to the browser locale with up to 2 decimals."
+      },
+      {
+        "name": "warningAt",
+        "type": "number | undefined",
+        "default": "80",
+        "required": false,
+        "description": "Percentage of the limit where the meter turns warning and a \"Near limit\" badge appears."
+      },
+      {
+        "name": "dangerAt",
+        "type": "number | undefined",
+        "default": "95",
+        "required": false,
+        "description": "Percentage of the limit where the meter turns danger and an \"At limit\" badge appears."
+      },
+      {
+        "name": "showThresholds",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Marks `warningAt` and `dangerAt` on the meter."
+      },
+      {
+        "name": "breakdown",
+        "type": "UsageBreakdownRow[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Rows of a breakdown table under the meter: `{ label, icon?, values }`. Old UsageTableCard `tbody`."
+      },
+      {
+        "name": "breakdownHeaders",
+        "type": "string[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "Column headings of the breakdown, starting with the label column. Old UsageTableCard `thead`."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Shows placeholder bars instead of the numbers while they load. Old `isLoaderActive`."
+      },
+      {
+        "name": "to",
+        "type": "string | Record<string, unknown> | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Makes the card a `RouterLink` to this route. Needs vue-router in the app; without it a string is used as `href`."
+      },
+      {
+        "name": "href",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Makes the card a plain link."
+      },
+      {
+        "name": "target",
+        "type": "string | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Link target for `href`, e.g. `_blank`."
+      }
+    ],
+    "events": [
+      {
+        "name": "click",
+        "type": "[e: MouseEvent]",
+        "signature": "(event: \"click\", e: MouseEvent): void"
+      }
+    ],
+    "slots": [
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "Replaces the `icon` tile."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Buttons at the top right, e.g. \"Upgrade plan\"."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "description": "Extra content between the meter and the breakdown."
+      },
+      {
+        "name": "footer",
+        "type": "any",
+        "description": "A row at the bottom, e.g. \"Resets on Oct 1\"."
       }
     ]
   },

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Bell, CircleHelp } from "lucide-vue-next";
-import { AcNavbar, AcNavbarItem, AcSearchBar, AcUserMenu } from "@/lib";
+import { AcLogo, AcNavbar, AcNavbarItem, AcSearchBar, AcUserMenu } from "@/lib";
 
 const query = ref("");
 </script>
@@ -11,7 +11,7 @@ const query = ref("");
     <AcNavbar :sticky="false" menu-button="always">
       <template #brand>
         <span class="flex items-center gap-2.5">
-          <img src="/logos/appscode-mark.png" alt="" class="size-6 rounded-6" />
+          <AcLogo variant="mark" label="" />
           <span class="hidden text-lg font-semibold text-heading sm:inline">Console</span>
         </span>
       </template>

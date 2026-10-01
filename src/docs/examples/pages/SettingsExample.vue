@@ -17,6 +17,7 @@ import {
   AcPagination,
   AcSectionContent,
   AcSelect,
+  AcSideTabs,
   AcSwitch,
   AcTable,
   AcTag,
@@ -53,13 +54,13 @@ interface NotificationSetting {
   on: boolean;
 }
 
-const SECTIONS: { key: SectionKey; label: string; group: string; icon: Component; description: string }[] = [
+const SECTIONS: { key: SectionKey; label: string; group: string; icon: Component; description: string; tone?: "danger" }[] = [
   { key: "profile", label: "Profile", group: "Account", icon: User, description: "How you appear to people in your organisation." },
   { key: "appearance", label: "Appearance", group: "Account", icon: Palette, description: "Theme and colour for this browser." },
   { key: "notifications", label: "Notifications", group: "Account", icon: Bell, description: "Choose what reaches your inbox and Slack. Changes save as you go." },
   { key: "tokens", label: "API tokens", group: "Account", icon: KeyRound, description: "Personal tokens for the AppsCode API, kubectl-dba and CI pipelines." },
   { key: "members", label: "Members", group: "Organisation", icon: Users, description: "People in the appscode organisation and what they can do." },
-  { key: "danger", label: "Danger zone", group: "Organisation", icon: TriangleAlert, description: "Irreversible actions for the whole organisation." },
+  { key: "danger", label: "Danger zone", group: "Organisation", icon: TriangleAlert, tone: "danger", description: "Irreversible actions for the whole organisation." },
 ];
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -167,8 +168,6 @@ const deleteOrgOpen = ref(false);
 const deletingOrg = ref(false);
 
 const current = computed(() => SECTIONS.find((s) => s.key === section.value)!);
-const navGroups = computed(() => [...new Set(SECTIONS.map((s) => s.group))].map((g) => ({ name: g, items: SECTIONS.filter((s) => s.group === g) })));
-const navOptions = SECTIONS.map((s) => ({ value: s.key, label: s.label, group: s.group }));
 
 const profileErrors = computed(() => ({
   name: profile.value.name.trim() ? "" : "Enter your name.",
@@ -195,10 +194,6 @@ const pagedMembers = computed(() => {
   const start = (memberPage.value - 1) * memberPageSize.value;
   return members.value.slice(start, start + memberPageSize.value);
 });
-
-function selectSection(value: unknown) {
-  if (typeof value === "string") section.value = value as SectionKey;
-}
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -334,40 +329,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="@container bg-surface-muted">
-    <div class="flex min-h-[640px] flex-col @2xl:flex-row">
-      <!-- Wide: a vertical list. Narrow: the same sections in a select, so nothing scrolls sideways. -->
-      <nav aria-label="Settings" class="hidden w-56 shrink-0 border-r border-border-light bg-surface px-3 py-5 @2xl:block">
-        <div v-for="group in navGroups" :key="group.name" class="mb-5 last:mb-0">
-          <p class="mb-1.5 px-2.5 text-sm font-semibold tracking-[0.06em] text-muted uppercase">{{ group.name }}</p>
-          <ul class="space-y-0.5">
-            <li v-for="item in group.items" :key="item.key">
-              <button
-                type="button"
-                class="flex h-8 w-full cursor-pointer items-center gap-2.5 rounded-6 px-2.5 text-left text-base transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
-                :class="
-                  section === item.key
-                    ? 'bg-surface-sunken font-medium text-heading'
-                    : item.key === 'danger'
-                      ? 'text-red-30 hover:bg-red-97'
-                      : 'text-label hover:bg-surface-muted hover:text-heading'
-                "
-                :aria-current="section === item.key ? 'page' : undefined"
-                @click="section = item.key"
-              >
-                <component :is="item.icon" class="size-4 shrink-0" aria-hidden="true" />
-                {{ item.label }}
-              </button>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      <div class="border-b border-border-light bg-surface px-4 py-3 @2xl:hidden">
-        <AcSelect :model-value="section" :options="navOptions" label="Settings section" @update:model-value="selectSection" />
-      </div>
-
-      <main class="@container/main min-w-0 flex-1 px-4 py-6 @lg:px-8 @lg:py-8">
+  <div class="bg-surface-muted">
+    <AcSideTabs v-model="section" :items="SECTIONS" label="Settings" class="min-h-[640px]" :sticky="false">
+      <main class="@container/main min-w-0 px-4 py-6 @lg:px-8 @lg:py-8">
         <div class="mb-6">
           <h4>{{ current.label }}</h4>
           <p class="mt-1 text-base text-muted">{{ current.description }}</p>
@@ -540,7 +504,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </main>
-    </div>
+    </AcSideTabs>
   </div>
 
   <AcModal

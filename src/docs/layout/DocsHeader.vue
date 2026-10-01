@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { Menu, Search } from "lucide-vue-next";
-import { AcThemeMode } from "@/lib";
+import { AcThemeMode, AcLogo } from "@/lib";
 import BrandHueMenu from "./BrandHueMenu.vue";
 
 const emit = defineEmits<{ search: []; menu: [] }>();
@@ -29,11 +29,8 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
         <Menu class="size-4.5" aria-hidden="true" />
       </button>
       <RouterLink to="/" class="flex shrink-0 items-center gap-2.5" aria-label="AppsCode Design System home">
-        <img src="/logos/appscode-mark.png" alt="" class="size-6.5 rounded-6" />
-        <span class="flex items-baseline gap-1.5">
-          <span class="text-[15px] font-semibold tracking-[-0.02em] text-heading">AppsCode</span>
-          <span class="hidden text-[15px] font-normal tracking-[-0.02em] text-muted sm:inline">Design System</span>
-        </span>
+        <AcLogo :size="22" label="" />
+        <span class="hidden border-l border-border pl-2.5 text-[15px] font-normal tracking-[-0.02em] text-muted sm:inline">Design System</span>
       </RouterLink>
       <span class="ml-1 hidden rounded-50 border border-border px-2 py-0.5 font-mono text-[11px] text-label sm:inline">v0.2</span>
 

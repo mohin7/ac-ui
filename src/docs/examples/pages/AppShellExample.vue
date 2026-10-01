@@ -2,7 +2,6 @@
 import { computed, ref } from "vue";
 import {
   Activity,
-  Bell,
   Building2,
   CircleHelp,
   Database,
@@ -17,12 +16,16 @@ import {
   Terminal,
 } from "lucide-vue-next";
 import {
+  AcAppSwitcher,
   AcBadge,
   AcButton,
   AcCard,
+  AcClusterSwitcher,
   AcHeader,
+  AcLogo,
   AcNavbar,
   AcNavbarItem,
+  AcNotificationMenu,
   AcSearchBar,
   AcSegmentedControl,
   AcSidebar,
@@ -64,6 +67,13 @@ const COLUMNS = [
   { key: "status", label: "Status" },
 ];
 const STATUS = { Ready: "success", Provisioning: "info", Critical: "danger" } as const;
+const CLUSTERS = [
+  { name: "demo-cluster", displayName: "demo-cluster", provider: "EKS", location: "us-east-1", status: "Active" },
+  { name: "prod-gke", displayName: "prod-gke", provider: "GKE", location: "europe-west1", status: "Active" },
+  { name: "staging-aks", displayName: "staging-aks", provider: "AKS", location: "eastus2", status: "Active" },
+  { name: "edge-linode", displayName: "edge-linode", provider: "Akamai", location: "ap-south", status: "NotReady", disabled: true },
+];
+const MINUTE = 60_000;
 const MENU_ITEMS = [
   { label: "Organizations", icon: Building2 },
   { label: "API tokens", icon: KeyRound },
@@ -76,6 +86,12 @@ const look = ref<"light" | "dark">("dark");
 const width = ref<"desktop" | "phone">("desktop");
 const current = ref("postgres");
 const query = ref("");
+const cluster = ref("demo-cluster");
+const notifications = ref([
+  { id: 1, time: Date.now() - 3 * MINUTE, title: "cache-redis is critical", msg: "2 of 3 replicas are not ready.", status: "Failed", read: false },
+  { id: 2, time: Date.now() - 12 * MINUTE, title: "Provisioning analytics-pg", msg: "Postgres 16.1 in namespace data.", status: "Running", read: false },
+  { id: 3, time: Date.now() - 3 * 60 * MINUTE, title: "Backup succeeded", msg: "billing-pg · 1.2 GiB to s3://backups", status: "Success", read: true },
+]);
 
 const title = computed(() => PAGES[current.value] ?? "Overview");
 const rows = computed(() => {
@@ -90,6 +106,10 @@ const stats = computed(() => [
 
 function count(engine: Database["engine"]) {
   return DATABASES.filter((d) => d.engine === engine).length;
+}
+
+function markAllRead() {
+  notifications.value = notifications.value.map((n) => ({ ...n, read: true }));
 }
 
 function tone(status: unknown) {
@@ -134,11 +154,8 @@ function tone(status: unknown) {
         :breakpoint="640"
         label="Console"
       >
-        <template #header="{ collapsed: rail }">
-          <span class="flex items-center gap-2.5">
-            <img src="/logos/appscode-mark.png" alt="" class="size-6 shrink-0 rounded-6" />
-            <span v-if="!rail" class="text-lg font-semibold tracking-[-0.01em] text-heading">KubeDB</span>
-          </span>
+        <template #header>
+          <AcClusterSwitcher v-model="cluster" :cluster-options="CLUSTERS" />
         </template>
 
         <AcSidebarSection>
@@ -162,21 +179,28 @@ function tone(status: unknown) {
 
       <div class="flex min-w-0 flex-1 flex-col">
         <AcNavbar menu-button="always" menu-label="Toggle navigation" :sticky="false" @menu="sidebar?.toggle()">
+          <template #brand>
+            <span class="flex items-center gap-2">
+              <AcLogo variant="mark" label="" />
+              <span class="text-lg font-semibold tracking-[-0.01em] text-heading @max-md:hidden">KubeDB</span>
+            </span>
+          </template>
           <template #search>
             <AcSearchBar v-model="query" placeholder="Search databases" :debounce="0" class="@max-xl:hidden" />
           </template>
           <template #actions>
             <AcNavbarItem label="Create database" :icon="Plus" icon-only />
             <AcNavbarItem label="Terminal" :icon="Terminal" icon-only class="@max-xl:hidden" />
-            <AcNavbarItem label="Notifications" :icon="Bell" icon-only :badge="3" />
             <AcNavbarItem label="Help" :icon="CircleHelp" icon-only class="@max-xl:hidden" />
+            <AcNotificationMenu :notifications="notifications" view-all-href="#/examples/app-shell" @mark-all-read="markAllRead" />
+            <AcAppSwitcher current-app="db" base-url="https://appscode.com" class="@max-md:hidden" />
             <AcUserMenu name="Mohin Uddin" email="mohin@appscode.com" :items="MENU_ITEMS" :show-name="false" show-theme-mode class="ml-1" />
           </template>
         </AcNavbar>
 
         <main class="ac-scrollbar min-h-0 flex-1 bg-surface-muted">
-          <AcHeader :title="title" subtitle="demo-cluster · all namespaces" sticky>
-            <template #breadcrumb>demo-cluster / Databases</template>
+          <AcHeader :title="title" :subtitle="`${cluster} · all namespaces`" sticky>
+            <template #breadcrumb>{{ cluster }} / Databases</template>
             <AcButton title="Create" size="small">
               <template #icon><Plus aria-hidden="true" /></template>
             </AcButton>

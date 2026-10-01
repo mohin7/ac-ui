@@ -13,6 +13,7 @@ import {
   AcInput,
   AcModal,
   AcSelect,
+  AcStatCard,
   AcSteps,
   AcSwitch,
   AcTable,
@@ -152,10 +153,7 @@ const matches = (rows: Database[], q: string) =>
       <AcAlert color="warning">cache-redis has 1 replica and no recent backup. <a href="#/examples/databases">Configure Stash</a></AcAlert>
 
       <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <div v-for="s in stats" :key="s.label" class="rounded-10 border border-border bg-surface px-4 py-3.5 shadow-xs">
-          <p class="text-xs font-medium text-muted">{{ s.label }}</p>
-          <p class="mt-1 text-3xl font-semibold text-heading tabular-nums">{{ s.value }}</p>
-        </div>
+        <AcStatCard v-for="s in stats" :key="s.label" :label="s.label" :value="s.value" />
       </div>
 
       <AcContentTable title="All Databases" :subtitle="`${visible.length} shown`" searchable search-placeholder="Search databases">

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "lucide-vue-next";
+import AcButton from "./AcButton.vue";
+import type { Component } from "vue";
 import type { Tone } from "./types";
 
 export interface Props {
@@ -10,19 +12,38 @@ export interface Props {
   title?: string;
   /** Shows a close button that emits `close`. */
   dismissible?: boolean;
+  /** Hides the status icon, for dense inline messages. */
+  hideIcon?: boolean;
+  /** A Lucide icon component to replace the colour's default icon. */
+  icon?: Component;
+  /** Text of a small button on the right that emits `action`, such as "Retry" or "Upgrade". */
+  actionLabel?: string;
+  /** A Lucide icon component shown in the action button, before `action-label`. */
+  actionIcon?: Component;
+  /** Shows a spinner in the action button and blocks clicks while the action runs. */
+  actionLoading?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   color: "info",
   title: "",
   dismissible: false,
+  hideIcon: false,
+  icon: undefined,
+  actionLabel: "",
+  actionIcon: undefined,
+  actionLoading: false,
 });
 
-const emit = defineEmits<{ close: [] }>();
+const emit = defineEmits<{ close: []; action: [event: MouseEvent] }>();
 
 defineSlots<{
-  /** The message. Links inside are underlined in primary. */
+  /** The message. Links inside are underlined in the alert's colour. */
   default?: () => unknown;
+  /** Replaces the status icon, e.g. with a custom SVG. */
+  icon?: () => unknown;
+  /** Buttons on the right of the message (wrapping below it on narrow screens). Use `AcButton size="small"`. Replaces `action-label`. */
+  actions?: () => unknown;
 }>();
 
 // .ac-notification refined: a tinted surface and hairline in the status hue, text in the same hue family
@@ -37,6 +58,8 @@ const tones = {
 } as const;
 
 const tone = computed(() => tones[props.color]);
+const glyph = computed(() => props.icon ?? tone.value.glyph);
+const actionColor = computed(() => (props.color === "neutral" ? "white" : props.color));
 </script>
 
 <template>
@@ -46,10 +69,29 @@ const tone = computed(() => tones[props.color]);
     :role="color === 'danger' || color === 'warning' ? 'alert' : 'status'"
     data-testid="ac-alert"
   >
-    <component :is="tone.glyph" class="mt-0.5 size-4 shrink-0" :class="tone.icon" aria-hidden="true" />
-    <div class="min-w-0 flex-1">
-      <p v-if="title" class="font-semibold" :class="tone.title">{{ title }}</p>
-      <div :class="title && 'mt-0.5'"><slot /></div>
+    <span v-if="!hideIcon" class="mt-0.5 inline-flex shrink-0 [&_svg]:size-4" :class="tone.icon" aria-hidden="true">
+      <slot name="icon"><component :is="glyph" /></slot>
+    </span>
+    <div class="flex min-w-0 flex-1 flex-wrap items-center gap-x-4 gap-y-2">
+      <div class="min-w-0 flex-[1_1_16rem]">
+        <p v-if="title" class="font-semibold" :class="tone.title">{{ title }}</p>
+        <div :class="title && 'mt-0.5'"><slot /></div>
+      </div>
+      <div v-if="$slots.actions || actionLabel" class="-my-1 flex shrink-0 flex-wrap items-center gap-2">
+        <slot name="actions">
+          <AcButton
+            :title="actionLabel"
+            :color="actionColor"
+            variant="outlined"
+            size="small"
+            :loading="actionLoading"
+            data-testid="ac-alert-action"
+            @click="emit('action', $event)"
+          >
+            <template v-if="actionIcon" #icon><component :is="actionIcon" /></template>
+          </AcButton>
+        </slot>
+      </div>
     </div>
     <button
       v-if="dismissible"

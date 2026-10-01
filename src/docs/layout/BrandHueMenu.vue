@@ -2,7 +2,7 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { presets, useBrandHue } from "../composables/useBrandHue";
 
-const { hue, saturation, light, apply } = useBrandHue();
+const { hue, saturation, light, apply, sync } = useBrandHue();
 const open = ref(false);
 const el = ref<HTMLElement | null>(null);
 
@@ -30,7 +30,10 @@ onBeforeUnmount(() => {
       :aria-expanded="open"
       aria-label="Brand hue"
       title="Brand hue"
-      @click="open = !open"
+      @click="
+        sync();
+        open = !open;
+      "
     >
       <span class="size-3.5 rounded-full bg-primary shadow-button ring-[3px] ring-primary-93" aria-hidden="true" />
     </button>

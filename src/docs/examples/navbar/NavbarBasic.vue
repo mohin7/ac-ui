@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Bell, Plus, Terminal } from "lucide-vue-next";
-import { AcNavbar, AcNavbarItem, AcUserMenu } from "@/lib";
+import { AcLogo, AcNavbar, AcNavbarItem, AcUserMenu } from "@/lib";
 
 const section = ref("databases");
 </script>
@@ -11,7 +11,7 @@ const section = ref("databases");
     <AcNavbar product-name="DB" :sticky="false">
       <template #brand>
         <span class="flex items-center gap-2.5">
-          <img src="/logos/appscode-mark.png" alt="" class="size-6 rounded-6" />
+          <AcLogo variant="mark" label="" />
           <span class="text-lg font-semibold text-heading">KubeDB</span>
         </span>
       </template>

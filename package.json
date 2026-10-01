@@ -1,6 +1,6 @@
 {
   "name": "@appscode/design-system",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "description": "AppsCode design system: Tailwind CSS v4 theme and Vue 3 components.",
   "private": true,
   "type": "module",

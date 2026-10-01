@@ -30,6 +30,9 @@
   --shadow-*: initial;
   --color-white: hsl(0 0% 100%);
   --color-black: hsl(0 0% 0%);
+  /* Logo colours: exact brand values, the same in both themes. */
+  --color-brand-navy: #193d4b;
+  --color-brand-green: #00a651;
 
   /* ac-primary: AppsCode green */
   --color-primary: hsl(var(--primary-hue) var(--primary-saturation) var(--primary-light));

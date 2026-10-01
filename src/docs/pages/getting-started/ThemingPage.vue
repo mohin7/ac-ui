@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
+import ComponentExample from "../../components/ComponentExample.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
 const mapping = [
@@ -21,6 +22,27 @@ const root = document.documentElement.style;
 root.setProperty("--primary-hue", "208");
 root.setProperty("--primary-saturation", "77%");
 root.setProperty("--primary-light", "40%");`;
+
+const brand = `import { useBrandColor } from "@appscode/design-system";
+
+// persist: saves to localStorage("themeColor"), the key the old apps used, and restores it on first use
+const { color, contrast, isReadable, setColor, reset } = useBrandColor({ persist: true });
+
+setColor("#1971bd");                          // re-hue every primary step
+setColor(customer.brand, { ensureContrast: true }); // darken until white text reaches 4.5:1
+reset();                                      // back to the theme's default`;
+
+const legacy = `// Before
+import { HexToHSL, HSLToHex, getThemeHSL, setThemeHSL } from "@appscode/design-system/plugins/theme";
+// After: same names and return shapes, so only the path changes
+import { HexToHSL, HSLToHex, getThemeHSL, setThemeHSL } from "@appscode/design-system";`;
+
+const ranges = [
+  ["Violets, purples (240–300)", "up to ~55%"],
+  ["Blues, reds, pinks (200–235, 330–15)", "up to ~43%"],
+  ["Oranges (20–45)", "up to ~35%"],
+  ["Yellows, greens, cyans (50–190)", "up to ~25%"],
+];
 
 const override = `@import "tailwindcss";
 @import "./lib/theme.css";
@@ -91,6 +113,62 @@ const themeSnippet = `@theme {
     Status colours don't change.
   </p>
   <CodeBlock :code="hue" lang="typescript" />
+
+  <DocHeading id="brand-colour">Brand colour</DocHeading>
+  <p>
+    <code class="prose-code">useBrandColor()</code> sets the three hue variables from a hex colour, such as a
+    white-label customer's brand, and reads them back. State is shared by every caller. Pick a colour below: the whole
+    page re-hues, and Reset puts the default back.
+  </p>
+  <ComponentExample name="theming/BrandColor" />
+  <CodeBlock :code="brand" lang="typescript" />
+
+  <DocHeading id="brand-contrast" :level="3">Keeping text readable</DocHeading>
+  <p>
+    Only <code class="prose-code">bg-primary</code> and its hover (3% darker) use
+    <code class="prose-code">--primary-light</code>. That's the fill of solid buttons, primary badges, switches and
+    checkboxes, all with white text. The <code class="prose-code">primary-5…97</code> steps have fixed lightness, so
+    tint-and-text pairs such as <code class="prose-code">bg-primary-95 text-primary-20</code> stay readable whatever
+    colour you choose.
+  </p>
+  <p>
+    White text needs 4.5:1 on the fill (WCAG AA for 13px text). Hues differ a lot in brightness at the same
+    lightness, so the safe range depends on the hue. At full saturation:
+  </p>
+  <div class="my-4 overflow-x-auto rounded-10 border border-border bg-surface shadow-xs">
+    <table class="w-full text-left text-base">
+      <thead class="border-b border-border bg-surface-muted text-xs text-label">
+        <tr>
+          <th class="h-9 px-4 font-medium">Hue</th>
+          <th class="h-9 px-4 font-medium">Lightness for 4.5:1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="[h, l] in ranges" :key="h" class="border-t border-border-light">
+          <td class="h-9 px-4 text-heading">{{ h }}</td>
+          <td class="px-4 py-2"><code class="prose-code">{{ l }}</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Lower saturation allows a few percent more. Below about 15% every hue looks black. Don't guess: use
+    <code class="prose-code">contrast</code> / <code class="prose-code">isReadable</code>, or pass
+    <code class="prose-code">{ ensureContrast: true }</code> to darken a colour to the limit while keeping its hue.
+    <code class="prose-code">readableLightness(hue, saturation)</code> returns that limit.
+  </p>
+  <Callout type="warning">
+    The default AppsCode green (<code class="prose-code">149 100% 30%</code>) gives 3.7:1. That passes 3:1 for large or
+    bold text but not 4.5:1. <code class="prose-code">26%</code> lightness reaches 4.5:1 at the same hue.
+  </Callout>
+
+  <DocHeading id="brand-legacy" :level="3">From plugins/theme</DocHeading>
+  <p>
+    The old <code class="prose-code">plugins/theme</code> helpers are exported with the same names and return shapes
+    (strings, with <code class="prose-code">%</code> on saturation and lightness), so apps can change the import path
+    first and move to <code class="prose-code">useBrandColor</code> later.
+  </p>
+  <CodeBlock :code="legacy" lang="typescript" />
 
   <DocHeading id="customizing">Customising in an app</DocHeading>
   <p>Override the hue variables or add tokens after importing the theme. Don't edit component files for one app's needs.</p>

@@ -42,6 +42,9 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
   <DocHeading id="empty" :level="3">Empty state</DocHeading>
   <p>Use the <code class="prose-code">empty</code> slot to explain and offer the next action.</p>
   <ComponentExample name="table/TableEmpty" />
+  <DocHeading id="value-types" :level="3">Kubernetes values and server tables</DocHeading>
+  <p>Give a column a <code class="prose-code">type</code> (<code class="prose-code">auto</code>, <code class="prose-code">date</code>, <code class="prose-code">labels</code>, <code class="prose-code">status</code>…) to show its values with <RouterLink to="/components/cell-value">Cell Value</RouterLink>: dashes for empty values, relative ages, label chips, status badges. For a resource table from the API, pass the server's column as <code class="prose-code">descriptor</code> and the cells as row values; sorting uses each cell's <code class="prose-code">sort</code>.</p>
+  <ComponentExample name="cell-value/CellValueResourceTable" />
 
   <DocHeading id="guidelines">Guidelines</DocHeading>
   <DoDont :dos="dos" :donts="donts" />
