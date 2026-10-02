@@ -84,7 +84,7 @@ defineExpose({
 </script>
 
 <template>
-  <div v-bind="rootAttrs" class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-input">
+  <div v-bind="rootAttrs" class="w-full" :class="disabled && 'opacity-60'" data-ac-ds data-testid="ac-input">
     <div class="flex">
       <div
         class="relative flex min-w-0 flex-1 items-center border shadow-xs transition-[border-color,box-shadow] duration-150"
@@ -158,6 +158,7 @@ defineExpose({
         :disabled="disabled"
         :aria-label="addonIconOnly ? addonLabel : undefined"
         :title="addonIconOnly ? addonLabel : undefined"
+        data-ac-ds
         data-testid="ac-input-addon"
         @click="onAddon"
       >

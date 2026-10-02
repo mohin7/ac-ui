@@ -18,7 +18,7 @@ defineProps<Props>();
 </script>
 
 <template>
-  <ol class="flex w-full" data-testid="ac-steps">
+  <ol class="flex w-full" data-ac-ds data-testid="ac-steps">
     <li
       v-for="(step, i) in options"
       :key="step.id"

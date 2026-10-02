@@ -92,6 +92,7 @@ function onPointerLeave(e: PointerEvent) {
     :data-ac-label="label || undefined"
     class="flex w-full cursor-pointer items-start gap-2.5 rounded-6 px-2.5 py-1.5 text-left text-base no-underline outline-none select-none transition-colors duration-75 disabled:cursor-not-allowed disabled:opacity-40"
     :class="danger ? 'text-red-30 focus:bg-red-95 focus:text-red-20' : 'text-heading focus:bg-surface-sunken'"
+    data-ac-ds
     data-testid="ac-dropdown-item"
     @click="onClick"
     @pointermove="onPointerMove"

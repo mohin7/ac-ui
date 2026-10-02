@@ -198,7 +198,7 @@ const BADGE_COLORS: Record<string, BadgeColor> = {
   neutral: "default",
 };
 const STATUS_WORDS: [BadgeColor, RegExp][] = [
-  ["success", /^(ready|running|succeeded|success|successful|healthy|active|available|bound|completed?|current|provisioned|synced|true)$/],
+  ["success", /^(ready|running|succeeded|success|successful|healthy|active|available|approved|bound|completed?|current|provisioned|synced|true)$/],
   ["danger", /^(failed|failure|error|critical|notready|not ready|unhealthy|crashloopbackoff|lost|rejected|false)$/],
   ["warning", /^(pending|provisioning|progressing|updating|degraded|warning|halted|paused|terminating|waiting|suspended)$/],
 ];
@@ -422,6 +422,7 @@ onBeforeUnmount(() => {
       alignment === 'right' && 'justify-end',
       isBold && 'font-semibold text-heading',
     ]"
+    data-ac-ds
     data-testid="ac-cell-value"
   >
     <AcSkeleton v-if="loading" width="96px" />

@@ -338,6 +338,7 @@ defineExpose({
     role="group"
     :aria-labelledby="labelId"
     :aria-describedby="errorLines.length || hint ? messageId : undefined"
+    data-ac-ds
     data-testid="ac-form-array"
   >
     <!-- header -->

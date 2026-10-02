@@ -28,6 +28,9 @@ const donts = ["Don't use more than one solid primary button in the header.", "D
   <DocHeading id="detail" :level="3">Detail page</DocHeading>
   <p><code class="prose-code">back-button</code> emits <code class="prose-code">back</code>; the <code class="prose-code">breadcrumb</code> and <code class="prose-code">title-extra</code> slots add context and status.</p>
   <ComponentExample name="header/HeaderBack" />
+  <DocHeading id="resource" :level="3">Resource page</DocHeading>
+  <p>The <code class="prose-code">icon</code> slot puts a logo before the title, e.g. the database engine on a database's page.</p>
+  <ComponentExample name="header/HeaderResource" />
   <DocHeading id="header-items" :level="3">AcHeaderItems and AcHeaderItem</DocHeading>
   <p>
     The old library wrapped header controls in <code class="prose-code">AcHeaderItems</code> / <code class="prose-code">AcHeaderItem</code>.

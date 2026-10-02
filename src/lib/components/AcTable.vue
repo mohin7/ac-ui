@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="Row extends Record<string, unknown>">
 import { computed, ref } from "vue";
-import { ArrowUp, ChevronsUpDown } from "lucide-vue-next";
+import { ArrowUp, Check, ChevronsUpDown, Minus } from "lucide-vue-next";
 import AcCellValue from "./AcCellValue.vue";
 import type { CellType, ResourceCell, ResourceColumn } from "./AcCellValue.vue";
 
@@ -31,6 +31,10 @@ export interface Props<R> {
   emptyText?: string;
   /** Adds a pointer cursor and emits `row-click`. */
   clickable?: boolean;
+  /** Adds a checkbox column for choosing rows, e.g. for bulk delete. Bind the chosen rows' `rowKey` values with `v-model:selected`. */
+  selectable?: boolean;
+  /** Turns a server cell's link template into a URL, e.g. to fill `${username}` and `${clustername}` from the current route. */
+  resolveLink?: (link: string) => string;
 }
 
 const props = withDefaults(defineProps<Props<Row>>(), {
@@ -39,7 +43,12 @@ const props = withDefaults(defineProps<Props<Row>>(), {
   loaderRows: 3,
   emptyText: "No data found",
   clickable: false,
+  selectable: false,
+  resolveLink: undefined,
 });
+
+/** `rowKey` values of the chosen rows. Bind with `v-model:selected`. Rows that leave `rows` (another page, a search) stay chosen. */
+const selected = defineModel<unknown[]>("selected", { default: () => [] });
 
 const emit = defineEmits<{ "row-click": [row: Row]; sort: [key: string, mode: "asc" | "desc"] }>();
 
@@ -78,15 +87,62 @@ function sortValue(v: unknown) {
   return isCell(v) ? (v.sort ?? v.data) : v;
 }
 
+const rowKeys = computed(() => props.rows.map((row) => row[props.rowKey]));
+const selectedKeys = computed(() => new Set(selected.value));
+const allSelected = computed(() => rowKeys.value.length > 0 && rowKeys.value.every((k) => selectedKeys.value.has(k)));
+const someSelected = computed(() => !allSelected.value && rowKeys.value.some((k) => selectedKeys.value.has(k)));
+
+// Only the rows in view: choices made on other pages are kept.
+function toggleAll() {
+  const inView = new Set(rowKeys.value);
+  selected.value = allSelected.value
+    ? selected.value.filter((k) => !inView.has(k))
+    : [...selected.value, ...rowKeys.value.filter((k) => !selectedKeys.value.has(k))];
+}
+
+function toggleRow(row: Row) {
+  const key = row[props.rowKey];
+  selected.value = selectedKeys.value.has(key) ? selected.value.filter((k) => k !== key) : [...selected.value, key];
+}
+
+// Names the row by its first column, e.g. "Select demo-postgres", falling back to its key.
+function rowLabel(row: Row) {
+  const first = row[props.columns[0]?.key ?? ""];
+  const text = isCell(first) ? first.data : first;
+  return typeof text === "string" || typeof text === "number" ? text : String(row[props.rowKey]);
+}
+
+const checkboxClass =
+  "peer size-4 cursor-pointer appearance-none rounded-4 border border-border-dark bg-surface align-middle shadow-xs transition-[background-color,border-color,box-shadow] duration-150 hover:border-slate-60 checked:border-primary checked:bg-primary checked:shadow-button indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50";
+
 const alignClass = (col: Column) => ({ left: "text-left", center: "text-center", right: "text-right" })[col.align ?? "left"];
 </script>
 
 <template>
-  <div class="w-full overflow-hidden rounded-10 border border-border bg-surface shadow-xs" data-testid="ac-table">
+  <div class="w-full overflow-hidden rounded-10 border border-border bg-surface shadow-xs" data-ac-ds data-testid="ac-table">
     <div class="ac-scrollbar">
       <table class="w-full border-separate border-spacing-0 text-base">
         <thead>
           <tr>
+            <th v-if="selectable" scope="col" class="h-9 w-10 border-b border-border bg-surface-muted pr-0 pl-4 first:rounded-tl-10">
+              <span class="relative flex size-4">
+                <input
+                  type="checkbox"
+                  :class="checkboxClass"
+                  :checked="allSelected"
+                  :indeterminate="someSelected"
+                  :disabled="loading || !rows.length"
+                  aria-label="Select all rows"
+                  @change="toggleAll"
+                />
+                <component
+                  :is="someSelected ? Minus : Check"
+                  class="pointer-events-none absolute inset-0 m-auto size-3 text-white opacity-0 peer-checked:opacity-100 peer-indeterminate:opacity-100"
+                  :stroke-width="3"
+                  aria-hidden="true"
+                />
+              </span>
+            </th>
             <th
               v-for="col in columns"
               :key="col.key"
@@ -113,6 +169,7 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
         <tbody>
           <template v-if="loading">
             <tr v-for="i in loaderRows" :key="`loader-${i}`">
+              <td v-if="selectable" class="h-12 border-b border-border-light pl-4 [tr:last-child_&]:border-0" />
               <td v-for="(col, c) in columns" :key="col.key" class="h-12 border-b border-border-light px-4 [tr:last-child_&]:border-0">
                 <span class="block h-2.5 animate-pulse rounded-full bg-surface-sunken" :style="{ width: `${50 + ((i * 17 + c * 23) % 40)}%` }" />
               </td>
@@ -123,9 +180,25 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
               v-for="(row, i) in sortedRows"
               :key="String(row[rowKey] ?? i)"
               class="group transition-colors duration-100 hover:bg-surface-muted/70"
-              :class="clickable && 'cursor-pointer'"
+              :class="[clickable && 'cursor-pointer', selectable && selectedKeys.has(row[rowKey]) && 'bg-primary-97']"
               @click="clickable && emit('row-click', row)"
             >
+              <td v-if="selectable" class="h-12 w-10 border-b border-border-light pr-0 pl-4 group-last:border-0" @click.stop>
+                <span class="relative flex size-4">
+                  <input
+                    type="checkbox"
+                    :class="checkboxClass"
+                    :checked="selectedKeys.has(row[rowKey])"
+                    :aria-label="`Select ${rowLabel(row)}`"
+                    @change="toggleRow(row)"
+                  />
+                  <Check
+                    class="pointer-events-none absolute inset-0 m-auto size-3 text-white opacity-0 peer-checked:opacity-100"
+                    :stroke-width="3"
+                    aria-hidden="true"
+                  />
+                </span>
+              </td>
               <td
                 v-for="col in columns"
                 :key="col.key"
@@ -140,6 +213,7 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
                     :column="col.descriptor"
                     :type="col.type"
                     :title="col.label"
+                    :resolve-link="resolveLink"
                   />
                   <template v-else>{{ row[col.key] }}</template>
                 </slot>

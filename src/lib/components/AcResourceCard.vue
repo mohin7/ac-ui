@@ -139,13 +139,14 @@ function onClick(e: MouseEvent) {
 </script>
 
 <template>
-  <AcSkeleton v-if="loading" shape="info-card" :label="`Loading ${name || 'resource'}`" data-testid="ac-resource-card" />
+  <AcSkeleton v-if="loading" shape="info-card" :label="`Loading ${name || 'resource'}`" data-ac-ds data-testid="ac-resource-card" />
   <article
     v-else
     class="group relative flex min-w-0 flex-col rounded-10 border border-border bg-surface shadow-xs transition-[border-color,box-shadow] duration-150 has-[[data-ac-card-link]:focus-visible]:ring-[3px] has-[[data-ac-card-link]:focus-visible]:ring-ring"
     :class="[(link || isButton()) && 'hover:border-border-dark hover:shadow-sm', disabled && 'opacity-60']"
     :aria-labelledby="`${id}-name`"
     :aria-disabled="disabled || undefined"
+    data-ac-ds
     data-testid="ac-resource-card"
   >
     <div class="flex min-w-0 items-start gap-3 p-4">

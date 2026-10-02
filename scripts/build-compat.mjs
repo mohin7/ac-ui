@@ -17,10 +17,11 @@ import selectorParser from "postcss-selector-parser";
 const root = resolve(import.meta.dirname, "..");
 const lib = join(root, "src/lib");
 
-// Every component root (and every teleported panel) carries data-testid="ac-…".
-const SCOPE = '[data-testid^="ac-"], [data-testid^="ac-"] *';
+// Every component root (and every teleported panel) carries data-ac-ds. Not data-testid: the old library uses
+// "ac-…" test ids too, and an app's own data-testid would replace the component's.
+const SCOPE = "[data-ac-ds], [data-ac-ds] *";
 // Outermost component roots stand in for <html>/<body>; nested roots keep inheriting from their parent.
-const OUTER_ROOT = '[data-testid^="ac-"]:not([data-testid^="ac-"] *)';
+const OUTER_ROOT = "[data-ac-ds]:not([data-ac-ds] *)";
 const PAGE_ELEMENTS = new Set(["html", "body", ":host"]);
 // From the page rules, only the font and the 20px line height. Colour and size keep inheriting from the app.
 const ROOT_PROPS = new Set([
@@ -132,7 +133,7 @@ const banner = `/*
  * @appscode/design-system compat.css
  * For apps that still load the old Bulma/SCSS design system. Import it after the old styles:
  *   import "@appscode/design-system/compat.css";   (or the name the app installed it under)
- * Styles apply only inside new components (elements with data-testid="ac-…"), so old pages don't change.
+ * Styles apply only inside new components (elements marked data-ac-ds), so old pages don't change.
  * Apps that no longer load the old styles should use theme.css with Tailwind instead (see the README).
  */
 `;

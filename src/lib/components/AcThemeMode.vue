@@ -39,6 +39,7 @@ function choose(next: ColorMode) {
     role="radiogroup"
     aria-label="Theme"
     class="inline-flex items-center gap-0.5 rounded-8 border border-border bg-surface-muted p-0.5"
+    data-ac-ds
     data-testid="ac-theme-mode"
   >
     <button

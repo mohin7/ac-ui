@@ -245,7 +245,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-slider">
+  <div class="w-full" :class="disabled && 'opacity-60'" data-ac-ds data-testid="ac-slider">
     <div v-if="label || description || (!showInput && !range)" class="mb-2 flex items-start justify-between gap-3">
       <div class="min-w-0">
         <p v-if="label" :id="labelId" class="text-base font-medium text-heading">

@@ -60,6 +60,7 @@ const lineWidths = computed(() => {
     class="max-w-full"
     :class="shape === 'circle' ? 'shrink-0' : !rootStyle?.width && 'w-full'"
     :style="rootStyle"
+    data-ac-ds
     data-testid="ac-skeleton"
   >
     <span v-if="shape === 'circle'" :class="BONE" class="size-full rounded-full" aria-hidden="true" />

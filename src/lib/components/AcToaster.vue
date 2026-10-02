@@ -135,7 +135,7 @@ onBeforeUnmount(() => timers.forEach((t) => clearTimeout(t.handle)));
 
 <template>
   <Teleport to="body">
-    <section :aria-label="label" data-testid="ac-toaster">
+    <section :aria-label="label" data-ac-ds data-testid="ac-toaster">
       <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">{{ politeText }}</div>
       <div class="sr-only" role="alert" aria-live="assertive" aria-atomic="true">{{ assertiveText }}</div>
       <TransitionGroup
@@ -157,6 +157,7 @@ onBeforeUnmount(() => timers.forEach((t) => clearTimeout(t.handle)));
           :key="t.id"
           class="pointer-events-auto flex items-start gap-3 rounded-10 border border-border bg-surface py-3 pr-2.5 pl-3.5 shadow-lg"
           :class="(atTop ? i : shown.length - 1 - i) >= PHONE_MAX && 'max-sm:hidden'"
+          data-ac-ds
           data-testid="ac-toast"
           :data-tone="t.tone"
         >

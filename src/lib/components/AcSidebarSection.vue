@@ -35,6 +35,7 @@ const rail = computed(() => sidebar?.rail.value ?? false);
   <li
     class="list-none"
     :class="rail ? 'mt-2 border-t border-border-light pt-2 first:mt-0 first:border-0 first:pt-0' : 'mt-4 first:mt-0'"
+    data-ac-ds
     data-testid="ac-sidebar-section"
   >
     <template v-if="label && !rail">

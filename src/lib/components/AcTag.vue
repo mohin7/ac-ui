@@ -62,6 +62,7 @@ function remove() {
   <span
     class="inline-flex h-6 max-w-full items-stretch overflow-hidden border text-xs leading-none whitespace-nowrap"
     :class="[boxClass, rounded ? 'rounded-50' : 'rounded-6', isKeyValue && 'font-mono text-[11.5px]']"
+    data-ac-ds
     data-testid="ac-tag"
   >
     <template v-if="isKeyValue">

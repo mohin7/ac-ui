@@ -151,6 +151,7 @@ onBeforeUnmount(() => {
   <span
     ref="root"
     class="inline-flex max-w-full"
+    data-ac-ds
     data-testid="ac-tooltip"
     @pointerenter="onPointerEnter"
     @pointerleave="hide(100)"
@@ -174,6 +175,7 @@ onBeforeUnmount(() => {
           class="fixed z-[100] w-max max-w-64 rounded-6 bg-slate-10 px-2 py-1 text-xs font-medium text-slate-95 shadow-md dark:bg-slate-80 dark:text-slate-10 dark:ring-1 dark:ring-slate-70"
           :data-side="side"
           :style="{ top: `${position.top}px`, left: `${position.left}px` }"
+          data-ac-ds
           data-testid="ac-tooltip-panel"
           @pointerenter="show(0)"
           @pointerleave="hide(100)"

@@ -185,6 +185,7 @@ function onClick(e: MouseEvent) {
       (link || isButton()) && 'hover:border-border-dark hover:shadow-sm',
     ]"
     :aria-busy="loading || undefined"
+    data-ac-ds
     data-testid="ac-stat-card"
   >
     <div class="flex min-w-0 items-start justify-between gap-2" :class="inline && 'flex-1'">

@@ -17,6 +17,8 @@ withDefaults(defineProps<Props>(), { title: "", subtitle: "", backButton: false,
 const emit = defineEmits<{ back: [] }>();
 
 defineSlots<{
+  /** A logo or icon before the title, e.g. the database engine's logo on a resource page. Shown in a 40px tile. */
+  icon?: () => unknown;
   /** Breadcrumb above the title. */
   breadcrumb?: () => unknown;
   /** Replaces the title and subtitle. */
@@ -33,6 +35,7 @@ defineSlots<{
     class="z-20 border-b border-border-light bg-surface/90 backdrop-blur-md"
     :class="sticky && 'sticky'"
     :style="sticky ? { top } : undefined"
+    data-ac-ds
     data-testid="ac-header"
   >
     <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4">
@@ -42,11 +45,19 @@ defineSlots<{
           type="button"
           class="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-6 border border-border bg-surface text-label shadow-xs transition hover:border-border-dark hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
           aria-label="Back"
+          data-ac-ds
           data-testid="ac-header-back"
           @click="emit('back')"
         >
           <ArrowLeft class="size-4" aria-hidden="true" />
         </button>
+        <span
+          v-if="$slots.icon"
+          class="inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-8 border border-border-light bg-surface-muted p-1.5 text-label [&_img]:size-full [&_img]:object-contain [&_svg]:size-5"
+          aria-hidden="true"
+        >
+          <slot name="icon" />
+        </span>
         <div class="min-w-0">
           <div v-if="$slots.breadcrumb" class="mb-1 text-xs text-muted"><slot name="breadcrumb" /></div>
           <slot name="title">

@@ -36,6 +36,9 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
   <DocHeading id="clickable" :level="3">Clickable rows</DocHeading>
   <p><code class="prose-code">clickable</code> emits <code class="prose-code">row-click</code> with the row, e.g. to open a detail page.</p>
   <ComponentExample name="table/TableClickable" />
+  <DocHeading id="selectable" :level="3">Selectable rows</DocHeading>
+  <p><code class="prose-code">selectable</code> adds a checkbox column for bulk actions. Bind the chosen rows' <code class="prose-code">rowKey</code> values with <code class="prose-code">v-model:selected</code>. The header checkbox chooses every row in view; choices on other pages are kept.</p>
+  <ComponentExample name="table/TableSelectable" />
   <DocHeading id="loading" :level="3">Loading</DocHeading>
   <p><code class="prose-code">loading</code> shows skeleton rows while data loads.</p>
   <ComponentExample name="table/TableLoading" />

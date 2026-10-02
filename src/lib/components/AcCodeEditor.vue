@@ -383,6 +383,7 @@ defineExpose({
   <div
     class="flex min-w-0 flex-col overflow-hidden bg-surface"
     :class="bordered && 'rounded-10 border border-border shadow-xs transition-[border-color,box-shadow] has-[.cm-editor.cm-focused]:focus-ring'"
+    data-ac-ds
     data-testid="ac-code-editor"
   >
     <div v-if="hasHeader" class="flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-border-light px-3 py-2">

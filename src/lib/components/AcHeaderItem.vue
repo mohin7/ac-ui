@@ -6,5 +6,5 @@ defineSlots<{
 </script>
 
 <template>
-  <div class="flex items-center" data-testid="ac-header-item"><slot /></div>
+  <div class="flex items-center" data-ac-ds data-testid="ac-header-item"><slot /></div>
 </template>

@@ -86,7 +86,7 @@ vite.lib.config.ts            library build: entries index + editor/index, prese
 
 The AppsCode apps load the old Bulma/SCSS library globally, and it defines the same class names with other meanings: `mt-4` is `4px !important` there. `scripts/build-compat.mjs` compiles the library's Tailwind CSS and fences it in:
 
-- **Scope:** every utility and base rule only matches elements under a `[data-testid^="ac-"]` root.
+- **Scope:** every utility and base rule only matches elements under a `[data-ac-ds]` root. Not `data-testid`: the old library uses `ac-…` test ids too, and an app's own `data-testid` replaces the component's.
 - **Specificity:** utilities are `!important` inside `@layer ac-compat`, which beats the old unlayered `!important`.
 - **Roots:** outermost roots get the Geist font and the 20px line height, plus the body colour in dark mode only.
 - **Resets:** a few old element rules (`p`, `td`/`th`, `strong`, `code`, Bulma's `.block` margin) are reset inside components.
@@ -96,7 +96,7 @@ It was checked in kubedb-ui: old markup is pixel-identical with and without it. 
 
 Every component must keep these rules, or it breaks inside the old apps:
 
-- **Mark every root**, including each element that is the first child of a `<Teleport>`, with `data-testid="ac-…"`. That marker is the scope.
+- **Mark every root**, including each element that is the first child of a `<Teleport>`, with `data-ac-ds`. That marker is the scope.
 - **No `rem` in component styles.** Use px, and arbitrary values like `max-w-[320px]`. The old apps set `html { font-size: 13px }`, so rem values shrink by a fifth there. Container sizes are already px in theme.css.
 - **No `v-show` on an element with a display utility** (`flex`, `grid`, `block`…). Under compat the `!important` utility beats `v-show`'s inline `display: none`. Toggle classes instead: `:class="open ? 'flex' : 'hidden'"`.
 - **No inline `:style` for a property a utility on the same element also sets** (e.g. `w-full` with a `width` style). The `!important` utility would win.
@@ -142,7 +142,7 @@ defineSlots<{
 </script>
 
 <template>
-  <div data-testid="ac-thing">…</div>
+  <div data-ac-ds data-testid="ac-thing">…</div>
 </template>
 ```
 
@@ -153,7 +153,7 @@ defineSlots<{
   - Name the old library's prop when it's renamed, e.g. "Old `is-loader-active`."
 - **Types:** put public data shapes in the component file as `export interface` (e.g. `BreadcrumbItem`, `SideTabItem`), then re-export them as types from `src/lib/index.ts`.
 - **v-model:** use `defineModel`, including named models: `v-model:open`, `v-model:view`, `v-model:files`.
-- **Root element:** every component's root carries `data-testid="ac-<kebab-name>"`.
+- **Root element:** every component's root carries `data-ac-ds` (the compat.css scope) and `data-testid="ac-<kebab-name>"` (for tests).
 - **Form controls:**
   - Use `defineOptions({ inheritAttrs: false })`.
   - Split `useAttrs()`: `class` and `style` go on the wrapper, everything else on the real `<input>` or `<button>`.

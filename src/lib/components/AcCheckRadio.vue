@@ -22,7 +22,7 @@ const id = useId();
 </script>
 
 <template>
-  <div role="radiogroup" data-testid="ac-check-radio">
+  <div role="radiogroup" data-ac-ds data-testid="ac-check-radio">
     <div :class="cards ? 'grid gap-3 sm:grid-cols-2' : row ? 'flex flex-row flex-wrap gap-x-6 gap-y-2' : 'flex flex-col gap-2.5'">
       <label
         v-for="(option, i) in options"

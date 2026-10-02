@@ -157,6 +157,7 @@ function onClick(e: MouseEvent) {
     :class="(link || isButton()) && 'hover:border-border-dark hover:shadow-sm'"
     :aria-labelledby="`${id}-title`"
     :aria-busy="loading || undefined"
+    data-ac-ds
     data-testid="ac-usage-card"
   >
     <div class="flex min-w-0 flex-col gap-4 p-4">

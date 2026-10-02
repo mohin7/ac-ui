@@ -42,7 +42,7 @@ const classes = computed(() => [
 </script>
 
 <template>
-  <div role="group" :aria-label="label || undefined" class="items-center" :class="classes" data-testid="ac-buttons">
+  <div role="group" :aria-label="label || undefined" class="items-center" :class="classes" data-ac-ds data-testid="ac-buttons">
     <slot />
   </div>
 </template>

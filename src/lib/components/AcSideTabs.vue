@@ -330,6 +330,7 @@ onBeforeUnmount(() => {
   <div
     ref="root"
     :class="hasContent ? ['flex w-full min-w-0', compact ? 'flex-col' : 'flex-row'] : compact ? 'w-full' : 'flex shrink-0 self-stretch'"
+    data-ac-ds
     data-testid="ac-side-tabs"
   >
     <template v-if="!hideTabs">

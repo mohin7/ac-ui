@@ -109,6 +109,7 @@ function onClick(e: MouseEvent) {
         'has-checked:border-primary has-checked:bg-primary-97 has-checked:shadow-[0_0_0_1px_var(--color-primary)] has-focus-visible:ring-[3px] has-focus-visible:ring-ring',
       disabled && 'cursor-not-allowed opacity-60',
     ]"
+    data-ac-ds
     data-testid="ac-feature-card"
   >
     <div class="flex w-full min-w-0 gap-3" :class="centered ? 'flex-col items-center' : 'items-start'">

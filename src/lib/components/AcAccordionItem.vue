@@ -75,6 +75,7 @@ watch(isOpen, (v) => {
 <template>
   <div
     :class="variant === 'separated' && 'overflow-hidden rounded-10 border border-border bg-surface shadow-xs'"
+    data-ac-ds
     data-testid="ac-accordion-item"
   >
     <component :is="`h${level}`" class="m-0 text-base leading-5 font-normal tracking-normal">

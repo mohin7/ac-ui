@@ -214,7 +214,7 @@ onBeforeUnmount(unlisten);
 </script>
 
 <template>
-  <div class="inline-flex" data-testid="ac-user-menu">
+  <div class="inline-flex" data-ac-ds data-testid="ac-user-menu">
     <button
       :id="triggerId"
       ref="trigger"
@@ -225,6 +225,7 @@ onBeforeUnmount(unlisten);
       :aria-label="`${name}, account menu`"
       class="group inline-flex h-8 shrink-0 cursor-pointer items-center gap-2 rounded-50 p-0.5 transition-colors hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
       :class="[showName && 'sm:pr-2', open && 'bg-surface-sunken']"
+      data-ac-ds
       data-testid="ac-user-menu-trigger"
       @click="open ? close() : openMenu()"
       @keydown="onTriggerKeydown"
@@ -265,6 +266,7 @@ onBeforeUnmount(unlisten);
             bottom: placement.bottom !== undefined ? `${placement.bottom}px` : undefined,
             right: `${placement.right}px`,
           }"
+          data-ac-ds
           data-testid="ac-user-menu-panel"
           @keydown="onMenuKeydown"
         >
@@ -319,6 +321,7 @@ onBeforeUnmount(unlisten);
               role="menuitem"
               tabindex="-1"
               :class="ITEM_CLASS"
+              data-ac-ds
               data-testid="ac-user-menu-logout"
               @click="logout"
             >

@@ -164,6 +164,7 @@ function clamp(v: number) {
     :aria-label="label"
     class="@container z-10 w-full border-t"
     :class="[dark ? 'dark border-border-light bg-sidebar text-body' : 'border-border bg-surface-muted text-body', sticky && 'sticky bottom-0']"
+    data-ac-ds
     data-testid="ac-status-bar"
   >
     <div class="flex h-7 items-center justify-between gap-4 px-2 @lg:px-3">

@@ -85,7 +85,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-textarea">
+  <div class="w-full" :class="disabled && 'opacity-60'" data-ac-ds data-testid="ac-textarea">
     <div class="relative">
       <!-- placeholder=" " lets the label float with :placeholder-shown, as in AcInput -->
       <textarea

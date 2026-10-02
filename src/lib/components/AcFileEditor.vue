@@ -409,6 +409,7 @@ defineExpose({
     class="@container min-w-0 overflow-hidden rounded-10 border border-border bg-surface shadow-xs"
     :style="{ height }"
     :aria-busy="loading || undefined"
+    data-ac-ds
     data-testid="ac-file-editor"
   >
     <div v-if="loading" class="flex h-full flex-col @2xl:flex-row">

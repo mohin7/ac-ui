@@ -85,7 +85,7 @@ const donts = [
     here it's 16px. So <code class="prose-code">compat.css</code> is the library's styles precompiled and fenced in:
   </p>
   <ul>
-    <li>Its styles apply only inside new components, meaning elements under a <code class="prose-code">data-testid="ac-…"</code> root, and their menus and dialogs.</li>
+    <li>Its styles apply only inside new components, meaning elements under a root marked <code class="prose-code">data-ac-ds</code>, and their menus and dialogs.</li>
     <li>Its utilities are <code class="prose-code">!important</code> inside a cascade layer, which beats the old unlayered <code class="prose-code">!important</code> rules.</li>
     <li>It sets new components in Geist with a 20px line height, and leaves the rest of the page alone.</li>
     <li>Its sizes are in px, so the old apps' 13px root font size doesn't shrink anything. Its keyframes are renamed <code class="prose-code">ac-*</code>, so the old <code class="prose-code">spin</code> and <code class="prose-code">pulse</code> animations keep working.</li>

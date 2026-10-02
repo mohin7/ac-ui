@@ -92,7 +92,7 @@ watch(range, (r) => emit("range", { ...r }), { immediate: true });
 </script>
 
 <template>
-  <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 text-base" data-testid="ac-pagination">
+  <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 text-base" data-ac-ds data-testid="ac-pagination">
     <div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
       <div v-if="!hidePageSize" class="flex items-center gap-2">
         <span class="text-xs whitespace-nowrap text-muted" aria-hidden="true">Rows per page</span>
@@ -118,6 +118,7 @@ watch(range, (r) => emit("range", { ...r }), { immediate: true });
             class="inline-flex size-8 cursor-pointer items-center justify-center rounded-6 border border-border bg-surface text-body shadow-xs transition hover:border-border-dark hover:bg-surface-muted hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:bg-surface"
             aria-label="Previous page"
             :disabled="disabled || current <= 1"
+            data-ac-ds
             data-testid="ac-pagination-prev"
             @click="goTo(current - 1)"
           >
@@ -159,6 +160,7 @@ watch(range, (r) => emit("range", { ...r }), { immediate: true });
             class="inline-flex size-8 cursor-pointer items-center justify-center rounded-6 border border-border bg-surface text-body shadow-xs transition hover:border-border-dark hover:bg-surface-muted hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:bg-surface"
             aria-label="Next page"
             :disabled="disabled || current >= pageCount"
+            data-ac-ds
             data-testid="ac-pagination-next"
             @click="goTo(current + 1)"
           >

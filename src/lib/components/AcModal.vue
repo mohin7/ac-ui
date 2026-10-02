@@ -139,6 +139,7 @@ const widths = {
       <div
         v-if="open"
         class="fixed inset-0 z-[80] overflow-y-auto bg-overlay backdrop-blur-[2px]"
+        data-ac-ds
         data-testid="ac-modal"
         @keydown="onKeydown"
         @mousedown.self="closeOnOutsideClick && close()"
@@ -168,6 +169,7 @@ const widths = {
                   type="button"
                   class="inline-flex size-7 cursor-pointer items-center justify-center rounded-6 text-muted transition hover:bg-surface-sunken hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
                   aria-label="Close"
+                  data-ac-ds
                   data-testid="ac-modal-close"
                   @click="close"
                 >

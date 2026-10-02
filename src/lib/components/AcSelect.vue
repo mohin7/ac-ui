@@ -293,7 +293,10 @@ watch(query, (q) => {
 });
 onBeforeUnmount(unlisten);
 
-const hoisted = computed(() => !!props.label && (hasValue.value || open.value));
+// Focused or open counts as active: the same ring and label colour as AcInput gets on focus.
+const focused = ref(false);
+const active = computed(() => open.value || focused.value);
+const hoisted = computed(() => !!props.label && (hasValue.value || active.value));
 const displayText = computed(() => (!props.multiple && selectedOptions.value[0]?.label) || "");
 
 defineExpose({
@@ -303,7 +306,7 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="root" v-bind="rootAttrs" class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-select">
+  <div ref="root" v-bind="rootAttrs" class="w-full" :class="disabled && 'opacity-60'" data-ac-ds data-testid="ac-select">
     <div class="relative">
       <div
         :id="`${id}-trigger`"
@@ -327,13 +330,15 @@ defineExpose({
           label && hasValue && multiple ? 'pt-2.5' : '',
           disabled || loading ? 'cursor-not-allowed' : 'cursor-pointer',
           errorMsg
-            ? 'border-red-60'
-            : open
+            ? ['border-red-60', active && 'border-danger shadow-[0_0_0_3px_var(--color-red-90)]']
+            : active
               ? 'focus-ring'
-              : 'border-border hover:border-border-dark focus-visible:focus-ring',
+              : 'border-border hover:border-border-dark',
         ]"
         @click="toggle"
         @keydown="onKeydown"
+        @focus="focused = true"
+        @blur="focused = false"
       >
         <!-- value -->
         <div class="flex min-w-0 flex-1 flex-wrap items-center gap-1">
@@ -393,7 +398,7 @@ defineExpose({
         class="pointer-events-none absolute left-2.5 rounded-2 bg-surface px-1 transition-all duration-150 ease-out"
         :class="[
           hoisted ? 'top-0 -translate-y-1/2 text-xs font-medium' : 'top-1/2 -translate-y-1/2 text-base text-muted',
-          hoisted && (errorMsg ? 'text-red-30' : open ? 'text-primary-20' : 'text-label'),
+          hoisted && (errorMsg ? 'text-red-30' : active ? 'text-primary-20' : 'text-label'),
         ]"
       >
         {{ label }}<span v-if="required" class="text-danger" aria-hidden="true"> *</span>
@@ -425,6 +430,7 @@ defineExpose({
             width: `${placement.width}px`,
             maxHeight: `${placement.maxHeight}px`,
           }"
+          data-ac-ds
           data-testid="ac-select-panel"
         >
           <div v-if="searchable" class="border-b border-border-light p-1.5">

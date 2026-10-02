@@ -309,7 +309,7 @@ onBeforeUnmount(() => listen(false));
 </script>
 
 <template>
-  <div class="inline-flex" data-testid="ac-notification-menu">
+  <div class="inline-flex" data-ac-ds data-testid="ac-notification-menu">
     <AcNavbarItem
       ref="trigger"
       :label="label"
@@ -320,6 +320,7 @@ onBeforeUnmount(() => listen(false));
       :aria-expanded="open"
       :aria-controls="open ? panelId : undefined"
       :class="open && 'bg-surface-sunken text-heading'"
+      data-ac-ds
       data-testid="ac-notification-menu-trigger"
       @click="toggle"
       @keydown="onTriggerKeydown"
@@ -342,6 +343,7 @@ onBeforeUnmount(() => listen(false));
           class="fixed z-[90] flex w-[380px] max-w-[calc(100vw-16px)] flex-col overflow-hidden rounded-10 border border-border bg-surface shadow-lg outline-none"
           :class="fromTop ? 'origin-top-right' : 'origin-bottom-right'"
           :style="style"
+          data-ac-ds
           data-testid="ac-notification-menu-panel"
           @keydown="onPanelKeydown"
         >
@@ -357,6 +359,7 @@ onBeforeUnmount(() => listen(false));
               v-if="hasUnread || unread"
               type="button"
               class="ml-auto inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-6 px-2 text-xs font-medium text-label transition-colors hover:bg-surface-muted hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+              data-ac-ds
               data-testid="ac-notification-menu-mark-all"
               @click="emit('markAllRead')"
             >
@@ -382,7 +385,7 @@ onBeforeUnmount(() => listen(false));
             </slot>
           </div>
 
-          <ul v-else role="list" class="ac-scrollbar min-h-0 flex-1 divide-y divide-border-light" data-testid="ac-notification-menu-list">
+          <ul v-else role="list" class="ac-scrollbar min-h-0 flex-1 divide-y divide-border-light" data-ac-ds data-testid="ac-notification-menu-list">
             <li v-for="item in notifications" :key="item.id">
               <component
                 :is="linkTag(item.to, item.href)"
@@ -390,6 +393,7 @@ onBeforeUnmount(() => listen(false));
                 data-notification-item
                 class="relative flex w-full cursor-pointer gap-3 px-4 py-3 text-left no-underline outline-none transition-colors hover:bg-surface-muted focus-visible:bg-surface-muted focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:ring-inset"
                 :class="!item.read && 'bg-primary-97'"
+                data-ac-ds
                 data-testid="ac-notification-menu-item"
                 @click="choose(item)"
               >
@@ -419,6 +423,7 @@ onBeforeUnmount(() => listen(false));
                 :is="linkTag(viewAllTo, viewAllHref)"
                 v-bind="linkAttrs(viewAllTo, viewAllHref)"
                 class="flex h-8 w-full cursor-pointer items-center justify-center gap-1.5 rounded-6 text-base font-medium text-heading no-underline outline-none transition-colors hover:bg-surface-muted focus-visible:bg-surface-muted focus-visible:ring-[3px] focus-visible:ring-ring"
+                data-ac-ds
                 data-testid="ac-notification-menu-view-all"
                 @click="viewAll"
               >

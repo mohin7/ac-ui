@@ -73,12 +73,13 @@ const cancel = () => {
       </div>
     </div>
     <template #footer>
-      <AcButton title="Cancel" color="white" :disabled="loading" data-testid="ac-delete-modal-cancel" @click="cancel" />
+      <AcButton title="Cancel" color="white" :disabled="loading" data-ac-ds data-testid="ac-delete-modal-cancel" @click="cancel" />
       <AcButton
         :title="confirmText"
         color="danger"
         :loading="loading"
         :disabled="!canConfirm"
+        data-ac-ds
         data-testid="ac-delete-modal-confirm"
         @click="emit('confirm', itemName)"
       />

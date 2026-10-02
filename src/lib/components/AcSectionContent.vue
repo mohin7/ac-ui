@@ -50,6 +50,7 @@ const bodyId = useId();
 <template>
   <section
     :class="!plain && ['rounded-10 border bg-surface shadow-xs', tone === 'danger' ? 'border-red-80' : 'border-border']"
+    data-ac-ds
     data-testid="ac-section-content"
   >
     <header

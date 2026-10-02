@@ -21,7 +21,7 @@ const active = defineModel<string>({ required: true });
 </script>
 
 <template>
-  <div data-testid="ac-tabs">
+  <div data-ac-ds data-testid="ac-tabs">
     <div role="tablist" class="flex gap-5 overflow-x-auto overflow-y-hidden border-b border-border [scrollbar-width:none]">
       <button
         v-for="item in items"

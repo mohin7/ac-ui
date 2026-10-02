@@ -95,6 +95,7 @@ onBeforeUnmount(stopMeasuring);
     class="mt-4 w-full"
     :class="[sticky === 'container' && 'sticky bottom-0 z-10', sticky !== 'viewport' && innerWidth]"
     :style="sticky === 'viewport' ? { height: `${fixedBox.height}px` } : undefined"
+    data-ac-ds
     data-testid="ac-form-footer"
   >
     <div

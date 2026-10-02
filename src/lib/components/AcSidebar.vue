@@ -198,6 +198,7 @@ defineExpose({ toggle });
       class="inset-0 z-[79] bg-overlay"
       :class="contained ? 'absolute' : 'fixed'"
       aria-hidden="true"
+      data-ac-ds
       data-testid="ac-sidebar-backdrop"
       @click="closeDrawer"
     />
@@ -212,6 +213,7 @@ defineExpose({ toggle });
     :role="drawerOpen ? 'dialog' : undefined"
     :aria-modal="drawerOpen || undefined"
     :aria-label="drawerOpen ? label : undefined"
+    data-ac-ds
     data-testid="ac-sidebar"
     @keydown="onKeydown"
   >
@@ -229,6 +231,7 @@ defineExpose({ toggle });
         class="-mr-1.5 inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-6 text-muted transition hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
         :class="dark ? 'hover:bg-white/8' : 'hover:bg-slate-90'"
         aria-label="Close navigation"
+        data-ac-ds
         data-testid="ac-sidebar-close"
         @click="closeDrawer"
       >
@@ -257,6 +260,7 @@ defineExpose({ toggle });
         :class="[rail ? 'justify-center' : 'px-2.5', dark ? 'hover:bg-white/8' : 'hover:bg-slate-90']"
         :aria-label="rail ? 'Expand sidebar' : 'Collapse sidebar'"
         :title="rail ? 'Expand sidebar' : undefined"
+        data-ac-ds
         data-testid="ac-sidebar-collapse"
         @click="collapsed = !collapsed"
       >

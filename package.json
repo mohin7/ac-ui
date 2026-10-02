@@ -1,12 +1,14 @@
 {
-  "name": "@appscode/design-system",
-  "version": "3.0.0-alpha.2",
+  "name": "@mohin4/design-system",
+  "version": "0.0.4",
   "description": "AppsCode design system: Tailwind CSS v4 theme and Vue 3 components.",
-  "private": true,
   "type": "module",
   "files": [
     "dist/lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "module": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
   "exports": {
@@ -30,7 +32,8 @@
     "preview": "vite preview",
     "type-check": "vue-tsc --build --force",
     "meta": "node scripts/gen-meta.mjs",
-    "build:lib": "vite build -c vite.lib.config.ts && vue-tsc -p tsconfig.lib.json && node scripts/copy-theme.mjs && node scripts/build-compat.mjs"
+    "build:lib": "vite build -c vite.lib.config.ts && vue-tsc -p tsconfig.lib.json && node scripts/copy-theme.mjs && node scripts/build-compat.mjs",
+    "prepublishOnly": "npm run build:lib"
   },
   "peerDependencies": {
     "lucide-vue-next": "^1.0.0",

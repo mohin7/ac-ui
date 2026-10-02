@@ -199,7 +199,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="root" class="inline-flex" data-testid="ac-dropdown" @click="onTriggerClick" @keydown="onTriggerKeydown">
+  <div ref="root" class="inline-flex" data-ac-ds data-testid="ac-dropdown" @click="onTriggerClick" @keydown="onTriggerKeydown">
     <slot v-if="slots.trigger" name="trigger" :open="open" />
     <AcButton v-else-if="label" :title="label" color="white" :disabled="disabled">
       <ChevronDown class="-mr-1 text-muted transition-transform duration-200" :class="open && 'rotate-180'" aria-hidden="true" />
@@ -234,6 +234,7 @@ onBeforeUnmount(() => {
           class="ac-scrollbar fixed z-[90] flex w-max max-w-[min(320px,calc(100vw-16px))] flex-col rounded-8 border border-border bg-surface p-1 shadow-lg outline-none"
           :class="fromTop ? 'origin-top' : 'origin-bottom'"
           :style="style"
+          data-ac-ds
           data-testid="ac-dropdown-menu"
           @keydown="onMenuKeydown"
         >

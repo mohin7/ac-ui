@@ -103,6 +103,7 @@ const handleClick = (e: MouseEvent) => {
     :aria-busy="loading || undefined"
     class="relative inline-flex cursor-pointer items-center justify-center rounded-6 border font-medium tracking-[-0.005em] whitespace-nowrap transition-[background-color,border-color,color,box-shadow,transform] duration-150 ease-out select-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none disabled:active:translate-y-0 aria-disabled:pointer-events-none aria-disabled:opacity-50"
     :class="[colorClass, sizeClass, loading && 'text-transparent! pointer-events-none']"
+    data-ac-ds
     data-testid="ac-button"
     @click="handleClick"
   >

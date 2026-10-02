@@ -95,7 +95,7 @@ onBeforeUnmount(() => clearTimeout(copiedTimer));
 </script>
 
 <template>
-  <div :class="bordered && 'rounded-10 border border-border bg-surface shadow-xs'" data-testid="ac-info-table">
+  <div :class="bordered && 'rounded-10 border border-border bg-surface shadow-xs'" data-ac-ds data-testid="ac-info-table">
     <div
       v-if="title || $slots.actions"
       class="flex items-center justify-between gap-4"

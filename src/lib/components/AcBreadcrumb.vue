@@ -47,7 +47,7 @@ function linkProps(item: BreadcrumbItem) {
 </script>
 
 <template>
-  <nav aria-label="Breadcrumb" data-testid="ac-breadcrumb">
+  <nav aria-label="Breadcrumb" data-ac-ds data-testid="ac-breadcrumb">
     <ol class="flex min-w-0 flex-wrap items-center gap-1 text-xs text-muted">
       <template v-for="(entry, i) in visible" :key="entry ? entry.index : 'ellipsis'">
         <li v-if="i > 0" class="flex items-center text-slate-60" aria-hidden="true"><ChevronRight class="size-3" /></li>

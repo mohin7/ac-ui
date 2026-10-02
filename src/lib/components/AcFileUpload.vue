@@ -209,7 +209,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-file-upload">
+  <div class="w-full" :class="disabled && 'opacity-60'" data-ac-ds data-testid="ac-file-upload">
     <p v-if="label" :id="`${id}-label`" class="mb-1.5 text-xs font-medium text-label">
       {{ label }}<span v-if="required" class="text-danger" aria-hidden="true"> *</span>
     </p>

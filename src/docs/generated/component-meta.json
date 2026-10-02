@@ -2717,6 +2717,11 @@
     ],
     "slots": [
       {
+        "name": "icon",
+        "type": "any",
+        "description": "A logo or icon before the title, e.g. the database engine's logo on a resource page. Shown in a 40px tile."
+      },
+      {
         "name": "breadcrumb",
         "type": "any",
         "description": "Breadcrumb above the title."
@@ -5054,6 +5059,27 @@
         "default": "false",
         "required": false,
         "description": "Adds a pointer cursor and emits `row-click`."
+      },
+      {
+        "name": "selectable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a checkbox column for choosing rows, e.g. for bulk delete. Bind the chosen rows' `rowKey` values with `v-model:selected`."
+      },
+      {
+        "name": "resolveLink",
+        "type": "((link: string) => string) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Turns a server cell's link template into a URL, e.g. to fill `${username}` and `${clustername}` from the current route."
+      },
+      {
+        "name": "selected",
+        "type": "unknown[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "`rowKey` values of the chosen rows. Bind with `v-model:selected`. Rows that leave `rows` (another page, a search) stay chosen."
       }
     ],
     "events": [
@@ -5066,6 +5092,11 @@
         "name": "row-click",
         "type": "[row: Row]",
         "signature": "(evt: \"row-click\", row: Row): void"
+      },
+      {
+        "name": "update:selected",
+        "type": "[value: unknown[]]",
+        "signature": "(event: \"update:selected\", value: unknown[]): void"
       }
     ],
     "slots": [

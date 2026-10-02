@@ -33,6 +33,7 @@ const inkClass = computed(() => (props.tone === "white" ? "fill-white" : "fill-b
     :role="label ? 'img' : undefined"
     :aria-label="label || undefined"
     :aria-hidden="label ? undefined : 'true'"
+    data-ac-ds
     data-testid="ac-logo"
   >
     <g>

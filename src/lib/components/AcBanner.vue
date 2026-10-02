@@ -98,6 +98,7 @@ function dismiss() {
     class="flex w-full items-start gap-3 border-b px-4 py-2.5 text-base sm:items-center sm:px-6"
     :class="[tone[variant], variant === 'solid' ? '[&_a]:text-inherit [&_strong]:text-inherit' : '[&_strong]:text-heading']"
     :role="color === 'danger' || color === 'warning' ? 'alert' : 'status'"
+    data-ac-ds
     data-testid="ac-banner"
   >
     <component

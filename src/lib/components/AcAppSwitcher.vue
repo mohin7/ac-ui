@@ -264,7 +264,7 @@ onBeforeUnmount(() => listen(false));
 </script>
 
 <template>
-  <div class="inline-flex" data-testid="ac-app-switcher">
+  <div class="inline-flex" data-ac-ds data-testid="ac-app-switcher">
     <AcNavbarItem
       ref="trigger"
       :label="label"
@@ -274,6 +274,7 @@ onBeforeUnmount(() => listen(false));
       :aria-expanded="open"
       :aria-controls="open ? panelId : undefined"
       :class="open && 'bg-surface-sunken text-heading'"
+      data-ac-ds
       data-testid="ac-app-switcher-trigger"
       @click="toggle"
       @keydown="onTriggerKeydown"
@@ -295,6 +296,7 @@ onBeforeUnmount(() => listen(false));
           class="ac-scrollbar fixed z-[90] flex w-[340px] max-w-[calc(100vw-16px)] flex-col rounded-10 border border-border bg-surface shadow-lg"
           :class="fromTop ? 'origin-top-right' : 'origin-bottom-right'"
           :style="style"
+          data-ac-ds
           data-testid="ac-app-switcher-panel"
           @keydown="onPanelKeydown"
         >
@@ -307,6 +309,7 @@ onBeforeUnmount(() => listen(false));
                 :aria-current="isCurrent(app) ? 'page' : undefined"
                 :title="app.subtitle || undefined"
                 class="group relative flex h-full flex-col items-center gap-2 rounded-8 px-1.5 pt-3 pb-2.5 text-center no-underline outline-none transition-colors hover:bg-surface-muted focus-visible:ring-[3px] focus-visible:ring-ring aria-[current=page]:bg-primary-97"
+                data-ac-ds
                 data-testid="ac-app-switcher-app"
                 @click="choose(app)"
               >

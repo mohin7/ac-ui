@@ -43,6 +43,7 @@ const resolvedLayout = computed(() => props.layout ?? form?.layout.value ?? "sta
     :aria-describedby="description || $slots.description ? `${id}-desc` : undefined"
     class="border-t border-border-light py-7 first:border-t-0 first:pt-0"
     :class="resolvedLayout === 'aside' && 'md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10'"
+    data-ac-ds
     data-testid="ac-form-section"
   >
     <div v-if="title || description || $slots.description || $slots.actions" class="mb-5 flex items-start gap-4" :class="resolvedLayout === 'aside' && 'md:mb-0'">

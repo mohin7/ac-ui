@@ -87,6 +87,7 @@ function onClick(e: MouseEvent) {
       disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : 'cursor-pointer hover:bg-surface-sunken hover:text-heading',
     ]"
     :title="iconOnly ? label : undefined"
+    data-ac-ds
     data-testid="ac-navbar-item"
     @click="onClick"
   >
