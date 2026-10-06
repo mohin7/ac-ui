@@ -427,7 +427,7 @@ defineExpose({
 
     <div v-if="problems.length && !showingChanges" :id="problemsId" class="border-t border-border-light bg-surface-muted">
       <p class="sr-only" aria-live="polite">{{ problems.length }} {{ problems.length === 1 ? "problem" : "problems" }}</p>
-      <ul class="ac-scrollbar max-h-[92px] py-1">
+      <ul class="ac-scrollbar max-h-[calc(92px*var(--ac-scale))] py-1">
         <li v-for="(problem, i) in problems" :key="i">
           <button
             type="button"

@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { Menu, Search } from "lucide-vue-next";
-import { AcThemeMode, AcLogo } from "@/lib";
+import { AcFontScale, AcThemeMode, AcLogo } from "@/lib";
 import BrandHueMenu from "./BrandHueMenu.vue";
 
 const emit = defineEmits<{ search: []; menu: [] }>();
@@ -63,6 +63,7 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
             {{ isMac ? "⌘" : "Ctrl" }} K
           </kbd>
         </button>
+        <AcFontScale class="hidden md:inline-flex" />
         <AcThemeMode class="hidden sm:inline-flex" default-mode="system" />
         <BrandHueMenu />
       </div>

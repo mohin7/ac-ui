@@ -67,7 +67,7 @@ const props = withDefaults(defineProps<Props>(), {
   top: "0px",
   bottom: "0px",
   offsetSelectors: () => [],
-  width: "220px",
+  width: "calc(220px * var(--ac-scale))",
   hideTabs: false,
   collapsible: false,
   breakpoint: 640,
@@ -372,7 +372,7 @@ onBeforeUnmount(() => {
       <div
         v-else
         class="shrink-0 border-r border-border bg-surface transition-[width] duration-200 ease-out-soft motion-reduce:transition-none"
-        :style="{ width: rail ? '56px' : width }"
+        :style="{ width: rail ? 'calc(56px * var(--ac-scale))' : width }"
       >
         <nav
           :aria-label="label"

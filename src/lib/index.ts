@@ -1,5 +1,7 @@
 export * from "./components";
 export { useColorMode } from "./composables/useColorMode";
+export { useFontScale, FONT_SCALES } from "./composables/useFontScale";
+export type { FontScale } from "./composables/useFontScale";
 export type { ColorMode } from "./composables/useColorMode";
 export { useToast } from "./composables/useToast";
 export {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Plus } from "lucide-vue-next";
+import { ArrowRight, Plus } from "lucide-vue-next";
 import { AcButton } from "@/lib";
 </script>
 
@@ -12,6 +12,11 @@ import { AcButton } from "@/lib";
   <AcButton color="white" aria-label="Add">
     <template #icon>
       <Plus class="size-4" />
+    </template>
+  </AcButton>
+  <AcButton title="Continue" color="white">
+    <template #icon-right>
+      <ArrowRight class="size-4" />
     </template>
   </AcButton>
 </template>

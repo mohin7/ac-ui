@@ -18,6 +18,9 @@
 :root {
   /* Runtime brand hue — change these on <html> to re-hue every primary/secondary step.
      26% lightness is the AA limit (4.5:1 with white text) for the default hue. */
+  /* Interface scale: 1 = the 13px base. Set it on <html> (see useFontScale) and text, line heights, spacing
+     and radii grow together, so layouts keep their proportions. */
+  --ac-scale: 1;
   --primary-hue: 149;
   --primary-saturation: 100%;
   --primary-light: 26%;
@@ -210,41 +213,41 @@
   /* type — Geist for UI, Geist Mono for code and resource names */
   --font-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
-  --text-xm: 10px;
-  --text-xm--line-height: 14px;
-  --text-sm: 11px;
-  --text-sm--line-height: 16px;
-  --text-xs: 12px;
-  --text-xs--line-height: 16px;
-  --text-base: 13px;
-  --text-base--line-height: 20px;
-  --text-lg: 14px;
-  --text-lg--line-height: 22px;
-  --text-xl: 16px;
-  --text-xl--line-height: 26px;
-  --text-2xl: 18px;
-  --text-2xl--line-height: 28px;
-  --text-3xl: 24px;
-  --text-3xl--line-height: 32px;
+  --text-xm: calc(10px * var(--ac-scale));
+  --text-xm--line-height: calc(14px * var(--ac-scale));
+  --text-sm: calc(11px * var(--ac-scale));
+  --text-sm--line-height: calc(16px * var(--ac-scale));
+  --text-xs: calc(12px * var(--ac-scale));
+  --text-xs--line-height: calc(16px * var(--ac-scale));
+  --text-base: calc(13px * var(--ac-scale));
+  --text-base--line-height: calc(20px * var(--ac-scale));
+  --text-lg: calc(14px * var(--ac-scale));
+  --text-lg--line-height: calc(22px * var(--ac-scale));
+  --text-xl: calc(16px * var(--ac-scale));
+  --text-xl--line-height: calc(26px * var(--ac-scale));
+  --text-2xl: calc(18px * var(--ac-scale));
+  --text-2xl--line-height: calc(28px * var(--ac-scale));
+  --text-3xl: calc(24px * var(--ac-scale));
+  --text-3xl--line-height: calc(32px * var(--ac-scale));
   --text-3xl--letter-spacing: -0.02em;
-  --text-4xl: 30px;
-  --text-4xl--line-height: 38px;
+  --text-4xl: calc(30px * var(--ac-scale));
+  --text-4xl--line-height: calc(38px * var(--ac-scale));
   --text-4xl--letter-spacing: -0.025em;
-  --text-5xl: 36px;
-  --text-5xl--line-height: 44px;
+  --text-5xl: calc(36px * var(--ac-scale));
+  --text-5xl--line-height: calc(44px * var(--ac-scale));
   --text-5xl--letter-spacing: -0.03em;
-  --text-6xl: 42px;
-  --text-6xl--line-height: 48px;
+  --text-6xl: calc(42px * var(--ac-scale));
+  --text-6xl--line-height: calc(48px * var(--ac-scale));
   --text-6xl--letter-spacing: -0.03em;
-  --text-h1: 32px;
-  --text-h2: 26px;
-  --text-h3: 22px;
-  --text-h4: 18px;
-  --text-h5: 15px;
-  --text-h6: 13px;
+  --text-h1: calc(32px * var(--ac-scale));
+  --text-h2: calc(26px * var(--ac-scale));
+  --text-h3: calc(22px * var(--ac-scale));
+  --text-h4: calc(18px * var(--ac-scale));
+  --text-h5: calc(15px * var(--ac-scale));
+  --text-h6: calc(13px * var(--ac-scale));
 
   /* spacing: 1 unit = 4px, so p-4 = 16px like the source .p-16 */
-  --spacing: 4px;
+  --spacing: calc(4px * var(--ac-scale));
 
   /* Container sizes in px, not Tailwind's rem: the old apps set html { font-size: 13px },
      which would shrink every max-w-md and @container breakpoint by a fifth. */
@@ -263,14 +266,14 @@
   --container-7xl: 1280px;
 
   /* radius: 6px on controls, 10px on surfaces; the source steps are kept for old classes */
-  --radius-2: 2px;
-  --radius-4: 4px;
-  --radius-6: 6px;
-  --radius-8: 8px;
-  --radius-10: 10px;
-  --radius-12: 12px;
-  --radius-16: 16px;
-  --radius-50: 50px;
+  --radius-2: calc(2px * var(--ac-scale));
+  --radius-4: calc(4px * var(--ac-scale));
+  --radius-6: calc(6px * var(--ac-scale));
+  --radius-8: calc(8px * var(--ac-scale));
+  --radius-10: calc(10px * var(--ac-scale));
+  --radius-12: calc(12px * var(--ac-scale));
+  --radius-16: calc(16px * var(--ac-scale));
+  --radius-50: calc(50px * var(--ac-scale));
 
   /* elevation: soft, slate-tinted, layered */
   --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
@@ -487,12 +490,12 @@
     line-height: var(--text-base--line-height);
   }
   h1, h2, h3, h4, h5, h6 { color: var(--color-heading); font-weight: 600; text-wrap: balance; }
-  h1 { font-size: var(--text-h1); line-height: 40px; letter-spacing: -0.03em; }
-  h2 { font-size: var(--text-h2); line-height: 34px; letter-spacing: -0.025em; }
-  h3 { font-size: var(--text-h3); line-height: 30px; letter-spacing: -0.02em; }
-  h4 { font-size: var(--text-h4); line-height: 26px; letter-spacing: -0.015em; }
-  h5 { font-size: var(--text-h5); line-height: 22px; letter-spacing: -0.01em; }
-  h6 { font-size: var(--text-h6); line-height: 20px; font-weight: 500; }
+  h1 { font-size: var(--text-h1); line-height: calc(40px * var(--ac-scale)); letter-spacing: -0.03em; }
+  h2 { font-size: var(--text-h2); line-height: calc(34px * var(--ac-scale)); letter-spacing: -0.025em; }
+  h3 { font-size: var(--text-h3); line-height: calc(30px * var(--ac-scale)); letter-spacing: -0.02em; }
+  h4 { font-size: var(--text-h4); line-height: calc(26px * var(--ac-scale)); letter-spacing: -0.015em; }
+  h5 { font-size: var(--text-h5); line-height: calc(22px * var(--ac-scale)); letter-spacing: -0.01em; }
+  h6 { font-size: var(--text-h6); line-height: calc(20px * var(--ac-scale)); font-weight: 500; }
   code, kbd, pre, samp { font-family: var(--font-mono); font-feature-settings: normal; }
   ::selection { background-color: var(--color-primary-90); color: var(--color-primary-10); }
   :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
@@ -500,7 +503,7 @@
 
 @utility text-code {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: calc(13px * var(--ac-scale));
   letter-spacing: -0.01em;
   color: var(--color-heading);
 }

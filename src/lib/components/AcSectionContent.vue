@@ -11,7 +11,7 @@ export interface Props {
   backButton?: boolean;
   /** Lets people collapse the body with a chevron button. */
   collapsible?: boolean;
-  /** Pads the body. Turn off for flush tables and lists. */
+  /** Pads the body. Turn off for flush tables and lists; the body then clips to the card's rounded corners. */
   padded?: boolean;
   /** Drops the card surface so the section blends into its parent. */
   plain?: boolean;
@@ -92,7 +92,7 @@ const bodyId = useId();
         </button>
       </div>
     </header>
-    <div v-show="open" :id="bodyId" :class="padded && !plain && 'p-5'">
+    <div v-show="open" :id="bodyId" :class="plain ? undefined : padded ? 'p-5' : 'overflow-hidden rounded-b-10'">
       <slot />
     </div>
   </section>

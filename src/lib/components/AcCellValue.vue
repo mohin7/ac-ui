@@ -169,7 +169,7 @@ const props = withDefaults(defineProps<Props>(), {
   bold: false,
   mono: false,
   align: undefined,
-  maxWidth: "280px",
+  maxWidth: "calc(280px * var(--ac-scale))",
   maxItems: 3,
   unit: "",
   relative: true,

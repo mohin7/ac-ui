@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
 import { ChevronDown, LogOut } from "lucide-vue-next";
+import AcFontScale from "./AcFontScale.vue";
 import AcThemeMode from "./AcThemeMode.vue";
 import type { Component } from "vue";
 
@@ -30,6 +31,8 @@ export interface Props {
   items?: UserMenuItem[];
   /** Adds the Light / Dark / System switch (`AcThemeMode`). */
   showThemeMode?: boolean;
+  /** Adds a text-size switch (`AcFontScale`) that scales the whole interface. */
+  showFontScale?: boolean;
   /** Shows the name next to the avatar in the trigger (from 640px up). */
   showName?: boolean;
   /** Makes Sign out a link to this URL, e.g. `${accountsDomain}/user/logout`. `logout` is emitted either way. */
@@ -44,6 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
   profileUrl: "",
   items: () => [],
   showThemeMode: false,
+  showFontScale: false,
   showName: true,
   logoutUrl: "",
   logoutLabel: "Sign out",
@@ -311,6 +315,11 @@ onBeforeUnmount(unlisten);
           <div v-if="showThemeMode" role="group" :aria-labelledby="`${id}-theme`" class="border-t border-border-light px-3.5 py-2.5">
             <p :id="`${id}-theme`" class="mb-1.5 text-xs font-medium text-label">Theme</p>
             <AcThemeMode display="labels" @set:theme="emit('set:theme', $event)" />
+          </div>
+
+          <div v-if="showFontScale" role="group" :aria-labelledby="`${id}-scale`" class="border-t border-border-light px-3.5 py-2.5">
+            <p :id="`${id}-scale`" class="mb-1.5 text-xs font-medium text-label">Text size</p>
+            <AcFontScale display="labels" />
           </div>
 
           <div role="group" class="border-t border-border-light p-1">

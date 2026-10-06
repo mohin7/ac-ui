@@ -4,7 +4,7 @@ import { RotateCcw } from "lucide-vue-next";
 import { AcBadge, AcButton, AcInput, AcSwitch, hexToHsl, useBrandColor } from "@/lib";
 
 const presets = [
-  { name: "AppsCode green", hex: "#00994a" },
+  { name: "AppsCode green", hex: "#008540" },
   { name: "Legacy blue", hex: "#1971bd" },
   { name: "Indigo", hex: "#4d4dcb" },
   { name: "Lime (too light)", hex: "#7cb518" },

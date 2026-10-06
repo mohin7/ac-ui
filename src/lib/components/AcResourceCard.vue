@@ -232,7 +232,7 @@ function onClick(e: MouseEvent) {
         <dd class="mt-0.5 flex min-w-0 flex-wrap items-center gap-1.5 text-base font-medium text-heading">
           <slot :name="`detail-${detail.key}`" :detail="detail">
             <span v-if="isEmpty(detail.value)" class="text-muted" aria-label="Not set">—</span>
-            <span v-else class="min-w-0 break-words" :class="detail.mono && 'font-mono text-[12.5px]'">{{ detail.value }}</span>
+            <span v-else class="min-w-0 break-words" :class="detail.mono && 'font-mono text-[length:calc(12.5px*var(--ac-scale))]'">{{ detail.value }}</span>
           </slot>
         </dd>
       </div>

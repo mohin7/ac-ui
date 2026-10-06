@@ -158,7 +158,7 @@ const widths = {
             <header class="flex shrink-0 items-start gap-4 border-b border-border-light px-5 py-4">
               <div class="min-w-0 flex-1">
                 <slot name="header">
-                  <h4 :id="`${id}-title`" class="text-[16px] leading-6 tracking-[-0.015em]">{{ title }}</h4>
+                  <h4 :id="`${id}-title`" class="text-xl leading-6 tracking-[-0.015em]">{{ title }}</h4>
                   <p v-if="description" :id="`${id}-desc`" class="mt-0.5 text-base text-muted">{{ description }}</p>
                 </slot>
               </div>

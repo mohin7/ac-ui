@@ -40,6 +40,8 @@ defineSlots<{
   default?: () => unknown;
   /** A 16px icon before the label (an inline SVG or icon component). */
   icon?: () => unknown;
+  /** A 16px icon after the label, e.g. an arrow or chevron. */
+  "icon-right"?: () => unknown;
 }>();
 
 // Colour recipes follow styles/components/_button.scss (solid, light -95/-30, outlined),
@@ -112,6 +114,9 @@ const handleClick = (e: MouseEvent) => {
     </span>
     <span v-if="title">{{ title }}</span>
     <slot />
+    <span v-if="$slots['icon-right']" class="-mr-0.5 inline-flex shrink-0 items-center justify-center" aria-hidden="true">
+      <slot name="icon-right" />
+    </span>
     <AcSpinner
       v-if="loading"
       class="absolute inset-0 m-auto"

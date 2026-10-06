@@ -42,6 +42,9 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
   <DocHeading id="expandable" :level="3">Expandable rows</DocHeading>
   <p><code class="prose-code">expandable</code> adds an arrow column. Opening a row shows the <code class="prose-code">expanded</code> slot under it, across the full width of the table. Bind the open rows' <code class="prose-code">rowKey</code> values with <code class="prose-code">v-model:expanded</code>, or leave it unbound to let the table keep track. Use <code class="prose-code">can-expand</code> to give an arrow only to rows that have details. The arrow doesn't trigger <code class="prose-code">@row-click</code>.</p>
   <ComponentExample name="table/TableExpandable" />
+  <DocHeading id="flat" :level="3">Inside a card</DocHeading>
+  <p>A table draws its own border, rounded corners and shadow. Put it in a card or section that already has a frame and that makes a box inside a box. <code class="prose-code">flat</code> removes the table's frame and softens the header rule, so the card is the only edge. Use <code class="prose-code">AcCard</code> with <code class="prose-code">:padded="false"</code>: it clips the table to its rounded corners.</p>
+  <ComponentExample name="table/TableFlat" />
 
   <DocHeading id="loading" :level="3">Loading</DocHeading>
   <p><code class="prose-code">loading</code> shows skeleton rows while data loads.</p>

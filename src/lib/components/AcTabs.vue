@@ -41,7 +41,7 @@ const active = defineModel<string>({ required: true });
         {{ item.label }}
         <span
           v-if="item.count !== undefined"
-          class="inline-flex h-4.5 min-w-4.5 items-center justify-center rounded-50 px-1.5 text-[11px] leading-none tabular-nums"
+          class="inline-flex h-4.5 min-w-4.5 items-center justify-center rounded-50 px-1.5 text-sm leading-none tabular-nums"
           :class="active === item.key ? 'bg-primary-95 text-primary-10' : 'bg-surface-sunken text-label'"
           >{{ item.count }}</span
         >

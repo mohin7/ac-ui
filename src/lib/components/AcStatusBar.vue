@@ -214,7 +214,7 @@ function clamp(v: number) {
                 <span
                   v-if="item.value !== undefined"
                   class="max-w-48 truncate font-medium text-heading"
-                  :class="item.mono && 'font-mono text-[11.5px]'"
+                  :class="item.mono && 'font-mono text-[length:calc(11.5px*var(--ac-scale))]'"
                   >{{ item.value }}</span
                 >
               </template>

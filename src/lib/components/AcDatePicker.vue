@@ -824,7 +824,7 @@ defineExpose({
             </button>
           </div>
 
-          <div class="max-w-full min-w-0" :class="mode === 'duration' ? 'w-72' : 'w-[276px]'">
+          <div class="max-w-full min-w-0" :class="mode === 'duration' ? 'w-72' : 'w-[calc(276px*var(--ac-scale))]'">
             <!-- duration -->
             <div v-if="mode === 'duration'" class="p-4">
               <p class="text-base font-medium text-heading">{{ label || "Duration" }}</p>

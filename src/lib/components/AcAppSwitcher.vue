@@ -293,7 +293,7 @@ onBeforeUnmount(() => listen(false));
           ref="panel"
           role="dialog"
           :aria-labelledby="headingId"
-          class="ac-scrollbar fixed z-[90] flex w-[340px] max-w-[calc(100vw-16px)] flex-col rounded-10 border border-border bg-surface shadow-lg"
+          class="ac-scrollbar fixed z-[90] flex w-[calc(340px*var(--ac-scale))] max-w-[calc(100vw-16px)] flex-col rounded-10 border border-border bg-surface shadow-lg"
           :class="fromTop ? 'origin-top-right' : 'origin-bottom-right'"
           :style="style"
           data-ac-ds

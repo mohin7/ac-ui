@@ -37,6 +37,8 @@ export interface Props<R> {
   expandable?: boolean;
   /** With `expandable`, decides per row whether it can open. Rows that can't show no arrow. */
   canExpand?: (row: R) => boolean;
+  /** Drops the table's own frame (border, rounded corners, shadow) so it sits flush inside a card or section that already has one. Without it a table in a card draws a second box. */
+  flat?: boolean;
   /** Turns a server cell's link template into a URL, e.g. to fill `${username}` and `${clustername}` from the current route. */
   resolveLink?: (link: string) => string;
 }
@@ -46,6 +48,7 @@ const props = withDefaults(defineProps<Props<Row>>(), {
   loading: false,
   loaderRows: 3,
   emptyText: "No data found",
+  flat: false,
   clickable: false,
   selectable: false,
   expandable: false,
@@ -135,6 +138,9 @@ function rowLabel(row: Row) {
   return typeof text === "string" || typeof text === "number" ? text : String(row[props.rowKey]);
 }
 
+/** Flat tables sit under a card's own border, so the header rule is the quiet one. */
+const headBorder = computed(() => (props.flat ? "border-border-light" : "border-border"));
+
 const checkboxClass =
   "peer size-4 cursor-pointer appearance-none rounded-4 border border-border-dark bg-surface align-middle shadow-xs transition-[background-color,border-color,box-shadow] duration-150 hover:border-slate-60 checked:border-primary checked:bg-primary checked:shadow-button indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50";
 
@@ -142,15 +148,15 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
 </script>
 
 <template>
-  <div class="w-full overflow-hidden rounded-10 border border-border bg-surface shadow-xs" data-ac-ds data-testid="ac-table">
+  <div class="w-full overflow-hidden bg-surface" :class="!flat && 'rounded-10 border border-border shadow-xs'" data-ac-ds data-testid="ac-table">
     <div class="ac-scrollbar">
       <table class="w-full border-separate border-spacing-0 text-base">
         <thead>
           <tr>
-            <th v-if="expandable" scope="col" class="h-9 w-10 border-b border-border bg-surface-muted pr-0 pl-3 first:rounded-tl-10">
+            <th v-if="expandable" scope="col" class="h-9 w-10 border-b bg-surface-muted pr-0 pl-3" :class="[headBorder, !flat && 'first:rounded-tl-10']">
               <span class="sr-only">Expand</span>
             </th>
-            <th v-if="selectable" scope="col" class="h-9 w-10 border-b border-border bg-surface-muted pr-0 pl-4 first:rounded-tl-10">
+            <th v-if="selectable" scope="col" class="h-9 w-10 border-b bg-surface-muted pr-0 pl-4" :class="[headBorder, !flat && 'first:rounded-tl-10']">
               <span class="relative flex size-4">
                 <input
                   type="checkbox"
@@ -173,8 +179,8 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
               v-for="col in columns"
               :key="col.key"
               scope="col"
-              class="h-9 border-b border-border bg-surface-muted px-4 text-xs font-medium whitespace-nowrap text-label first:rounded-tl-10 last:rounded-tr-10"
-              :class="[alignClass(col), col.sortable && 'cursor-pointer select-none transition-colors hover:text-heading']"
+              class="h-9 border-b bg-surface-muted px-4 text-xs font-medium whitespace-nowrap text-label"
+              :class="[headBorder, !flat && 'first:rounded-tl-10 last:rounded-tr-10', alignClass(col), col.sortable && 'cursor-pointer select-none transition-colors hover:text-heading']"
               :style="col.width ? { width: col.width } : undefined"
               :aria-sort="sortKey === col.key ? (sortMode === 'asc' ? 'ascending' : 'descending') : undefined"
               @click="toggleSort(col)"

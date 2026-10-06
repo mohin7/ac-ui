@@ -5,6 +5,7 @@ import ComponentExample from "../../components/ComponentExample.vue";
 import DocHeading from "../../components/DocHeading.vue";
 import brand from "../../snippets/theming/brand.txt?raw";
 import legacy from "../../snippets/theming/legacy.txt?raw";
+import scale from "../../snippets/theming/scale.txt?raw";
 
 const mapping = [
   ["Colour scales", "bg-primary-95, text-red-10, border-blue-50", "$primary-95, $red-10, $blue-50"],
@@ -158,6 +159,23 @@ const themeSnippet = `@theme {
     first and move to <code class="prose-code">useBrandColor</code> later.
   </p>
   <CodeBlock :code="legacy" lang="typescript" />
+
+  <DocHeading id="interface-scale">Interface scale</DocHeading>
+  <p>
+    Type sizes, line heights, the 4px spacing unit and the radii are all multiples of one variable,
+    <code class="prose-code">--ac-scale</code> (default <code class="prose-code">1</code>). Set it on
+    <code class="prose-code">&lt;html&gt;</code> and the whole interface grows or shrinks in proportion, so layouts keep
+    their shape. <code class="prose-code">useFontScale()</code> does that and remembers the choice in localStorage, like
+    <code class="prose-code">useColorMode()</code>.
+  </p>
+  <ComponentExample name="theming/FontScale" />
+  <CodeBlock :code="scale" lang="typescript" />
+  <Callout type="note">
+    Sizes stay in px, never <code class="prose-code">rem</code>, so apps that still set
+    <code class="prose-code">html {{ "{" }} font-size: 13px {{ "}" }}</code> are unaffected. In your own code, write
+    <code class="prose-code">calc(240px * var(--ac-scale))</code> for a size that should follow the scale, such as the
+    width of a panel that holds text. Borders, rings and breakpoints don't scale.
+  </Callout>
 
   <DocHeading id="customizing">Customising in an app</DocHeading>
   <p>Override the hue variables or add tokens after importing the theme. Don't edit component files for one app's needs.</p>

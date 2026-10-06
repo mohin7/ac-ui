@@ -340,7 +340,7 @@ onBeforeUnmount(() => listen(false));
           role="dialog"
           tabindex="-1"
           :aria-labelledby="headingId"
-          class="fixed z-[90] flex w-[380px] max-w-[calc(100vw-16px)] flex-col overflow-hidden rounded-10 border border-border bg-surface shadow-lg outline-none"
+          class="fixed z-[90] flex w-[calc(380px*var(--ac-scale))] max-w-[calc(100vw-16px)] flex-col overflow-hidden rounded-10 border border-border bg-surface shadow-lg outline-none"
           :class="fromTop ? 'origin-top-right' : 'origin-bottom-right'"
           :style="style"
           data-ac-ds

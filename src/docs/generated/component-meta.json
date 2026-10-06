@@ -614,6 +614,11 @@
         "name": "icon",
         "type": "any",
         "description": "A 16px icon before the label (an inline SVG or icon component)."
+      },
+      {
+        "name": "icon-right",
+        "type": "any",
+        "description": "A 16px icon after the label, e.g. an arrow or chevron."
       }
     ]
   },
@@ -685,7 +690,7 @@
         "type": "boolean | undefined",
         "default": "true",
         "required": false,
-        "description": "Adds 20px padding to the body. Turn off for flush tables."
+        "description": "Adds 20px padding to the body. Turn off for flush tables; the body then clips to the card's rounded corners."
       }
     ],
     "events": [],
@@ -798,7 +803,7 @@
       {
         "name": "maxWidth",
         "type": "string | undefined",
-        "default": "\"280px\"",
+        "default": "\"calc(280px * var(--ac-scale))\"",
         "required": false,
         "description": "CSS max width. Longer text is cut with an ellipsis and a tooltip shows it in full."
       },
@@ -2321,6 +2326,32 @@
     ],
     "slots": []
   },
+  "AcFontScale": {
+    "props": [
+      {
+        "name": "defaultScale",
+        "type": "number | FontScale | undefined",
+        "default": "\"default\"",
+        "required": false,
+        "description": "Used until the viewer picks a size: a preset name or a number (0.8–1.5)."
+      },
+      {
+        "name": "display",
+        "type": "\"labels\" | \"icons\" | undefined",
+        "default": "\"icons\"",
+        "required": false,
+        "description": "`icons` is a compact switch of four \"A\"s; `labels` adds the words, for menus and settings pages."
+      }
+    ],
+    "events": [
+      {
+        "name": "set:scale",
+        "type": "[scale: number]",
+        "signature": "(event: \"set:scale\", scale: number): void"
+      }
+    ],
+    "slots": []
+  },
   "AcForm": {
     "props": [
       {
@@ -3393,6 +3424,39 @@
       }
     ]
   },
+  "AcPage": {
+    "props": [
+      {
+        "name": "padded",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Pads the page on all sides (20px). Turn off when a parent already pads it."
+      },
+      {
+        "name": "gap",
+        "type": "\"normal\" | \"small\" | \"large\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Space between the page's direct children: `small` 12px, `normal` 20px, `large` 32px."
+      },
+      {
+        "name": "width",
+        "type": "\"normal\" | \"narrow\" | \"wide\" | \"full\" | undefined",
+        "default": "\"full\"",
+        "required": false,
+        "description": "Caps the content width and centres it: `narrow` 768px, `normal` 1024px, `wide` 1280px, `full` fills the area."
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The page's sections: `AcCard`, `AcSectionContent`, `AcTable`, a form. Each direct child is spaced by `gap`."
+      }
+    ]
+  },
   "AcPagination": {
     "props": [
       {
@@ -3846,7 +3910,7 @@
         "type": "boolean | undefined",
         "default": "true",
         "required": false,
-        "description": "Pads the body. Turn off for flush tables and lists."
+        "description": "Pads the body. Turn off for flush tables and lists; the body then clips to the card's rounded corners."
       },
       {
         "name": "plain",
@@ -4281,7 +4345,7 @@
       {
         "name": "width",
         "type": "string | undefined",
-        "default": "\"220px\"",
+        "default": "\"calc(220px * var(--ac-scale))\"",
         "required": false,
         "description": "Width of the list."
       },
@@ -5158,6 +5222,13 @@
         "description": "With `expandable`, decides per row whether it can open. Rows that can't show no arrow."
       },
       {
+        "name": "flat",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Drops the table's own frame (border, rounded corners, shadow) so it sits flush inside a card or section that already has one. Without it a table in a card draws a second box."
+      },
+      {
         "name": "resolveLink",
         "type": "((link: string) => string) | undefined",
         "default": "undefined",
@@ -5702,6 +5773,13 @@
         "default": "false",
         "required": false,
         "description": "Adds the Light / Dark / System switch (`AcThemeMode`)."
+      },
+      {
+        "name": "showFontScale",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a text-size switch (`AcFontScale`) that scales the whole interface."
       },
       {
         "name": "showName",
