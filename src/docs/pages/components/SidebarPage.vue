@@ -74,6 +74,12 @@ const donts = [
   </p>
   <ComponentExample name="sidebar/SidebarCollapsed" />
 
+  <DocHeading id="hover-expand" :level="3">Hover to expand</DocHeading>
+  <p>
+    Add <code class="prose-code">hover-expand</code> to a collapsed sidebar to open it to full width over the page while the pointer or keyboard focus is inside, and fold it back when both leave. The page doesn't shift, because a spacer keeps the rail's width. Items and the <code class="prose-code">header</code> slot see the expanded state, so labels and the full logo show. The Collapse button then reads "Expand" and pins it open. It has no effect on the mobile drawer.
+  </p>
+  <ComponentExample name="sidebar/SidebarHoverExpand" />
+
   <DocHeading id="mobile" :level="3">Mobile drawer</DocHeading>
   <p>
     Below 768px the sidebar is hidden and slides in over the page when <code class="prose-code">v-model:mobile-open</code> is true. Open it from
@@ -113,6 +119,7 @@ const donts = [
     <li>The current page has <code class="prose-code">aria-current="page"</code>.</li>
     <li>Groups and collapsible sections follow the disclosure pattern: a button with <code class="prose-code">aria-expanded</code> and <code class="prose-code">aria-controls</code>.</li>
     <li>In the rail each item keeps its label as the accessible name and as a hover tooltip.</li>
+    <li>With <code class="prose-code">hover-expand</code>, keyboard focus inside the rail opens it too, and it stays open while focus moves between its items.</li>
     <li>The mobile drawer is a modal dialog: focus moves into it, Tab stays inside, Escape closes it and focus returns to the menu button.</li>
     <li>Width and slide animations are turned off under <code class="prose-code">prefers-reduced-motion</code>.</li>
   </ul>

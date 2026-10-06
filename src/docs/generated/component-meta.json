@@ -2097,6 +2097,13 @@
         "description": "Adds a copy button to the header."
       },
       {
+        "name": "downloadable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a download button to the header. It saves the open file's text, in the format shown, under the file's name. Hidden while a secret is masked."
+      },
+      {
         "name": "wrap",
         "type": "boolean | undefined",
         "default": "true",
@@ -2158,6 +2165,11 @@
         "name": "validate",
         "type": "[problems: Record<string, EditorProblem[]>]",
         "signature": "(evt: \"validate\", problems: Record<string, EditorProblem[]>): void"
+      },
+      {
+        "name": "download",
+        "type": "[file: F]",
+        "signature": "(evt: \"download\", file: F): void"
       },
       {
         "name": "update:view",
@@ -2723,6 +2735,13 @@
         "default": "\"0px\"",
         "required": false,
         "description": "Distance from the top when sticky, e.g. `\"56px\"` under an app navbar."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"compact\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "`normal` suits a page's main header. `compact` has a 14px title and less padding, for dense pages and forms."
       }
     ],
     "events": [
@@ -3988,6 +4007,20 @@
         "description": "Adds a search box to the list. Emits `search` so you can load options from an API."
       },
       {
+        "name": "creatable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "With `searchable`, lets the viewer add a value that isn't in the list: an \"Add\" row appears for text that matches no option, and Enter takes it. The text becomes the value, so use it with string values. Emits `create`."
+      },
+      {
+        "name": "createText",
+        "type": "string | undefined",
+        "default": "\"Add\"",
+        "required": false,
+        "description": "Word at the start of the add row, which reads `Add “text”`."
+      },
+      {
         "name": "clearable",
         "type": "boolean | undefined",
         "default": "false",
@@ -4073,6 +4106,11 @@
         "name": "remove",
         "type": "[option: SelectOption<V>]",
         "signature": "(evt: \"remove\", option: SelectOption<V>): void"
+      },
+      {
+        "name": "create",
+        "type": "[text: string]",
+        "signature": "(evt: \"create\", text: string): void"
       },
       {
         "name": "refresh",
@@ -4351,6 +4389,13 @@
         "default": "768",
         "required": false,
         "description": "Width in px below which the sidebar becomes an off-canvas drawer: the window's width, or the parent's with `contained`. `0` keeps it docked."
+      },
+      {
+        "name": "hoverExpand",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "With the sidebar collapsed to the rail, opens it to full width over the page while the pointer or keyboard focus is inside, then folds it back. The page doesn't shift."
       },
       {
         "name": "top",
@@ -4960,6 +5005,20 @@
         "type": "number",
         "required": true,
         "description": "Id of the current step. Lower ids show a check mark."
+      },
+      {
+        "name": "orientation",
+        "type": "\"horizontal\" | \"vertical\" | undefined",
+        "default": "\"horizontal\"",
+        "required": false,
+        "description": "`horizontal` fits a wizard's header. `vertical` fits a side panel and can list `substeps`."
+      },
+      {
+        "name": "activeSubstep",
+        "type": "string | number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "With `orientation=\"vertical\"`, the id of the current sub-step of the current step. Earlier sub-steps show a check mark."
       }
     ],
     "events": [],
@@ -5085,6 +5144,20 @@
         "description": "Adds a checkbox column for choosing rows, e.g. for bulk delete. Bind the chosen rows' `rowKey` values with `v-model:selected`."
       },
       {
+        "name": "expandable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds an arrow column that opens a detail area under each row. Fill it with the `expanded` slot, and bind the open rows' `rowKey` values with `v-model:expanded`."
+      },
+      {
+        "name": "canExpand",
+        "type": "((row: Row) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "With `expandable`, decides per row whether it can open. Rows that can't show no arrow."
+      },
+      {
         "name": "resolveLink",
         "type": "((link: string) => string) | undefined",
         "default": "undefined",
@@ -5097,6 +5170,13 @@
         "default": "[]",
         "required": false,
         "description": "`rowKey` values of the chosen rows. Bind with `v-model:selected`. Rows that leave `rows` (another page, a search) stay chosen."
+      },
+      {
+        "name": "expanded",
+        "type": "unknown[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "`rowKey` values of the rows that are open. Bind with `v-model:expanded`."
       }
     ],
     "events": [
@@ -5114,9 +5194,19 @@
         "name": "update:selected",
         "type": "[value: unknown[]]",
         "signature": "(event: \"update:selected\", value: unknown[]): void"
+      },
+      {
+        "name": "update:expanded",
+        "type": "[value: unknown[]]",
+        "signature": "(event: \"update:expanded\", value: unknown[]): void"
       }
     ],
     "slots": [
+      {
+        "name": "expanded",
+        "type": "{ row: Row; }",
+        "description": "Detail area under an open row, for tables with `expandable`: `#expanded=\"{ row }\"`."
+      },
       {
         "name": "empty",
         "type": "any",

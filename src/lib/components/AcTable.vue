@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="Row extends Record<string, unknown>">
-import { computed, ref } from "vue";
-import { ArrowUp, Check, ChevronsUpDown, Minus } from "lucide-vue-next";
+import { computed, ref, useId } from "vue";
+import { ArrowUp, Check, ChevronRight, ChevronsUpDown, Minus } from "lucide-vue-next";
 import AcCellValue from "./AcCellValue.vue";
 import type { CellType, ResourceCell, ResourceColumn } from "./AcCellValue.vue";
 
@@ -33,6 +33,10 @@ export interface Props<R> {
   clickable?: boolean;
   /** Adds a checkbox column for choosing rows, e.g. for bulk delete. Bind the chosen rows' `rowKey` values with `v-model:selected`. */
   selectable?: boolean;
+  /** Adds an arrow column that opens a detail area under each row. Fill it with the `expanded` slot, and bind the open rows' `rowKey` values with `v-model:expanded`. */
+  expandable?: boolean;
+  /** With `expandable`, decides per row whether it can open. Rows that can't show no arrow. */
+  canExpand?: (row: R) => boolean;
   /** Turns a server cell's link template into a URL, e.g. to fill `${username}` and `${clustername}` from the current route. */
   resolveLink?: (link: string) => string;
 }
@@ -44,21 +48,29 @@ const props = withDefaults(defineProps<Props<Row>>(), {
   emptyText: "No data found",
   clickable: false,
   selectable: false,
+  expandable: false,
+  canExpand: undefined,
   resolveLink: undefined,
 });
 
 /** `rowKey` values of the chosen rows. Bind with `v-model:selected`. Rows that leave `rows` (another page, a search) stay chosen. */
 const selected = defineModel<unknown[]>("selected", { default: () => [] });
 
+/** `rowKey` values of the rows that are open. Bind with `v-model:expanded`. */
+const expanded = defineModel<unknown[]>("expanded", { default: () => [] });
+
 const emit = defineEmits<{ "row-click": [row: Row]; sort: [key: string, mode: "asc" | "desc"] }>();
 
 defineSlots<{
   /** Custom cell for a column: `#cell-name="{ row, value }"`. One slot per column key. */
   [key: `cell-${string}`]: (props: { row: Row; value: unknown }) => unknown;
+  /** Detail area under an open row, for tables with `expandable`: `#expanded="{ row }"`. */
+  expanded?: (props: { row: Row }) => unknown;
   /** Content shown when `rows` is empty. */
   empty?: () => unknown;
 }>();
 
+const tableId = useId();
 const sortKey = ref<string>("");
 const sortMode = ref<"asc" | "desc">("asc");
 
@@ -105,6 +117,17 @@ function toggleRow(row: Row) {
   selected.value = selectedKeys.value.has(key) ? selected.value.filter((k) => k !== key) : [...selected.value, key];
 }
 
+const expandedKeys = computed(() => new Set(expanded.value));
+const isOpen = (row: Row) => props.expandable && expandedKeys.value.has(row[props.rowKey]);
+const rowCanExpand = (row: Row) => !props.canExpand || props.canExpand(row);
+const detailId = (row: Row) => `${tableId}-detail-${String(row[props.rowKey])}`;
+const columnCount = computed(() => props.columns.length + (props.selectable ? 1 : 0) + (props.expandable ? 1 : 0));
+
+function toggleExpanded(row: Row) {
+  const key = row[props.rowKey];
+  expanded.value = expandedKeys.value.has(key) ? expanded.value.filter((k) => k !== key) : [...expanded.value, key];
+}
+
 // Names the row by its first column, e.g. "Select demo-postgres", falling back to its key.
 function rowLabel(row: Row) {
   const first = row[props.columns[0]?.key ?? ""];
@@ -124,6 +147,9 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
       <table class="w-full border-separate border-spacing-0 text-base">
         <thead>
           <tr>
+            <th v-if="expandable" scope="col" class="h-9 w-10 border-b border-border bg-surface-muted pr-0 pl-3 first:rounded-tl-10">
+              <span class="sr-only">Expand</span>
+            </th>
             <th v-if="selectable" scope="col" class="h-9 w-10 border-b border-border bg-surface-muted pr-0 pl-4 first:rounded-tl-10">
               <span class="relative flex size-4">
                 <input
@@ -169,6 +195,7 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
         <tbody>
           <template v-if="loading">
             <tr v-for="i in loaderRows" :key="`loader-${i}`">
+              <td v-if="expandable" class="h-12 border-b border-border-light pl-3 [tr:last-child_&]:border-0" />
               <td v-if="selectable" class="h-12 border-b border-border-light pl-4 [tr:last-child_&]:border-0" />
               <td v-for="(col, c) in columns" :key="col.key" class="h-12 border-b border-border-light px-4 [tr:last-child_&]:border-0">
                 <span class="block h-2.5 animate-pulse rounded-full bg-surface-sunken" :style="{ width: `${50 + ((i * 17 + c * 23) % 40)}%` }" />
@@ -176,14 +203,27 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
             </tr>
           </template>
           <template v-else>
+            <template v-for="(row, i) in sortedRows" :key="String(row[rowKey] ?? i)">
             <tr
-              v-for="(row, i) in sortedRows"
-              :key="String(row[rowKey] ?? i)"
               data-testid="ac-table-row"
               class="group transition-colors duration-100 hover:bg-surface-muted/70"
               :class="[clickable && 'cursor-pointer', selectable && selectedKeys.has(row[rowKey]) && 'bg-primary-97']"
               @click="clickable && emit('row-click', row)"
             >
+              <td v-if="expandable" class="h-12 w-10 border-b border-border-light pr-0 pl-3 group-last:border-0" @click.stop>
+                <button
+                  v-if="rowCanExpand(row)"
+                  type="button"
+                  class="inline-flex size-7 cursor-pointer items-center justify-center rounded-6 text-muted transition-colors hover:bg-surface-sunken hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+                  :aria-expanded="isOpen(row)"
+                  :aria-controls="detailId(row)"
+                  :aria-label="`${isOpen(row) ? 'Collapse' : 'Expand'} ${rowLabel(row)}`"
+                  data-testid="ac-table-expand"
+                  @click="toggleExpanded(row)"
+                >
+                  <ChevronRight class="size-4 transition-transform duration-150 motion-reduce:transition-none" :class="isOpen(row) && 'rotate-90'" aria-hidden="true" />
+                </button>
+              </td>
               <td v-if="selectable" class="h-12 w-10 border-b border-border-light pr-0 pl-4 group-last:border-0" @click.stop>
                 <span class="relative flex size-4">
                   <input
@@ -220,6 +260,14 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
                 </slot>
               </td>
             </tr>
+            <tr v-if="isOpen(row) && rowCanExpand(row)" class="group" data-testid="ac-table-detail">
+              <td :colspan="columnCount" class="border-b border-border-light bg-surface-muted/50 p-0 group-last:border-0">
+                <div :id="detailId(row)" role="region" :aria-label="`Details for ${rowLabel(row)}`" class="px-4 py-3 text-body">
+                  <slot name="expanded" :row="row" />
+                </div>
+              </td>
+            </tr>
+            </template>
           </template>
         </tbody>
       </table>

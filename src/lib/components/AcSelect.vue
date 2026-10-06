@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="V extends string | number">
 import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useId, watch } from "vue";
-import { Check, ChevronDown, CircleAlert, RefreshCw, Search, X } from "lucide-vue-next";
+import { Check, ChevronDown, CircleAlert, Plus, RefreshCw, Search, X } from "lucide-vue-next";
 import AcSpinner from "./AcSpinner.vue";
 import type { SelectOption } from "./types";
 
@@ -15,6 +15,10 @@ export interface Props<T extends string | number> {
   multiple?: boolean;
   /** Adds a search box to the list. Emits `search` so you can load options from an API. */
   searchable?: boolean;
+  /** With `searchable`, lets the viewer add a value that isn't in the list: an "Add" row appears for text that matches no option, and Enter takes it. The text becomes the value, so use it with string values. Emits `create`. */
+  creatable?: boolean;
+  /** Word at the start of the add row, which reads `Add “text”`. */
+  createText?: string;
   /** Shows a clear button when a value is selected. */
   clearable?: boolean;
   /** Shows a spinner and blocks the field while options load. */
@@ -42,6 +46,8 @@ const props = withDefaults(defineProps<Props<V>>(), {
   placeholder: "Select…",
   multiple: false,
   searchable: false,
+  creatable: false,
+  createText: "Add",
   clearable: false,
   loading: false,
   refreshable: false,
@@ -55,6 +61,8 @@ const props = withDefaults(defineProps<Props<V>>(), {
 
 const emit = defineEmits<{
   select: [option: SelectOption<V>];
+  /** Fires when the viewer adds a value that isn't in `options`, with the text. The value is already in `v-model`; use this to save it. */
+  create: [text: string];
   remove: [option: SelectOption<V>];
   search: [query: string];
   refresh: [];
@@ -124,6 +132,19 @@ const groups = computed(() => {
 });
 const optionId = (i: number) => `${id}-opt-${i}`;
 
+// ---- creating values (only with `creatable` + `searchable`)
+const createQuery = computed(() => query.value.trim());
+const showCreate = computed(() => {
+  const text = createQuery.value.toLowerCase();
+  if (!props.creatable || !props.searchable || !text) return false;
+  const exists = props.options.some((o) => o.label.toLowerCase() === text || String(o.value).toLowerCase() === text);
+  const picked = selectedValues.value.some((v) => String(v).toLowerCase() === text);
+  return !exists && !picked;
+});
+// The add row is one more entry after the filtered options; it is never disabled.
+const lastIndex = computed(() => filtered.value.length + (showCreate.value ? 1 : 0) - 1);
+const createIndex = computed(() => filtered.value.length);
+
 // ---- open / close and positioning
 const place = () => {
   const el = trigger.value;
@@ -140,8 +161,7 @@ const place = () => {
 };
 
 const firstEnabled = (from = 0, step = 1) => {
-  const list = filtered.value;
-  for (let i = from; i >= 0 && i < list.length; i += step) if (!list[i]!.disabled) return i;
+  for (let i = from; i >= 0 && i <= lastIndex.value; i += step) if (!filtered.value[i]?.disabled) return i;
   return -1;
 };
 
@@ -192,6 +212,22 @@ const removeValue = (o: SelectOption<V>) => {
   emit("remove", o);
 };
 
+const createFromQuery = () => {
+  const text = createQuery.value;
+  if (!showCreate.value || !text) return;
+  const value = text as unknown as V;
+  const option = { value, label: text } as SelectOption<V>;
+  if (props.multiple) {
+    model.value = [...selectedValues.value, value];
+    query.value = "";
+  } else {
+    model.value = value;
+    closeList();
+  }
+  emit("select", option);
+  emit("create", text);
+};
+
 const clear = () => {
   selectedOptions.value.forEach((o) => emit("remove", o));
   model.value = props.multiple ? [] : null;
@@ -206,12 +242,12 @@ const scrollActiveIntoView = () =>
   nextTick(() => panel.value?.querySelector(`#${CSS.escape(optionId(activeIndex.value))}`)?.scrollIntoView({ block: "nearest" }));
 
 const move = (step: number) => {
-  const list = filtered.value;
-  if (!list.length) return;
+  const count = lastIndex.value + 1;
+  if (!count) return;
   let i = activeIndex.value;
-  for (let n = 0; n < list.length; n++) {
-    i = (i + step + list.length) % list.length;
-    if (!list[i]!.disabled) break;
+  for (let n = 0; n < count; n++) {
+    i = (i + step + count) % count;
+    if (!filtered.value[i]?.disabled) break;
   }
   activeIndex.value = i;
   scrollActiveIntoView();
@@ -241,12 +277,13 @@ const onKeydown = (e: KeyboardEvent) => {
     scrollActiveIntoView();
   } else if (key === "End") {
     e.preventDefault();
-    activeIndex.value = firstEnabled(filtered.value.length - 1, -1);
+    activeIndex.value = firstEnabled(lastIndex.value, -1);
     scrollActiveIntoView();
   } else if (key === "Enter" || (key === " " && !props.searchable)) {
     e.preventDefault();
     const o = filtered.value[activeIndex.value];
     if (o) choose(o);
+    else if (showCreate.value) createFromQuery();
   } else if (key === "Escape") {
     e.preventDefault();
     closeList();
@@ -497,7 +534,22 @@ defineExpose({
                 <Check v-if="!multiple && isSelected(option)" class="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               </li>
             </template>
-            <li v-if="!filtered.length" role="presentation" class="px-3 py-6 text-center text-base text-muted">
+            <li
+              v-if="showCreate"
+              :id="optionId(createIndex)"
+              role="option"
+              aria-selected="false"
+              class="flex cursor-pointer items-center gap-2 rounded-6 px-2.5 py-1.5 text-base text-heading transition-colors duration-75"
+              :class="createIndex === activeIndex && 'bg-surface-muted'"
+              data-testid="ac-select-create"
+              @mouseenter="activeIndex = createIndex"
+              @mousedown.prevent
+              @click="createFromQuery"
+            >
+              <Plus class="size-4 shrink-0 text-primary" aria-hidden="true" />
+              <span class="min-w-0 flex-1 truncate">{{ createText }} “{{ createQuery }}”</span>
+            </li>
+            <li v-if="!filtered.length && !showCreate" role="presentation" class="px-3 py-6 text-center text-base text-muted">
               <slot name="empty" :query="query">{{ query ? `${noResultText} for “${query}”` : "No options" }}</slot>
             </li>
           </ul>

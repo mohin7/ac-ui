@@ -16,9 +16,9 @@ const donts = ["Don't use more than one solid primary button in the header.", "D
   <ComponentPlayground
     tag="AcHeader"
     :component="AcHeader"
-    :controls="[{'prop': 'title', 'type': 'text'}, {'prop': 'subtitle', 'type': 'text'}, {'prop': 'backButton', 'type': 'boolean'}, {'prop': 'sticky', 'type': 'boolean'}]"
-    :initial="{'title': 'Databases', 'subtitle': 'appscode / demo-cluster', 'backButton': false, 'sticky': false}"
-    :defaults="{'title': '', 'subtitle': '', 'backButton': false, 'sticky': false}"
+    :controls="[{'prop': 'title', 'type': 'text'}, {'prop': 'subtitle', 'type': 'text'}, {'prop': 'backButton', 'type': 'boolean'}, {'prop': 'sticky', 'type': 'boolean'}, {'prop': 'size', 'type': 'select', 'options': ['normal', 'compact']}]"
+    :initial="{'title': 'Databases', 'subtitle': 'appscode / demo-cluster', 'backButton': false, 'sticky': false, 'size': 'normal'}"
+    :defaults="{'title': '', 'subtitle': '', 'backButton': false, 'sticky': false, 'size': 'normal'}"
   />
 
   <DocHeading id="examples">Examples</DocHeading>
@@ -31,6 +31,9 @@ const donts = ["Don't use more than one solid primary button in the header.", "D
   <DocHeading id="resource" :level="3">Resource page</DocHeading>
   <p>The <code class="prose-code">icon</code> slot puts a logo before the title, e.g. the database engine on a database's page.</p>
   <ComponentExample name="header/HeaderResource" />
+  <DocHeading id="compact" :level="3">Compact</DocHeading>
+  <p><code class="prose-code">size="compact"</code> uses a 14px title and about a third less height. Use it on dense pages, such as a create form or a settings page, where the main header would crowd the content.</p>
+  <ComponentExample name="header/HeaderCompact" />
   <DocHeading id="header-items" :level="3">AcHeaderItems and AcHeaderItem</DocHeading>
   <p>
     The old library wrapped header controls in <code class="prose-code">AcHeaderItems</code> / <code class="prose-code">AcHeaderItem</code>.

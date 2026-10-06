@@ -39,6 +39,10 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
   <DocHeading id="selectable" :level="3">Selectable rows</DocHeading>
   <p><code class="prose-code">selectable</code> adds a checkbox column for bulk actions. Bind the chosen rows' <code class="prose-code">rowKey</code> values with <code class="prose-code">v-model:selected</code>. The header checkbox chooses every row in view; choices on other pages are kept.</p>
   <ComponentExample name="table/TableSelectable" />
+  <DocHeading id="expandable" :level="3">Expandable rows</DocHeading>
+  <p><code class="prose-code">expandable</code> adds an arrow column. Opening a row shows the <code class="prose-code">expanded</code> slot under it, across the full width of the table. Bind the open rows' <code class="prose-code">rowKey</code> values with <code class="prose-code">v-model:expanded</code>, or leave it unbound to let the table keep track. Use <code class="prose-code">can-expand</code> to give an arrow only to rows that have details. The arrow doesn't trigger <code class="prose-code">@row-click</code>.</p>
+  <ComponentExample name="table/TableExpandable" />
+
   <DocHeading id="loading" :level="3">Loading</DocHeading>
   <p><code class="prose-code">loading</code> shows skeleton rows while data loads.</p>
   <ComponentExample name="table/TableLoading" />
@@ -56,6 +60,7 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
   <ul>
     <li>Native <code class="prose-code">&lt;table&gt;</code> with <code class="prose-code">scope="col"</code> headers.</li>
     <li>Sorted columns expose <code class="prose-code">aria-sort</code>.</li>
+    <li>The expand arrow is a button with <code class="prose-code">aria-expanded</code> and <code class="prose-code">aria-controls</code>, labelled "Expand" or "Collapse" with the row's first value. The detail area is a labelled region.</li>
   </ul>
 
   <ApiTables component="AcTable" :extra-slots="[{'name': 'cell-<key>', 'type': '{ row: Row; value: unknown }', 'description': 'Custom content for the cell of column `key`, e.g. `#cell-status`.'}]" />

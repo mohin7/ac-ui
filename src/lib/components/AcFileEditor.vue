@@ -39,6 +39,8 @@ export interface Props {
   validate?: boolean;
   /** Adds a copy button to the header. */
   copyable?: boolean;
+  /** Adds a download button to the header. It saves the open file's text, in the format shown, under the file's name. Hidden while a secret is masked. */
+  downloadable?: boolean;
   /** Wraps long lines instead of scrolling sideways. */
   wrap?: boolean;
   /** Accessible name for the file list, e.g. "Secret keys". */
@@ -50,7 +52,7 @@ export interface Props {
 
 <script setup lang="ts" generic="F extends EditorFile">
 import { computed, nextTick, onBeforeUnmount, ref, shallowRef, useId, watch } from "vue";
-import { CircleAlert, Eye, EyeOff, FileBraces, FileCode, FileLock, FileTerminal, FileText, Lock, TriangleAlert } from "lucide-vue-next";
+import { CircleAlert, Download, Eye, EyeOff, FileBraces, FileCode, FileLock, FileTerminal, FileText, Lock, TriangleAlert } from "lucide-vue-next";
 import { Text } from "@codemirror/state";
 import AcButton from "./AcButton.vue";
 import AcCodeEditor from "./AcCodeEditor.vue";
@@ -71,6 +73,7 @@ const props = withDefaults(defineProps<Props>(), {
   formatSwitch: false,
   validate: true,
   copyable: true,
+  downloadable: false,
   wrap: true,
   label: "Files",
   emptyText: "No files to show",
@@ -90,6 +93,8 @@ const view = defineModel<"edit" | "changes">("view", { default: "edit" });
 const emit = defineEmits<{
   /** Fires after files are checked, with each file's problems keyed by name. A file without problems has an empty list. */
   validate: [problems: Record<string, EditorProblem[]>];
+  /** Fires after the open file is downloaded. */
+  download: [file: F];
 }>();
 
 defineSlots<{
@@ -316,6 +321,25 @@ function onSearchKeydown(e: KeyboardEvent) {
   if (e.key !== "ArrowDown" || !tabStop.value) return;
   e.preventDefault();
   pick(tabStop.value, true);
+}
+
+const EXTENSION_FOR: Record<string, string> = { yaml: "yaml", json: "json", shell: "sh" };
+
+function downloadName(name: string, language: EditorLanguage) {
+  // Keep the file's own extension; only add one when the name has none, e.g. a ConfigMap key such as `nginx`.
+  return /\.[A-Za-z0-9]+$/.test(name) ? name : `${name}.${EXTENSION_FOR[language] ?? "txt"}`;
+}
+
+function download() {
+  const p = pane.value;
+  if (!p) return;
+  const url = URL.createObjectURL(new Blob([editorText.value], { type: "text/plain;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = downloadName(p.file.name, p.language);
+  link.click();
+  URL.revokeObjectURL(url);
+  emit("download", p.file);
 }
 
 function reveal(show: boolean) {
@@ -553,6 +577,17 @@ defineExpose({
               label="Format"
               @update:model-value="setFormat"
             />
+            <button
+              v-if="downloadable && !hidden"
+              type="button"
+              class="inline-flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-6 text-muted transition hover:bg-surface-sunken hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+              :aria-label="`Download ${pane.file.name}`"
+              title="Download"
+              data-testid="ac-file-editor-download"
+              @click="download"
+            >
+              <Download class="size-3.5" aria-hidden="true" />
+            </button>
             <button
               v-if="pane.file.secret"
               type="button"

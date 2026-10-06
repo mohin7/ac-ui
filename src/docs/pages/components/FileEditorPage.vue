@@ -97,9 +97,9 @@ const migration: [string, string][] = [
   <ComponentPlayground
     tag="AcFileEditor"
     :component="AcFileEditor"
-    :controls="[{'prop': 'height', 'type': 'select', 'options': ['360px', '480px']}, {'prop': 'loading', 'type': 'boolean'}, {'prop': 'readonly', 'type': 'boolean'}, {'prop': 'formatSwitch', 'type': 'boolean'}, {'prop': 'searchable', 'type': 'boolean'}, {'prop': 'copyable', 'type': 'boolean'}, {'prop': 'validate', 'type': 'boolean'}, {'prop': 'label', 'type': 'text'}]"
-    :initial="{'height': '360px', 'loading': false, 'readonly': false, 'formatSwitch': true, 'searchable': false, 'copyable': true, 'validate': true, 'label': 'Files'}"
-    :defaults="{'height': '480px', 'loading': false, 'readonly': false, 'formatSwitch': false, 'searchable': 'auto', 'copyable': true, 'validate': true, 'label': 'Files'}"
+    :controls="[{'prop': 'height', 'type': 'select', 'options': ['360px', '480px']}, {'prop': 'loading', 'type': 'boolean'}, {'prop': 'readonly', 'type': 'boolean'}, {'prop': 'formatSwitch', 'type': 'boolean'}, {'prop': 'searchable', 'type': 'boolean'}, {'prop': 'copyable', 'type': 'boolean'}, {'prop': 'downloadable', 'type': 'boolean'}, {'prop': 'validate', 'type': 'boolean'}, {'prop': 'label', 'type': 'text'}]"
+    :initial="{'height': '360px', 'loading': false, 'readonly': false, 'formatSwitch': true, 'searchable': false, 'copyable': true, 'downloadable': false, 'validate': true, 'label': 'Files'}"
+    :defaults="{'height': '480px', 'loading': false, 'readonly': false, 'formatSwitch': false, 'searchable': 'auto', 'copyable': true, 'downloadable': false, 'validate': true, 'label': 'Files'}"
     :extra="{'files': sampleFiles, 'class': 'w-full'}"
     extra-code='v-model:files="files"'
     :script="script"
@@ -164,6 +164,10 @@ const migration: [string, string][] = [
     <code class="prose-code">content</code> is ready to patch. A value that isn't UTF-8 text, such as a keystore, is shown as stored and can't be edited.
   </p>
   <ComponentExample name="file-editor/FileEditorSecrets" />
+
+  <DocHeading id="download" :level="3">Download</DocHeading>
+  <p><code class="prose-code">downloadable</code> adds a download button to the header. It saves the open file as shown, in YAML or JSON, under the file's name; a name without an extension gets <code class="prose-code">.yaml</code>, <code class="prose-code">.json</code> or <code class="prose-code">.txt</code>. The button is hidden while a secret is masked, and <code class="prose-code">@download</code> fires with the file.</p>
+  <ComponentExample name="file-editor/FileEditorDownload" />
 
   <DocHeading id="search" :level="3">Many files</DocHeading>
   <p>
