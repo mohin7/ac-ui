@@ -16,10 +16,11 @@
 /* Dark mode is class-based: `.dark` (new) or `.is-dark-theme` (the old library's class) on <html> or any subtree. */
 @custom-variant dark (&:where(.dark, .dark *, .is-dark-theme, .is-dark-theme *));
 :root {
-  /* Runtime brand hue — change these on <html> to re-hue every primary/secondary step. */
+  /* Runtime brand hue — change these on <html> to re-hue every primary/secondary step.
+     26% lightness is the AA limit (4.5:1 with white text) for the default hue. */
   --primary-hue: 149;
   --primary-saturation: 100%;
-  --primary-light: 30%;
+  --primary-light: 26%;
   --secondary-hue: 196;
   --secondary-saturation: 50%;
   --secondary-light: 20%;
@@ -309,7 +310,9 @@
 .dark,
 .is-dark-theme {
   color-scheme: dark;
-  /* primary */
+  /* primary: the solid fill is lifted 4% so it keeps its look (and reads as text) on dark surfaces */
+  --color-primary: hsl(var(--primary-hue) var(--primary-saturation) calc(var(--primary-light) + 4%));
+  --color-primary-hover: hsl(var(--primary-hue) var(--primary-saturation) calc(var(--primary-light) + 1%));
   --color-primary-5: hsl(var(--primary-hue) var(--primary-saturation) 95%);
   --color-primary-10: hsl(var(--primary-hue) var(--primary-saturation) 90%);
   --color-primary-20: hsl(var(--primary-hue) var(--primary-saturation) 82%);

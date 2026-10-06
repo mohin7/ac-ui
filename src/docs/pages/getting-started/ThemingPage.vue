@@ -146,8 +146,9 @@ const themeSnippet = `@theme {
     <code class="prose-code">readableLightness(hue, saturation)</code> returns that limit.
   </p>
   <Callout type="warning">
-    The default AppsCode green (<code class="prose-code">149 100% 30%</code>) gives 3.7:1. That passes 3:1 for large or
-    bold text but not 4.5:1. <code class="prose-code">26%</code> lightness reaches 4.5:1 at the same hue.
+    The default AppsCode green is <code class="prose-code">149 100% 26%</code>, the lightest value that still gives white
+    text 4.5:1 (AA). A lighter brand colour fails that, so pass <code class="prose-code">ensureContrast</code> or keep
+    it at or below <code class="prose-code">readableLightness(hue, saturation)</code>. In dark mode the fill is lifted 4%.
   </Callout>
 
   <DocHeading id="brand-legacy" :level="3">From plugins/theme</DocHeading>
