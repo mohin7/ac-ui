@@ -1944,6 +1944,13 @@
         "description": "Adds a \"Required\" badge. Old `isRequired`."
       },
       {
+        "name": "recommended",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a \"Recommended\" badge. Shown after \"Required\" when both are set."
+      },
+      {
         "name": "centered",
         "type": "boolean | undefined",
         "default": "false",
@@ -2020,6 +2027,16 @@
         "name": "status",
         "type": "any",
         "description": "Replaces the `status` badge, e.g. with several badges."
+      },
+      {
+        "name": "title-extra",
+        "type": "any",
+        "description": "Small content right after the title, before the badges, e.g. a ready or warning icon."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Controls at the top right of the card, e.g. an Enable or Reconcile button. They stay clickable when the whole card is a link or button."
       },
       {
         "name": "footer",

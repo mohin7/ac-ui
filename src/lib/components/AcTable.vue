@@ -179,6 +179,7 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
             <tr
               v-for="(row, i) in sortedRows"
               :key="String(row[rowKey] ?? i)"
+              data-testid="ac-table-row"
               class="group transition-colors duration-100 hover:bg-surface-muted/70"
               :class="[clickable && 'cursor-pointer', selectable && selectedKeys.has(row[rowKey]) && 'bg-primary-97']"
               @click="clickable && emit('row-click', row)"
