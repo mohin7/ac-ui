@@ -5,6 +5,20 @@ import DocHeading from "../../components/DocHeading.vue";
 type Entry = { title: string; items: string[] };
 const releases: { version: string; id: string; summary: string; groups: Entry[] }[] = [
   {
+    version: "0.0.9",
+    id: "v0-0-9",
+    summary: "One border colour for the lines between app regions.",
+    groups: [
+      {
+        title: "Changed",
+        items: [
+          "`AcSideTabs` (with `sticky` and content beside the list): the list column's edge now runs to the bottom of the viewport when the content is short, instead of stopping where the content ends.",
+          "`AcSidebar`, `AcSideTabs`, `AcStatusBar` and the `AcTabs` strip use `border-border-light`, like `AcNavbar` and `AcHeader`, so the lines between app regions are one colour. Frames of surfaces (cards, modals, inputs, tables) still use `border-border`. See the Colors page, \"Which border?\".",
+        ],
+      },
+    ],
+  },
+  {
     version: "0.0.8",
     id: "v0-0-8",
     summary: "Select, tabs and table additions; success green passes AA.",

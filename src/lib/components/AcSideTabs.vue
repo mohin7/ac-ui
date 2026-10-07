@@ -175,6 +175,13 @@ const panelStyle = computed(() =>
   props.sticky ? { top: stickyTop.value, maxHeight: `calc(100dvh - ${stickyTop.value} - ${props.bottom})` } : undefined,
 );
 
+// The column's edge runs down to the bottom of the viewport even when the content beside it is short.
+// The list starts at `stickyTop`, so that is where the remaining height is measured from.
+const columnStyle = computed(() => ({
+  width: rail.value ? "calc(56px * var(--ac-scale))" : props.width,
+  minHeight: props.sticky && hasContent.value ? `calc(100dvh - ${stickyTop.value} - ${props.bottom})` : undefined,
+}));
+
 function isActive(item: SideTabItem) {
   return item.key === model.value;
 }
@@ -339,12 +346,12 @@ onBeforeUnmount(() => {
   >
     <template v-if="!hideTabs">
       <!-- Phone: select -->
-      <div v-if="compact && mobile === 'select'" class="border-b border-border bg-surface px-4 py-3">
+      <div v-if="compact && mobile === 'select'" class="border-b border-border-light bg-surface px-4 py-3">
         <AcSelect :model-value="model || null" :options="selectOptions" :label="label" @update:model-value="onSelect" />
       </div>
 
       <!-- Phone: a row of tabs that scrolls sideways -->
-      <nav v-else-if="compact" :aria-label="label" class="border-b border-border bg-surface">
+      <nav v-else-if="compact" :aria-label="label" class="border-b border-border-light bg-surface">
         <ul
           ref="scroller"
           class="flex gap-1 overflow-x-auto px-2 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -375,8 +382,8 @@ onBeforeUnmount(() => {
       <!-- Wide: a vertical list -->
       <div
         v-else
-        class="shrink-0 border-r border-border bg-surface transition-[width] duration-200 ease-out-soft motion-reduce:transition-none"
-        :style="{ width: rail ? 'calc(56px * var(--ac-scale))' : width }"
+        class="shrink-0 border-r border-border-light bg-surface transition-[width] duration-200 ease-out-soft motion-reduce:transition-none"
+        :style="columnStyle"
       >
         <nav
           :aria-label="label"
@@ -469,7 +476,7 @@ onBeforeUnmount(() => {
                   <ul
                     :id="`${id}-${item.key}`"
                     role="list"
-                    class="mt-0.5 ml-4.5 flex-col gap-0.5 border-l border-border pl-2"
+                    class="mt-0.5 ml-4.5 flex-col gap-0.5 border-l border-border-light pl-2"
                     :class="isOpen(item) && !rail ? 'flex' : 'hidden'"
                   >
                     <li v-for="child in item.children" :key="child.key">

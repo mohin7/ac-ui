@@ -30,7 +30,7 @@ const donts = [
   "Don't use it for notifications; use a toast or a banner.",
 ];
 const theme = [
-  ["h-7 border-t border-border bg-surface-muted", "Bar"],
+  ["h-7 border-t border-border-light bg-surface-muted", "Bar"],
   ["dark bg-sidebar", "Dark bar; the dark class switches every token inside to the dark theme"],
   ["text-xs text-muted · font-medium text-heading", "Label · value"],
   ["font-mono text-[11.5px]", "`mono` values"],

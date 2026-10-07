@@ -95,7 +95,7 @@ function onTabClick(item: TabItem, e: MouseEvent) {
 
 <template>
   <div data-ac-ds data-testid="ac-tabs">
-    <div role="tablist" class="flex gap-5 overflow-x-auto overflow-y-hidden border-b border-border [scrollbar-width:none]">
+    <div role="tablist" class="flex gap-5 overflow-x-auto overflow-y-hidden border-b border-border-light [scrollbar-width:none]">
       <component
         :is="tagOf(item)"
         v-for="item in items"

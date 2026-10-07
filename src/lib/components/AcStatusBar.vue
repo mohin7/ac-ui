@@ -163,7 +163,7 @@ function clamp(v: number) {
   <footer
     :aria-label="label"
     class="@container z-10 w-full border-t"
-    :class="[dark ? 'dark border-border-light bg-sidebar text-body' : 'border-border bg-surface-muted text-body', sticky && 'sticky bottom-0']"
+    :class="[dark ? 'dark border-border-light bg-sidebar text-body' : 'border-border-light bg-surface-muted text-body', sticky && 'sticky bottom-0']"
     data-ac-ds
     data-testid="ac-status-bar"
   >

@@ -98,7 +98,7 @@ const rootStyle = computed(() =>
 );
 
 const rootClass = computed(() => {
-  const look = props.dark ? "dark border-r border-border-light bg-sidebar text-body" : "border-r border-border bg-surface-muted text-body";
+  const look = props.dark ? "dark border-r border-border-light bg-sidebar text-body" : "border-r border-border-light bg-surface-muted text-body";
   if (isMobile.value) {
     return [
       look,

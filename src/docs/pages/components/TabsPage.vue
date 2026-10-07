@@ -56,7 +56,7 @@ const donts = ["Don't use tabs for sequential steps — use Steps.", "Don't hide
       </thead>
       <tbody>
         <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-primary text-heading</code></td><td class="px-4 py-3">Active tab</td></tr>
-        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-b border-border</code></td><td class="px-4 py-3">Baseline</td></tr>
+        <tr class="border-t border-border-light"><td class="px-4 py-3"><code class="prose-code">border-b border-border-light</code></td><td class="px-4 py-3">Baseline</td></tr>
       </tbody>
     </table>
   </div>

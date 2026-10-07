@@ -19,7 +19,7 @@ const layout = `<div class="flex">
 
 const theme = [
   ["w-60 · w-14", "Expanded width (240px) · collapsed rail (56px)"],
-  ["bg-surface-muted border-border", "Light sidebar"],
+  ["bg-surface-muted border-border-light", "Light sidebar"],
   ["dark bg-sidebar", "Dark sidebar; the dark class switches every token inside to the dark theme"],
   ["h-8 rounded-6 text-body", "Item"],
   ["hover:bg-slate-90 · hover:bg-white/8", "Item hover (light · dark sidebar)"],

@@ -123,6 +123,13 @@ const donts = [
     <code class="prose-code">warning</code> is 2.1:1, so warning fills use <code class="prose-code">text-on-warning</code>.
   </Callout>
   <Callout type="note">
+    <strong>Which border?</strong> The edge of a surface (card, modal, input, popover, table) uses
+    <code class="prose-code">border-border</code>. A divider inside a surface (a card's header rule, table rows, list
+    separators) and the lines between app regions (navbar, page header, breadcrumb, sidebars, side tabs, tab strip, status bar)
+    use <code class="prose-code">border-border-light</code>, so the page's frame reads as one quiet colour and surfaces stand out from it.
+    Controls that need an edge to be seen (inputs) use <code class="prose-code">border-border-dark</code>.
+  </Callout>
+  <Callout type="note">
     <code class="prose-code">border</code> (slate-80) is 1.2:1 on white — decorative only. Inputs get their edge from
     <code class="prose-code">border-border-dark</code> and turn primary on focus.
   </Callout>

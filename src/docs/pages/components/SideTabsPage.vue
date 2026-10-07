@@ -30,14 +30,14 @@ const donts = [
 ];
 const theme = [
   ["w-[220px] · w-14", "List width (the `width` prop) · collapsed rail (56px)"],
-  ["border-r border-border bg-surface", "List surface"],
+  ["border-r border-border-light bg-surface", "List surface"],
   ["sticky top-[top] max-h-[calc(100dvh-…)]", "Sticky list, scrolls on its own when long"],
   ["h-8 rounded-6 text-body hover:bg-surface-sunken", "Item"],
   ["bg-primary-95 text-primary-20", "Active item"],
   ["text-red-30 · bg-red-95 text-red-20", "`tone: \"danger\"` item · active"],
-  ["border-l border-border", "Guide line beside nested items"],
+  ["border-l border-border-light", "Guide line beside nested items"],
   ["text-sm uppercase tracking-[0.06em] text-muted", "Group heading"],
-  ["border-b border-border bg-surface", "Phone select or scrolling row"],
+  ["border-b border-border-light bg-surface", "Phone select or scrolling row"],
 ];
 </script>
 
