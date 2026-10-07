@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { Inbox, SearchX, TriangleAlert } from "lucide-vue-next";
+import { Inbox, SearchX, TriangleAlert } from "@lucide/vue";
 import type { Component } from "vue";
 
 export interface Props {

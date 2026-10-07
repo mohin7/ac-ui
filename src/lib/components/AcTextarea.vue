@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, useId, watch } from "vue";
-import { CircleAlert } from "lucide-vue-next";
+import { CircleAlert } from "@lucide/vue";
 
 export interface Props {
   /** Floating label. It rests on the first line and rises on focus or when filled. */

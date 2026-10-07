@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { AcSegmentedControl } from "@/lib";
-import { Braces, FileCode, LayoutGrid, List } from "lucide-vue-next";
+import { Braces, FileCode, LayoutGrid, List } from "@lucide/vue";
 
 const format = ref("yaml");
 const view = ref("list");

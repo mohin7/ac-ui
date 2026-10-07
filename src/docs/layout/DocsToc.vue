@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref, watch } from "vue";
-import { TextAlignStart } from "lucide-vue-next";
+import { TextAlignStart } from "@lucide/vue";
 import { useRoute } from "vue-router";
 
 interface Item {

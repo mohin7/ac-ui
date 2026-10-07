@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { RotateCcw } from "lucide-vue-next";
+import { RotateCcw } from "@lucide/vue";
 import { AcButton, AcSegmentedControl } from "@/lib";
 import { AcCodeEditor } from "@/lib/editor";
 

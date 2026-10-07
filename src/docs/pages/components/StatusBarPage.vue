@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cpu, MemoryStick } from "lucide-vue-next";
+import { Cpu, MemoryStick } from "@lucide/vue";
 import { AcStatusBar } from "@/lib";
 import ApiTables from "../../components/ApiTables.vue";
 import Callout from "../../components/Callout.vue";
@@ -17,7 +17,7 @@ const items = [
   { label: "TLS", status: "success", align: "right" },
 ];
 const script =
-  'import { Cpu, MemoryStick } from "lucide-vue-next";\n\nconst items = [\n  { label: "Connected", status: "success", dot: true, priority: "high" },\n  { label: "Cluster", value: "prod-us-east-1", mono: true, priority: "high" },\n  { label: "MongoDB", value: "demo/mg-rs", mono: true },\n  { label: "CPU", icon: Cpu, value: "420m / 1", meter: 42, align: "right" },\n  { label: "Memory", icon: MemoryStick, value: "1.6Gi / 2Gi", meter: 80, align: "right" },\n  { label: "TLS", status: "success", align: "right" },\n];';
+  'import { Cpu, MemoryStick } from "@lucide/vue";\n\nconst items = [\n  { label: "Connected", status: "success", dot: true, priority: "high" },\n  { label: "Cluster", value: "prod-us-east-1", mono: true, priority: "high" },\n  { label: "MongoDB", value: "demo/mg-rs", mono: true },\n  { label: "CPU", icon: Cpu, value: "420m / 1", meter: 42, align: "right" },\n  { label: "Memory", icon: MemoryStick, value: "1.6Gi / 2Gi", meter: 80, align: "right" },\n  { label: "TLS", status: "success", align: "right" },\n];';
 
 const dos = [
   "Keep it to facts people glance at: connection, cluster, resource, usage, version.",

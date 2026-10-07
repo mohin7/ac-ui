@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
-import { Check, ChevronsUpDown, Cloud, Plus, Search } from "lucide-vue-next";
+import { Check, ChevronsUpDown, Cloud, Plus, Search } from "@lucide/vue";
 import AcSkeleton from "./AcSkeleton.vue";
 import type { Ref } from "vue";
 

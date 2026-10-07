@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance } from "vue";
-import { CircleCheck, CircleMinus, CircleX, Info, TriangleAlert } from "lucide-vue-next";
+import { CircleCheck, CircleMinus, CircleX, Info, TriangleAlert } from "@lucide/vue";
 import AcSpinner from "./AcSpinner.vue";
 import type { Component } from "vue";
 

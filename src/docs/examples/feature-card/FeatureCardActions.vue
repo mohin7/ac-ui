@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CircleCheck, DatabaseBackup, RefreshCw, TriangleAlert } from "lucide-vue-next";
+import { CircleCheck, DatabaseBackup, RefreshCw, TriangleAlert } from "@lucide/vue";
 import { AcButton, AcFeatureCard, AcTooltip, useToast } from "@/lib";
 
 const { toast } = useToast();

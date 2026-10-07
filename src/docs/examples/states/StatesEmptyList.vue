@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Database, Plus } from "lucide-vue-next";
+import { Database, Plus } from "@lucide/vue";
 import { AcBadge, AcButton, AcContentTable, AcEmptyState, AcTable } from "@/lib";
 import type { Column } from "@/lib";
 

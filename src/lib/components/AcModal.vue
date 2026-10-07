@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
-import { X } from "lucide-vue-next";
+import { X } from "@lucide/vue";
 
 export interface Props {
   /** Heading of the dialog. */

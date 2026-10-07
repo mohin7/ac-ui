@@ -42,7 +42,7 @@ Example pages put them together: a database list, a database detail page, a crea
 - **Shape:** 6px radius on controls and 10px on surfaces, with soft layered shadows from `shadow-xs` to `shadow-xl`.
 - **Focus:** a `focus-ring` utility (primary border and a soft halo) on form fields.
 - **Dark mode:** class-based. Every token has a dark value, so components need no dark-specific code.
-- **Icons:** [Lucide](https://lucide.dev) (`lucide-vue-next`). Components never draw their own SVG icons.
+- **Icons:** [Lucide](https://lucide.dev) (`@lucide/vue`). Components never draw their own SVG icons.
 
 ## Using it in an app
 
@@ -61,7 +61,7 @@ The docs page **Getting Started → Existing Apps** has the full guide. In short
 
 ```sh
 # installed next to the old 2.x package, under a second name
-npm install @appscode/ds-next@npm:@appscode/design-system@3.0.0-alpha.2 lucide-vue-next
+npm install @appscode/ds-next@npm:@appscode/design-system@3.0.0-alpha.2 @lucide/vue
 ```
 
 ```ts
@@ -97,7 +97,7 @@ import { AcCodeEditor, AcFileEditor } from "@appscode/design-system/editor";
 ```
 
 - **Requirements:** Vue 3.5+, Vite 5+ or Nuxt 3+, and TypeScript with `moduleResolution: "bundler"`. Every component renders on the server, so Nuxt SSR works.
-- **Peer dependencies:** `vue` ^3.5 and `lucide-vue-next` ^1.0. CodeMirror, Ajv and `yaml` are regular dependencies, bundled only by apps that import from `/editor`.
+- **Peer dependencies:** `vue` ^3.5 and `@lucide/vue` ^1.0. CodeMirror, Ajv and `yaml` are regular dependencies, bundled only by apps that import from `/editor`.
 - **Dark mode:** put `.dark` on `<html>` (the old `.is-dark-theme` class works too), or call `useColorMode().setMode("dark" | "light" | "system")`. The user's choice is saved under the old `themeMode` localStorage key.
 - **Toasts:** mount `<AcToaster />` once near the root, then call `useToast().success("Saved")` anywhere.
 - **Brand colour:** `useBrandColor().setColor("#0066cc")` re-hues the primary scale. The old `HexToHSL`, `setThemeHSL` and `getThemeHSL` helpers are exported under the same names.

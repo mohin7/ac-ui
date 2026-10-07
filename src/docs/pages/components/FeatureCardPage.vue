@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Activity } from "lucide-vue-next";
+import { Activity } from "@lucide/vue";
 import { AcFeatureCard } from "@/lib";
 import ApiTables from "../../components/ApiTables.vue";
 import Callout from "../../components/Callout.vue";
@@ -8,7 +8,7 @@ import ComponentPlayground from "../../components/ComponentPlayground.vue";
 import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
-const script = 'import { Activity } from "lucide-vue-next";';
+const script = 'import { Activity } from "@lucide/vue";';
 
 const dos = [
   "Keep descriptions to one or two sentences; they're clamped at three lines.",

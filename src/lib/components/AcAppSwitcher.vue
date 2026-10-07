@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
-import { Check, ChartLine, Database, GraduationCap, Grip, Receipt, Server, ServerCog, Telescope } from "lucide-vue-next";
+import { Check, ChartLine, Database, GraduationCap, Grip, Receipt, Server, ServerCog, Telescope } from "@lucide/vue";
 import AcLogo from "./AcLogo.vue";
 import AcNavbarItem from "./AcNavbarItem.vue";
 import type { Component } from "vue";

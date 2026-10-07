@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, useId } from "vue";
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown } from "@lucide/vue";
 import type { Ref } from "vue";
 
 interface SidebarContext {

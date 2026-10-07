@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from "vue";
-import { PanelLeftClose, PanelLeftOpen, X } from "lucide-vue-next";
+import { PanelLeftClose, PanelLeftOpen, X } from "@lucide/vue";
 
 export interface Props {
   /** Accessible name of the navigation landmark. */

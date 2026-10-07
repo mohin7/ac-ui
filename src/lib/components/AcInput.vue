@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs, useId, useSlots } from "vue";
-import { CircleAlert, Eye, EyeOff } from "lucide-vue-next";
+import { CircleAlert, Eye, EyeOff } from "@lucide/vue";
 import type { Component } from "vue";
 
 export interface Props {

@@ -14,7 +14,7 @@ import {
   Settings,
   Smartphone,
   Terminal,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import {
   AcAppSwitcher,
   AcBadge,

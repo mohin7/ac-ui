@@ -11,7 +11,7 @@ export default defineConfig({
     lib: { entry: { index: "src/lib/index.ts", "editor/index": "src/lib/editor/index.ts" }, formats: ["es"] },
     rollupOptions: {
       // Dependencies stay imports so the app dedupes them; CodeMirror breaks with two copies of @codemirror/state.
-      external: ["vue", "vue-router", "lucide-vue-next", "ajv", "yaml", /^@codemirror\//, /^@lezer\//],
+      external: ["vue", "vue-router", "@lucide/vue", "ajv", "yaml", /^@codemirror\//, /^@lezer\//],
       // One file per component keeps class names greppable for the consumer's Tailwind @source scan.
       output: { preserveModules: true, preserveModulesRoot: "src/lib", entryFileNames: "[name].js" },
     },

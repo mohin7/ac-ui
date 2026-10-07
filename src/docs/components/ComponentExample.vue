@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref, type Component } from "vue";
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown } from "@lucide/vue";
 import CodeBlock from "./CodeBlock.vue";
 
 // Every example is a real SFC in src/docs/examples; the preview runs it and the code shows its exact source.

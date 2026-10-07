@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends Record<string, unknown>">
 import { computed, nextTick, ref, toRaw, useId } from "vue";
-import { Check, ChevronDown, ChevronRight, CircleAlert, Pencil, Plus, Trash2, X } from "lucide-vue-next";
+import { Check, ChevronDown, ChevronRight, CircleAlert, Pencil, Plus, Trash2, X } from "@lucide/vue";
 import AcBadge from "./AcBadge.vue";
 import AcButton from "./AcButton.vue";
 import AcCellValue from "./AcCellValue.vue";

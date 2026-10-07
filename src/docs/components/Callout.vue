@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Info, Lightbulb, TriangleAlert } from "lucide-vue-next";
+import { Info, Lightbulb, TriangleAlert } from "@lucide/vue";
 withDefaults(defineProps<{ type?: "tip" | "note" | "warning" }>(), { type: "note" });
 </script>
 

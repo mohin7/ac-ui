@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T">
 import { useId } from "vue";
-import { Check } from "lucide-vue-next";
+import { Check } from "@lucide/vue";
 import type { Option } from "./types";
 
 export interface Props<V> {

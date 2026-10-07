@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import { Trash2 } from "lucide-vue-next";
+import { Trash2 } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 import AcInput from "./AcInput.vue";
 import AcModal from "./AcModal.vue";

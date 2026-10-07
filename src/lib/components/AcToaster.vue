@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
-import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "lucide-vue-next";
+import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 import { useToast } from "../composables/useToast";
 import type { Toast, ToastTone } from "../composables/useToast";

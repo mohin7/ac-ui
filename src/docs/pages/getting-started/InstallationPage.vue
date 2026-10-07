@@ -7,7 +7,7 @@ import fonts from "../../snippets/installation/fonts.txt?raw";
 import main from "../../snippets/installation/main.txt?raw";
 import use from "../../snippets/installation/use.txt?raw";
 
-const deps = `npm install vue lucide-vue-next
+const deps = `npm install vue @lucide/vue
 npm install -D tailwindcss @tailwindcss/vite`;
 
 const tsconfig = `{
@@ -51,7 +51,7 @@ const fontsInstall = `npm install @fontsource-variable/geist @fontsource-variabl
   <DocHeading id="copy-lib" :level="3">3. Add the library</DocHeading>
   <p>
     Copy <code class="prose-code">src/lib</code> (the theme, components and composables) into your app. Its only
-    dependencies are Vue and <code class="prose-code">lucide-vue-next</code>.
+    dependencies are Vue and <code class="prose-code">@lucide/vue</code>.
   </p>
   <CodeBlock :code="copy" lang="bash" filename="Terminal" />
   <Callout type="note">
@@ -85,6 +85,6 @@ const fontsInstall = `npm install @fontsource-variable/geist @fontsource-variabl
   <ul>
     <li>Add <RouterLink to="/components/theme-mode">AcThemeMode</RouterLink> and the no-flash snippet from <RouterLink to="/getting-started/dark-mode">Dark Mode</RouterLink>.</li>
     <li>Mount <code class="prose-code">&lt;AcToaster /&gt;</code> once in your root component to use <RouterLink to="/components/toast">useToast()</RouterLink>.</li>
-    <li>Icons come from <code class="prose-code">lucide-vue-next</code> — see <RouterLink to="/foundations/icons">Icons</RouterLink>.</li>
+    <li>Icons come from <code class="prose-code">@lucide/vue</code> — see <RouterLink to="/foundations/icons">Icons</RouterLink>.</li>
   </ul>
 </template>

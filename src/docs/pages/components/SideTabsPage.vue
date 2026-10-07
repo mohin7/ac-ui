@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Activity, DatabaseBackup, LayoutDashboard, Settings2, TriangleAlert } from "lucide-vue-next";
+import { Activity, DatabaseBackup, LayoutDashboard, Settings2, TriangleAlert } from "@lucide/vue";
 import { AcSideTabs } from "@/lib";
 import ApiTables from "../../components/ApiTables.vue";
 import Callout from "../../components/Callout.vue";
@@ -16,7 +16,7 @@ const items = [
   { key: "danger", label: "Danger zone", icon: TriangleAlert, tone: "danger" },
 ];
 const script =
-  'import { ref } from "vue";\nimport { Activity, DatabaseBackup, LayoutDashboard, Settings2, TriangleAlert } from "lucide-vue-next";\n\nconst section = ref("overview");\nconst items = [\n  { key: "overview", label: "Overview", icon: LayoutDashboard },\n  { key: "configuration", label: "Configuration", icon: Settings2 },\n  { key: "backups", label: "Backups", icon: DatabaseBackup, badge: 12 },\n  { key: "monitoring", label: "Monitoring", icon: Activity },\n  { key: "danger", label: "Danger zone", icon: TriangleAlert, tone: "danger" },\n];';
+  'import { ref } from "vue";\nimport { Activity, DatabaseBackup, LayoutDashboard, Settings2, TriangleAlert } from "@lucide/vue";\n\nconst section = ref("overview");\nconst items = [\n  { key: "overview", label: "Overview", icon: LayoutDashboard },\n  { key: "configuration", label: "Configuration", icon: Settings2 },\n  { key: "backups", label: "Backups", icon: DatabaseBackup, badge: 12 },\n  { key: "monitoring", label: "Monitoring", icon: Activity },\n  { key: "danger", label: "Danger zone", icon: TriangleAlert, tone: "danger" },\n];';
 
 const dos = [
   "Use side tabs for five or more sections of one resource or settings area.",

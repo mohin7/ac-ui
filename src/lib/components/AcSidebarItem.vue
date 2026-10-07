@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, inject, onBeforeUnmount, onMounted, provide, ref, useId, watch } from "vue";
-import { ChevronRight } from "lucide-vue-next";
+import { ChevronRight } from "@lucide/vue";
 import type { Component, Ref } from "vue";
 import type { Tone } from "./types";
 

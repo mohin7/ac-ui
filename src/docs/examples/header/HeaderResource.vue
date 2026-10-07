@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link2, Trash2 } from "lucide-vue-next";
+import { Link2, Trash2 } from "@lucide/vue";
 import { AcBadge, AcButton, AcHeader } from "@/lib";
 </script>
 

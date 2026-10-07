@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from "vue";
-import { Check, Copy, Eye, EyeOff } from "lucide-vue-next";
+import { Check, Copy, Eye, EyeOff } from "@lucide/vue";
 
 export interface InfoItem {
   /** Names the slots for this row: `#value-<key>` and `#label-<key>`. Defaults to `label`. */

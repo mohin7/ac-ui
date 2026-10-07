@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Pencil, RotateCw, Trash2 } from "lucide-vue-next";
+import { Pencil, RotateCw, Trash2 } from "@lucide/vue";
 import { AcBadge, AcDropdownDivider, AcDropdownItem, AcResourceCard, useToast } from "@/lib";
 
 const { toast } = useToast();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Database, HardDrive, Server, TriangleAlert } from "lucide-vue-next";
+import { Database, HardDrive, Server, TriangleAlert } from "@lucide/vue";
 import { AcStatCard, useToast } from "@/lib";
 
 const { toast } = useToast();

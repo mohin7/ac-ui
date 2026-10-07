@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useId } from "vue";
-import { ArrowLeft, ChevronDown } from "lucide-vue-next";
+import { ArrowLeft, ChevronDown } from "@lucide/vue";
 
 export interface Props {
   /** Section title. */

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Activity, Database, DatabaseBackup, LayoutDashboard, LifeBuoy, Server, Settings } from "lucide-vue-next";
+import { Activity, Database, DatabaseBackup, LayoutDashboard, LifeBuoy, Server, Settings } from "@lucide/vue";
 import { AcLogo, AcSidebar, AcSidebarItem, AcSidebarSection } from "@/lib";
 
 const current = ref("postgres");

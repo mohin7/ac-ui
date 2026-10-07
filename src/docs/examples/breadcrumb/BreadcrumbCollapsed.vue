@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Database, Server } from "lucide-vue-next";
+import { Database, Server } from "@lucide/vue";
 import { AcBreadcrumb } from "@/lib";
 
 const items = [

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, useId } from "vue";
-import { CircleAlert, FileText, Upload, X } from "lucide-vue-next";
+import { CircleAlert, FileText, Upload, X } from "@lucide/vue";
 
 export interface FileRejection {
   /** The file that was turned away. */

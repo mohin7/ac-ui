@@ -32,7 +32,7 @@ function unwatchOverflow(el: Element) {
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent, getCurrentInstance, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
-import { Braces, Check, Minus } from "lucide-vue-next";
+import { Braces, Check, Minus } from "@lucide/vue";
 import AcBadge from "./AcBadge.vue";
 import AcModal from "./AcModal.vue";
 import AcSkeleton from "./AcSkeleton.vue";

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, useAttrs, useId, watch } from "vue";
-import { Calendar, CalendarRange, ChevronLeft, ChevronRight, CircleAlert, Timer, X } from "lucide-vue-next";
+import { Calendar, CalendarRange, ChevronLeft, ChevronRight, CircleAlert, Timer, X } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 
 export interface DatePickerPreset {

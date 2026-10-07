@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Database } from "lucide-vue-next";
+import { Database } from "@lucide/vue";
 import { AcAlert, AcBadge, AcButton, AcInput, AcSwitch } from "@/lib";
 import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";

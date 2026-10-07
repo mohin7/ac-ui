@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Database, DatabaseBackup, LayoutDashboard, Settings } from "lucide-vue-next";
+import { Database, DatabaseBackup, LayoutDashboard, Settings } from "@lucide/vue";
 import { AcClusterSwitcher, AcSidebar, AcSidebarItem, AcSidebarSection } from "@/lib";
 
 const clusters = [

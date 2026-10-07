@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, ref } from "vue";
-import { Plus } from "lucide-vue-next";
+import { Plus } from "@lucide/vue";
 import {
   AcAccordion,
   AcAccordionItem,

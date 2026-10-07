@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Activity, DatabaseBackup, KeyRound, ShieldCheck } from "lucide-vue-next";
+import { Activity, DatabaseBackup, KeyRound, ShieldCheck } from "@lucide/vue";
 import { AcFeatureCard, useToast } from "@/lib";
 
 const { toast } = useToast();

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { RotateCcw } from "lucide-vue-next";
+import { RotateCcw } from "@lucide/vue";
 import { AcBadge, AcButton, AcInput, AcSwitch, hexToHsl, useBrandColor } from "@/lib";
 
 const presets = [

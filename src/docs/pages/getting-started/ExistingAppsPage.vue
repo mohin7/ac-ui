@@ -14,7 +14,7 @@ const requirements = [
   ["Vue", "3.5 or later", "kubedb-ui 3.5.40, platform-ui 3.5.27"],
   ["Bundler", "Vite 5+ or Nuxt 3+", "kubedb-ui Vite 7, platform-ui Nuxt 4"],
   ["TypeScript", 'moduleResolution "bundler"', "Both apps already use it, so /editor types resolve"],
-  ["Peer dependency", "lucide-vue-next ^1.0", "Install it alongside the package"],
+  ["Peer dependency", "@lucide/vue ^1.0", "Install it alongside the package"],
   ["Server rendering", "Supported", "All 74 components render on the server, so Nuxt needs no <ClientOnly>"],
 ];
 

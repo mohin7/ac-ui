@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Database, Plus } from "lucide-vue-next";
+import { Database, Plus } from "@lucide/vue";
 import { AcButton, AcEmptyState } from "@/lib";
 </script>
 

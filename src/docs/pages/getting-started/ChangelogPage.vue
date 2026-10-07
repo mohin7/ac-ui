@@ -5,6 +5,19 @@ import DocHeading from "../../components/DocHeading.vue";
 type Entry = { title: string; items: string[] };
 const releases: { version: string; id: string; summary: string; groups: Entry[] }[] = [
   {
+    version: "0.0.11",
+    id: "v0-0-11",
+    summary: "Icons come from @lucide/vue.",
+    groups: [
+      {
+        title: "Changed",
+        items: [
+          "The icon package is now `@lucide/vue`. `lucide-vue-next` is deprecated. The icons and their names are the same; only the package name changes. Apps must install `@lucide/vue` (the peer dependency) and can remove `lucide-vue-next`. Change your own `import { … } from \"lucide-vue-next\"` lines the same way.",
+        ],
+      },
+    ],
+  },
+  {
     version: "0.0.10",
     id: "v0-0-10",
     summary: "A header slot for table columns, a small pagination and tinted toasts.",

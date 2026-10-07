@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Moon, Sun } from "lucide-vue-next";
+import { Moon, Sun } from "@lucide/vue";
 import { useColorMode } from "@/lib";
 
 const { isDark, mode, setMode } = useColorMode();

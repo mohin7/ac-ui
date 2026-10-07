@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Menu } from "lucide-vue-next";
+import { Menu } from "@lucide/vue";
 
 export interface Props {
   /** When the menu button shows: `mobile` below 768px, `always`, or `never`. It emits `menu`; wire it to the sidebar's `v-model:mobile-open` or its `toggle()`. */

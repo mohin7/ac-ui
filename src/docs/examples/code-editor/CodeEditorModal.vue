@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { Braces } from "lucide-vue-next";
+import { Braces } from "@lucide/vue";
 import { AcButton, AcModal } from "@/lib";
 import { AcCodeEditor } from "@/lib/editor";
 

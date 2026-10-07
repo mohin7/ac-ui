@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useId } from "vue";
-import { CircleAlert } from "lucide-vue-next";
+import { CircleAlert } from "@lucide/vue";
 
 export interface SliderMark {
   /** Where the mark sits, between `min` and `max`. */

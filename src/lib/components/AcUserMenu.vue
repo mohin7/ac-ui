@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
-import { ChevronDown, LogOut } from "lucide-vue-next";
+import { ChevronDown, LogOut } from "@lucide/vue";
 import AcFontScale from "./AcFontScale.vue";
 import AcThemeMode from "./AcThemeMode.vue";
 import type { Component } from "vue";

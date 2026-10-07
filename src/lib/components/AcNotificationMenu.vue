@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
-import { ArrowRight, Bell, BellOff, CheckCheck, CircleCheck, CircleX, Info, LoaderCircle, TriangleAlert } from "lucide-vue-next";
+import { ArrowRight, Bell, BellOff, CheckCheck, CircleCheck, CircleX, Info, LoaderCircle, TriangleAlert } from "@lucide/vue";
 import AcNavbarItem from "./AcNavbarItem.vue";
 import AcSkeleton from "./AcSkeleton.vue";
 import type { Component } from "vue";

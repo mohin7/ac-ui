@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Bell, CircleHelp } from "lucide-vue-next";
+import { Bell, CircleHelp } from "@lucide/vue";
 import { AcLogo, AcNavbar, AcNavbarItem, AcSearchBar, AcUserMenu } from "@/lib";
 
 const query = ref("");

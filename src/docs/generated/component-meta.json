@@ -1755,7 +1755,7 @@
         "type": "Component | undefined",
         "default": "undefined",
         "required": false,
-        "description": "An icon component shown before the label, e.g. `:icon=\"Trash2\"` from lucide-vue-next. Or use the `icon` slot."
+        "description": "An icon component shown before the label, e.g. `:icon=\"Trash2\"` from"
       },
       {
         "name": "shortcut",

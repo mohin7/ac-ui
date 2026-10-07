@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cloud } from "lucide-vue-next";
+import { Cloud } from "@lucide/vue";
 import { AcResourceCard } from "@/lib";
 import ApiTables from "../../components/ApiTables.vue";
 import Callout from "../../components/Callout.vue";
@@ -8,7 +8,7 @@ import ComponentPlayground from "../../components/ComponentPlayground.vue";
 import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
-const script = 'import { Cloud } from "lucide-vue-next";\n\nconst tags = [{ label: "v1.30.4" }, { label: "Hub", color: "info" }];\nconst details = [\n  { label: "Provider", value: "AWS EKS" },\n  { label: "Location", value: "us-east-1" },\n  { label: "Nodes", value: 12 },\n  { label: "Age", value: "182d" },\n];';
+const script = 'import { Cloud } from "@lucide/vue";\n\nconst tags = [{ label: "v1.30.4" }, { label: "Hub", color: "info" }];\nconst details = [\n  { label: "Provider", value: "AWS EKS" },\n  { label: "Location", value: "us-east-1" },\n  { label: "Nodes", value: 12 },\n  { label: "Age", value: "182d" },\n];';
 
 const dos = [
   "Show the four or so facts people scan for; put the rest on the detail page.",

@@ -7,7 +7,7 @@ export interface Props {
   label?: string;
   /** A second, muted line under the label. */
   description?: string;
-  /** An icon component shown before the label, e.g. `:icon="Trash2"` from lucide-vue-next. Or use the `icon` slot. */
+  /** An icon component shown before the label, e.g. `:icon="Trash2"` from @lucide/vue. Or use the `icon` slot. */
   icon?: Component;
   /** Keyboard shortcut hint shown at the right, e.g. "⌘D". Display only; bind the key yourself. */
   shortcut?: string;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, useId } from "vue";
-import { ArrowRight, ArrowUpRight, Check } from "lucide-vue-next";
+import { ArrowRight, ArrowUpRight, Check } from "@lucide/vue";
 import AcBadge from "./AcBadge.vue";
 import type { Component } from "vue";
 import type { Tone } from "./types";

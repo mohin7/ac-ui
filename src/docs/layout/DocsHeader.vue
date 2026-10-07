@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { Menu, Search } from "lucide-vue-next";
+import { Menu, Search } from "@lucide/vue";
 import { AcFontScale, AcThemeMode, AcLogo } from "@/lib";
 import BrandHueMenu from "./BrandHueMenu.vue";
 import pkg from "../../../package.json";

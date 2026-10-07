@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, useId, useSlots, watch } from "vue";
-import { Check, CircleAlert, Copy, TriangleAlert } from "lucide-vue-next";
+import { Check, CircleAlert, Copy, TriangleAlert } from "@lucide/vue";
 import { closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
 import { defaultKeymap, history, historyKeymap, indentWithTab, simplifySelection, temporarilySetTabFocusMode } from "@codemirror/commands";
 import { json } from "@codemirror/lang-json";

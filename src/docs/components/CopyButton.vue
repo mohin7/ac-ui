@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check, Copy } from "lucide-vue-next";
+import { Check, Copy } from "@lucide/vue";
 import { useCopy } from "../composables/useCopy";
 
 const props = withDefaults(defineProps<{ text: string; label?: string }>(), { label: "Copy code" });

@@ -181,7 +181,7 @@ const utils = `<!-- before (Bulma + AppsCode utilities) -->
 
   <DocHeading id="other">Other changes</DocHeading>
   <ul>
-    <li>No Bulma or Font Awesome CSS is loaded. Icons come from <code class="prose-code">lucide-vue-next</code>; the old icon components map to Lucide on the <RouterLink to="/foundations/icons">Icons</RouterLink> page.</li>
+    <li>No Bulma or Font Awesome CSS is loaded. Icons come from <code class="prose-code">@lucide/vue</code>; the old icon components map to Lucide on the <RouterLink to="/foundations/icons">Icons</RouterLink> page.</li>
     <li>Focus is visible: a 2px primary outline on keyboard focus (the old CSS removed button outlines).</li>
     <li>Fonts change from Roboto + Inconsolata to Geist + Geist Mono.</li>
     <li>Controls use a 6px radius and surfaces 10px (was 4px everywhere); <code class="prose-code">rounded-4</code> still exists.</li>

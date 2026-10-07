@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, ref } from "vue";
-import { ChevronRight, House } from "lucide-vue-next";
+import { ChevronRight, House } from "@lucide/vue";
 import type { Component } from "vue";
 
 export interface BreadcrumbItem {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "lucide-vue-next";
+import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 import type { Component } from "vue";
 import type { Tone } from "./types";

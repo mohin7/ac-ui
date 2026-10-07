@@ -75,7 +75,7 @@ vite.lib.config.ts            library build: entries index + editor/index, prese
   - Others load it with `import("../editor")` inside `defineAsyncComponent`, as `AcCellValue` does.
   - Heavy parts load on first use: the diff (`@codemirror/merge`), the YAML parser and Ajv.
   - Docs example folders named `*-editor/` are lazy-loaded by `ComponentExample.vue`.
-- **Externals** in the library build: `vue`, `vue-router`, `lucide-vue-next`, `ajv`, `yaml`, `@codemirror/*` and `@lezer/*`. Two copies of `@codemirror/state` break CodeMirror.
+- **Externals** in the library build: `vue`, `vue-router`, `@lucide/vue`, `ajv`, `yaml`, `@codemirror/*` and `@lezer/*`. Two copies of `@codemirror/state` break CodeMirror.
 - **Old-library compatibility where it's cheap:**
   - the `.is-dark-theme` class and the `themeMode` localStorage key;
   - the `themeColor` key and the `HexToHSL` / `setThemeHSL` / `getThemeHSL` names;
@@ -108,7 +108,7 @@ Every component is `src/lib/components/AcX.vue`, written as `<script setup lang=
 
 **Script order:**
 
-1. Imports: `vue`, then third-party (`lucide-vue-next`, `@codemirror/*`), then local components, then composables, with `import type` last.
+1. Imports: `vue`, then third-party (`@lucide/vue`, `@codemirror/*`), then local components, then composables, with `import type` last.
 2. Local types.
 3. `export interface Props`.
 4. `withDefaults(defineProps<Props>(), {…})`.
@@ -120,7 +120,7 @@ Every component is `src/lib/components/AcX.vue`, written as `<script setup lang=
 ```vue
 <script setup lang="ts">
 import { computed, useId } from "vue";
-import { X } from "lucide-vue-next";
+import { X } from "@lucide/vue";
 
 export interface Props {
   /** Text shown above the field. Doubles as the accessible name. */
@@ -165,7 +165,7 @@ defineSlots<{
   - Z-index scale: menus and popovers `z-[90]`; modals and side panels `z-[80]`; toasts and tooltips `z-[100]`. Don't invent new levels.
 - **Escape:** a child that handles Escape (a select, menu or editor) calls `preventDefault()`. `AcModal` and `AcSidePanel` ignore an Escape whose `defaultPrevented` is set.
 - **Icons:**
-  - Use `lucide-vue-next` only, with an icon prop typed as `Component`.
+  - Use `@lucide/vue` only, with an icon prop typed as `Component`.
   - Size icons with `class="size-4"`, and add `aria-hidden="true"` when they're decorative.
   - Fallback order is Lucide, then Phosphor (via unplugin-icons), then simple-icons for brands. Never add a fourth icon set.
   - Never hand-draw SVG icons; `AcLogo` is the only inline SVG, because it's a brand asset.

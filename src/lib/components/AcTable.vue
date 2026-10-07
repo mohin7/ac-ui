@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="Row extends Record<string, unknown>">
 import { computed, ref, useId } from "vue";
-import { ArrowUp, Check, ChevronRight, ChevronsUpDown, Minus } from "lucide-vue-next";
+import { ArrowUp, Check, ChevronRight, ChevronsUpDown, Minus } from "@lucide/vue";
 import AcCellValue from "./AcCellValue.vue";
 import type { CellType, ResourceCell, ResourceColumn } from "./AcCellValue.vue";
 

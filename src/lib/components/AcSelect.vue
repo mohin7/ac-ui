@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="V">
 import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useId, watch } from "vue";
-import { Check, ChevronDown, CircleAlert, Plus, RefreshCw, Search, X } from "lucide-vue-next";
+import { Check, ChevronDown, CircleAlert, Plus, RefreshCw, Search, X } from "@lucide/vue";
 import AcSpinner from "./AcSpinner.vue";
 import type { SelectOption } from "./types";
 

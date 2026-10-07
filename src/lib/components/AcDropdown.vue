@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, onUpdated, provide, ref, useId, watch } from "vue";
-import { ChevronDown, EllipsisVertical } from "lucide-vue-next";
+import { ChevronDown, EllipsisVertical } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 
 export interface Props {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check, X } from "lucide-vue-next";
+import { Check, X } from "@lucide/vue";
 import InlineMd from "./InlineMd.vue";
 defineProps<{ dos: string[]; donts: string[] }>();
 </script>

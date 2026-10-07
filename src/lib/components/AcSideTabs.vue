@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref, useId, useSlots, watch } from "vue";
-import { ChevronRight, PanelLeftClose, PanelLeftOpen } from "lucide-vue-next";
+import { ChevronRight, PanelLeftClose, PanelLeftOpen } from "@lucide/vue";
 import AcSelect from "./AcSelect.vue";
 import type { Component, Ref } from "vue";
 import type { SelectOption, Tone } from "./types";

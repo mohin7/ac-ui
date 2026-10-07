@@ -98,7 +98,7 @@ import {
   Users,
   Wallet,
   X,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { AcButton } from "@/lib";
 import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
@@ -161,7 +161,7 @@ const sizes = [
   { cls: "size-8", px: 32, use: "Empty states and hero tiles (use stroke-width 1.5)" },
 ];
 
-const install = "npm install lucide-vue-next";
+const install = "npm install @lucide/vue";
 
 const dos = ["Use size-4 next to 13px text and let the icon inherit the text colour.", "Give every icon-only button an aria-label."];
 const donts = ["Don't mix icon sets for the same concept on one screen.", "Don't draw new SVGs in components — pick a Lucide icon, or add a Phosphor one if Lucide has nothing."];
@@ -179,7 +179,7 @@ const filtered = computed(() => {
 
 function copyImport(name: string) {
   lastCopied.value = name;
-  copy(`import { ${name} } from "lucide-vue-next";`);
+  copy(`import { ${name} } from "@lucide/vue";`);
 }
 </script>
 
@@ -190,7 +190,7 @@ function copyImport(name: string) {
     icons you add look like the ones already on the page.
   </p>
   <ol>
-    <li><strong>Lucide</strong> (<code class="prose-code">lucide-vue-next</code>) — reach for it first. Clean 24px outline icons, 1,600+ of them.</li>
+    <li><strong>Lucide</strong> (<code class="prose-code">@lucide/vue</code>) — reach for it first. Clean 24px outline icons, 1,600+ of them.</li>
     <li><strong>Phosphor</strong> via unplugin-icons — only when Lucide has nothing close.</li>
     <li><strong>simple-icons</strong> via unplugin-icons — brand and company logos (GitHub, AWS, Postgres…).</li>
   </ol>

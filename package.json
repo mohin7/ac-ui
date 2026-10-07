@@ -1,6 +1,6 @@
 {
   "name": "@mohin4/design-system",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "AppsCode design system: Tailwind CSS v4 theme and Vue 3 components.",
   "type": "module",
   "files": [
@@ -36,7 +36,7 @@
     "prepublishOnly": "npm run build:lib"
   },
   "peerDependencies": {
-    "lucide-vue-next": "^1.0.0",
+    "@lucide/vue": "^1.0.0",
     "vue": "^3.5.0"
   },
   "dependencies": {
@@ -65,7 +65,7 @@
     "@types/node": "^26.6.3",
     "@vitejs/plugin-vue": "^6.0.9",
     "@vue/tsconfig": "^0.9.1",
-    "lucide-vue-next": "^1.0.0",
+    "@lucide/vue": "^1.0.0",
     "postcss": "^8.5.28",
     "postcss-selector-parser": "^7.1.6",
     "shiki": "^4.4.3",

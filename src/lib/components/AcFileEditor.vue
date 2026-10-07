@@ -52,7 +52,7 @@ export interface Props {
 
 <script setup lang="ts" generic="F extends EditorFile">
 import { computed, nextTick, onBeforeUnmount, ref, shallowRef, useId, watch } from "vue";
-import { CircleAlert, Download, Eye, EyeOff, FileBraces, FileCode, FileLock, FileTerminal, FileText, Lock, TriangleAlert } from "lucide-vue-next";
+import { CircleAlert, Download, Eye, EyeOff, FileBraces, FileCode, FileLock, FileTerminal, FileText, Lock, TriangleAlert } from "@lucide/vue";
 import { Text } from "@codemirror/state";
 import AcButton from "./AcButton.vue";
 import AcCodeEditor from "./AcCodeEditor.vue";

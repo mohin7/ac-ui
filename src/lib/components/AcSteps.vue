@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check } from "lucide-vue-next";
+import { Check } from "@lucide/vue";
 
 export interface SubStep {
   /** Unique across all steps, e.g. `"credentials"` or `3`. */

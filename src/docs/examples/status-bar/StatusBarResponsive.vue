@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Cpu, MemoryStick } from "lucide-vue-next";
+import { Cpu, MemoryStick } from "@lucide/vue";
 import { AcSegmentedControl, AcStatusBar } from "@/lib";
 
 const width = ref("100%");

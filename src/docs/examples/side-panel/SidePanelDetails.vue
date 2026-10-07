@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { AcButton, AcSidePanel } from "@/lib";
-import { ExternalLink } from "lucide-vue-next";
+import { ExternalLink } from "@lucide/vue";
 
 const open = ref(false);
 const details = [

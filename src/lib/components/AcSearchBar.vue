@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from "vue";
-import { ChevronDown, Search, X } from "lucide-vue-next";
+import { ChevronDown, Search, X } from "@lucide/vue";
 
 export interface SearchFilterOption {
   value: string | number;

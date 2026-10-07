@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Activity, DatabaseBackup, LayoutDashboard, Settings2, ShieldCheck } from "lucide-vue-next";
+import { Activity, DatabaseBackup, LayoutDashboard, Settings2, ShieldCheck } from "@lucide/vue";
 import { AcButton, AcSideTabs } from "@/lib";
 
 const section = ref("backups");

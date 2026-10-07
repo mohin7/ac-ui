@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AppWindow, Menu, PanelLeft } from "lucide-vue-next";
+import { AppWindow, Menu, PanelLeft } from "@lucide/vue";
 import { AcSidebar, AcSidebarItem, AcSidebarSection } from "@/lib";
 </script>
 

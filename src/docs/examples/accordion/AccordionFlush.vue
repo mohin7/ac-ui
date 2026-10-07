@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Database, HardDrive, Network } from "lucide-vue-next";
+import { Database, HardDrive, Network } from "@lucide/vue";
 import { AcAccordion, AcAccordionItem, AcCard } from "@/lib";
 
 const open = ref<string | null>(null);

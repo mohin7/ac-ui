@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { AcDropdown, AcDropdownDivider, AcDropdownItem, AcTable } from "@/lib";
-import { ArchiveRestore, DatabaseBackup, Pencil, Terminal, Trash2 } from "lucide-vue-next";
+import { ArchiveRestore, DatabaseBackup, Pencil, Terminal, Trash2 } from "@lucide/vue";
 
 const columns = [
   { key: "name", label: "Name" },

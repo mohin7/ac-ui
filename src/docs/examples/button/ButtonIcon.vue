@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowRight, Plus } from "lucide-vue-next";
+import { ArrowRight, Plus } from "@lucide/vue";
 import { AcButton } from "@/lib";
 </script>
 
