@@ -166,12 +166,13 @@
   --color-gray-97: hsl(0 0% 97%);
 
   /* status */
-  --color-success: var(--color-green-40);
+  /* 34% is the AA limit for white text (4.6:1); green-40 gave 3.5:1 */
+  --color-success: hsl(141 53% 34%);
   --color-info: var(--color-blue-50);
   --color-warning: var(--color-yellow-50);
   --color-danger: var(--color-red-40);
   /* Hover fills and text-on-warning are fixed values, not scale steps, so dark mode keeps them readable. */
-  --color-success-hover: hsl(141 53% 32%);
+  --color-success-hover: hsl(141 53% 30%);
   --color-info-hover: hsl(217 71% 42%);
   --color-warning-hover: hsl(38 93% 58%);
   --color-danger-hover: hsl(348 100% 33%);
@@ -444,11 +445,11 @@
   --color-slate-90: #1a2335;
   --color-slate-95: #121a29;
   /* status fills keep their light-mode strength so white text on them stays readable */
-  --color-success: hsl(141 53% 40%);
+  --color-success: hsl(141 53% 34%);
   --color-info: hsl(217 71% 55%);
   --color-warning: hsl(38 93% 50%);
   --color-danger: hsl(348 90% 55%);
-  --color-success-hover: hsl(141 53% 45%);
+  --color-success-hover: hsl(141 53% 31%);
   --color-info-hover: hsl(217 71% 60%);
   --color-warning-hover: hsl(38 93% 56%);
   --color-danger-hover: hsl(348 90% 60%);

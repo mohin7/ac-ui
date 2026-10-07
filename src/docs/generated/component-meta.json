@@ -4043,6 +4043,13 @@
         "description": "The choices: `{ value, label, description?, disabled?, group? }`."
       },
       {
+        "name": "by",
+        "type": "(V extends object ? keyof V & string : never) | ((a: V, b: V) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "How to tell whether two values are the same, for option values that are objects. A property name (`\"id\"`) or a function `(a, b) => boolean`. Without it values are compared with `===`, which is right for strings and numbers."
+      },
+      {
         "name": "label",
         "type": "string | undefined",
         "default": "\"\"",
@@ -4368,7 +4375,7 @@
         "type": "number | undefined",
         "default": "640",
         "required": false,
-        "description": "Width in px below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. `0` keeps it vertical."
+        "description": "Width in px (at scale 1) below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. It grows with the interface scale. `0` keeps it vertical."
       },
       {
         "name": "mobile",
@@ -5222,6 +5229,27 @@
         "description": "With `expandable`, decides per row whether it can open. Rows that can't show no arrow."
       },
       {
+        "name": "rowActive",
+        "type": "((row: Row) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Marks the current row, e.g. the one chosen in a picker: tinted with a primary outline and `aria-current`. Not the checkbox selection, which is `selectable`."
+      },
+      {
+        "name": "rowDisabled",
+        "type": "((row: Row) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Greys a row out: it ignores clicks and its checkbox is disabled."
+      },
+      {
+        "name": "manualSort",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "The table doesn't reorder rows itself: sort the whole list outside (all pages, or on the server) when `sort` fires or `v-model:sortBy` changes. Headers still show the arrow."
+      },
+      {
         "name": "flat",
         "type": "boolean | undefined",
         "default": "false",
@@ -5248,6 +5276,13 @@
         "default": "[]",
         "required": false,
         "description": "`rowKey` values of the rows that are open. Bind with `v-model:expanded`."
+      },
+      {
+        "name": "sortBy",
+        "type": "{ key: string; mode: \"asc\" | \"desc\"; } | null | undefined",
+        "default": "null",
+        "required": false,
+        "description": "The sorted column and direction, or `null`. Bind with `v-model:sortBy` to set it from outside, e.g. to keep it across pages or in the URL."
       }
     ],
     "events": [
@@ -5270,6 +5305,11 @@
         "name": "update:expanded",
         "type": "[value: unknown[]]",
         "signature": "(event: \"update:expanded\", value: unknown[]): void"
+      },
+      {
+        "name": "update:sortBy",
+        "type": "[value: { key: string; mode: \"asc\" | \"desc\"; } | null]",
+        "signature": "(event: \"update:sortBy\", value: { key: string; mode: \"asc\" | \"desc\"; } | null): void"
       }
     ],
     "slots": [
@@ -5291,12 +5331,13 @@
         "name": "items",
         "type": "TabItem[]",
         "required": true,
-        "description": "The tabs: `{ key, label, count?, disabled? }`. `v-model` holds the active `key`."
+        "description": "The tabs: `{ key, label, count?, disabled?, to?, href?, testid? }`. `v-model` holds the active `key`. With `to`, it follows the current route."
       },
       {
         "name": "modelValue",
-        "type": "string",
-        "required": true,
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
         "description": ""
       }
     ],

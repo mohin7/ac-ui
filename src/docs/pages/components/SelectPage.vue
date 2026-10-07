@@ -41,6 +41,9 @@ const donts = ["Don't use a select for 2–5 options people should compare — u
   <DocHeading id="creatable" :level="3">Creatable</DocHeading>
   <p>With <code class="prose-code">searchable</code>, <code class="prose-code">creatable</code> lets people add a value that isn't in the list, such as a custom role or label. Text that matches no option adds an "Add “text”" row at the end of the list; click it or press Enter to take it. The text becomes the value in <code class="prose-code">v-model</code> and <code class="prose-code">@create</code> fires, so you can save it. Change the row's wording with <code class="prose-code">create-text</code>. Use it with string values.</p>
   <ComponentExample name="select/SelectCreatable" />
+  <DocHeading id="objects" :level="3">Object values</DocHeading>
+  <p>Option values can be objects, such as a cluster or a user, so <code class="prose-code">v-model</code> hands back the whole record. Tell the select how to match them with <code class="prose-code">by</code>: a property name (<code class="prose-code">by="id"</code>) or a function <code class="prose-code">(a, b) =&gt; boolean</code>. Without it, values are compared with <code class="prose-code">===</code>, which fits strings and numbers but not objects that were fetched again. <code class="prose-code">creatable</code> still needs string values.</p>
+  <ComponentExample name="select/SelectObjects" />
 
   <DocHeading id="groups" :level="3">Groups and descriptions</DocHeading>
   <p>Give options a <code class="prose-code">group</code> to list them under headings, and a <code class="prose-code">description</code> for a second line.</p>

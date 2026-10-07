@@ -55,7 +55,7 @@ export interface Props {
   hideTabs?: boolean;
   /** Shows a Collapse button that toggles `v-model:collapsed` (an icon-only rail). */
   collapsible?: boolean;
-  /** Width in px below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. `0` keeps it vertical. */
+  /** Width in px (at scale 1) below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. It grows with the interface scale. `0` keeps it vertical. */
   breakpoint?: number;
   /** Phone layout: a `select`, or a horizontal row of tabs that `scroll`s. */
   mobile?: "select" | "scroll";
@@ -276,7 +276,9 @@ function revealActive() {
 function measure() {
   const target = hasContent.value ? root.value : root.value?.parentElement;
   if (!target) return;
-  compact.value = props.breakpoint > 0 && target.clientWidth < props.breakpoint;
+  // The list and its text grow with the interface scale, so the width that needs the phone layout does too.
+  const scale = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ac-scale")) || 1;
+  compact.value = props.breakpoint > 0 && target.clientWidth < props.breakpoint * scale;
 }
 
 function watchOffsets() {
@@ -312,6 +314,7 @@ watch(() => props.offsetSelectors.join(","), watchOffsets);
 
 onMounted(() => {
   measure();
+  window.addEventListener("ac-scale", measure);
   watchOffsets();
   const target = hasContent.value ? root.value : root.value?.parentElement;
   if (target && typeof ResizeObserver !== "undefined") {
@@ -321,6 +324,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  window.removeEventListener("ac-scale", measure);
   resizeObserver?.disconnect();
   offsetObserver?.disconnect();
 });

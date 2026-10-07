@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Callout from "../../components/Callout.vue";
 import CopyChip from "../../components/CopyChip.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
@@ -24,6 +25,11 @@ const shadows = [
 </script>
 
 <template>
+  <Callout type="note">
+    Radii are shown at interface scale 1. They are multiples of <code class="prose-code">--ac-scale</code>, so they grow or shrink
+    together when the viewer picks a text size. See <RouterLink to="/getting-started/theming#interface-scale">Interface scale</RouterLink>.
+  </Callout>
+
   <DocHeading id="radius">Radius</DocHeading>
   <p>
     Two radii carry the system: <code class="prose-code">rounded-6</code> for controls and

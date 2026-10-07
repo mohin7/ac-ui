@@ -1,12 +1,14 @@
-<script setup lang="ts" generic="V extends string | number">
+<script setup lang="ts" generic="V">
 import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useId, watch } from "vue";
 import { Check, ChevronDown, CircleAlert, Plus, RefreshCw, Search, X } from "lucide-vue-next";
 import AcSpinner from "./AcSpinner.vue";
 import type { SelectOption } from "./types";
 
-export interface Props<T extends string | number> {
+export interface Props<T> {
   /** The choices: `{ value, label, description?, disabled?, group? }`. */
   options: SelectOption<T>[];
+  /** How to tell whether two values are the same, for option values that are objects. A property name (`"id"`) or a function `(a, b) => boolean`. Without it values are compared with `===`, which is right for strings and numbers. */
+  by?: (T extends object ? keyof T & string : never) | ((a: T, b: T) => boolean);
   /** Floating label. It rests inside the field and rises when a value is chosen or the list opens. */
   label?: string;
   /** Text shown in the field when there's no label and nothing is selected. */
@@ -42,6 +44,7 @@ export interface Props<T extends string | number> {
 defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(defineProps<Props<V>>(), {
+  by: undefined,
   label: "",
   placeholder: "Select…",
   multiple: false,
@@ -106,18 +109,47 @@ const selectedValues = computed<V[]>(() => {
   if (v === null || v === undefined || v === ("" as unknown)) return [];
   return Array.isArray(v) ? v : [v];
 });
-const isSelected = (o: SelectOption<V>) => selectedValues.value.includes(o.value);
+// Values are strings or numbers by default; with `by` they can be objects.
+const same = (a: V, b: V): boolean => {
+  const by = props.by as string | ((a: V, b: V) => boolean) | undefined;
+  if (typeof by === "function") return by(a, b);
+  if (by && a && b && typeof a === "object" && typeof b === "object") return (a as Record<string, unknown>)[by] === (b as Record<string, unknown>)[by];
+  return a === b;
+};
+const labelOf = (v: V) => {
+  const by = props.by;
+  return typeof by === "string" && v && typeof v === "object" ? String((v as Record<string, unknown>)[by]) : String(v);
+};
+// A stable v-for key: objects fall back to the position when there's no `by` property.
+const keyOf = (v: V, i: number) => {
+  const by = props.by;
+  if (v && typeof v === "object") return typeof by === "string" ? String((v as Record<string, unknown>)[by]) : `i${i}`;
+  return String(v);
+};
+const isSelected = (o: SelectOption<V>) => selectedValues.value.some((v) => same(v, o.value));
 const selectedOptions = computed(() =>
-  selectedValues.value.map((v) => props.options.find((o) => o.value === v) ?? ({ value: v, label: String(v) } as SelectOption<V>)),
+  selectedValues.value.map((v) => props.options.find((o) => same(o.value, v)) ?? ({ value: v, label: labelOf(v) } as SelectOption<V>)),
 );
 const hasValue = computed(() => selectedValues.value.length > 0);
 
 // ---- filtering and grouping
+// Options of one group are listed together, under the group's first appearance, so arrow keys follow what's on screen.
+const byGroup = (list: SelectOption<V>[]) => {
+  if (!list.some((o) => o.group)) return list;
+  const order: string[] = [];
+  list.forEach((o) => {
+    const g = o.group ?? "";
+    if (!order.includes(g)) order.push(g);
+  });
+  return [...list].sort((a, b) => order.indexOf(a.group ?? "") - order.indexOf(b.group ?? ""));
+};
 const filtered = computed(() => {
   const q = query.value.trim().toLowerCase();
-  if (!q) return props.options;
-  return props.options.filter(
-    (o) => o.label.toLowerCase().includes(q) || o.description?.toLowerCase().includes(q) || o.group?.toLowerCase().includes(q),
+  if (!q) return byGroup(props.options);
+  return byGroup(
+    props.options.filter(
+      (o) => o.label.toLowerCase().includes(q) || o.description?.toLowerCase().includes(q) || o.group?.toLowerCase().includes(q),
+    ),
   );
 });
 const groups = computed(() => {
@@ -137,8 +169,8 @@ const createQuery = computed(() => query.value.trim());
 const showCreate = computed(() => {
   const text = createQuery.value.toLowerCase();
   if (!props.creatable || !props.searchable || !text) return false;
-  const exists = props.options.some((o) => o.label.toLowerCase() === text || String(o.value).toLowerCase() === text);
-  const picked = selectedValues.value.some((v) => String(v).toLowerCase() === text);
+  const exists = props.options.some((o) => o.label.toLowerCase() === text || labelOf(o.value).toLowerCase() === text);
+  const picked = selectedValues.value.some((v) => labelOf(v).toLowerCase() === text);
   return !exists && !picked;
 });
 // The add row is one more entry after the filtered options; it is never disabled.
@@ -191,7 +223,7 @@ const choose = (o: SelectOption<V>) => {
   if (o.disabled) return;
   if (props.multiple) {
     const current = [...selectedValues.value];
-    const i = current.indexOf(o.value);
+    const i = current.findIndex((v) => same(v, o.value));
     if (i >= 0) {
       current.splice(i, 1);
       emit("remove", o);
@@ -208,7 +240,7 @@ const choose = (o: SelectOption<V>) => {
 };
 
 const removeValue = (o: SelectOption<V>) => {
-  model.value = props.multiple ? selectedValues.value.filter((v) => v !== o.value) : null;
+  model.value = props.multiple ? selectedValues.value.filter((v) => !same(v, o.value)) : null;
   emit("remove", o);
 };
 
@@ -381,8 +413,8 @@ defineExpose({
         <div class="flex min-w-0 flex-1 flex-wrap items-center gap-1">
           <template v-if="multiple && hasValue">
             <span
-              v-for="o in selectedOptions"
-              :key="String(o.value)"
+              v-for="(o, i) in selectedOptions"
+              :key="keyOf(o.value, i)"
               class="inline-flex h-6 max-w-full items-center gap-1 rounded-4 bg-surface-sunken pr-0.5 pl-2 text-xs font-medium text-heading ring-1 ring-border ring-inset"
             >
               <span class="truncate">{{ o.label }}</span>
@@ -504,7 +536,7 @@ defineExpose({
               <li
                 v-for="{ option, index } in g.items"
                 :id="optionId(index)"
-                :key="String(option.value)"
+                :key="keyOf(option.value, index)"
                 role="option"
                 :aria-selected="isSelected(option)"
                 :aria-disabled="option.disabled || undefined"

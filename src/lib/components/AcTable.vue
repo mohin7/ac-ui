@@ -37,6 +37,12 @@ export interface Props<R> {
   expandable?: boolean;
   /** With `expandable`, decides per row whether it can open. Rows that can't show no arrow. */
   canExpand?: (row: R) => boolean;
+  /** Marks the current row, e.g. the one chosen in a picker: tinted with a primary outline and `aria-current`. Not the checkbox selection, which is `selectable`. */
+  rowActive?: (row: R) => boolean;
+  /** Greys a row out: it ignores clicks and its checkbox is disabled. */
+  rowDisabled?: (row: R) => boolean;
+  /** The table doesn't reorder rows itself: sort the whole list outside (all pages, or on the server) when `sort` fires or `v-model:sortBy` changes. Headers still show the arrow. */
+  manualSort?: boolean;
   /** Drops the table's own frame (border, rounded corners, shadow) so it sits flush inside a card or section that already has one. Without it a table in a card draws a second box. */
   flat?: boolean;
   /** Turns a server cell's link template into a URL, e.g. to fill `${username}` and `${clustername}` from the current route. */
@@ -49,6 +55,9 @@ const props = withDefaults(defineProps<Props<Row>>(), {
   loaderRows: 3,
   emptyText: "No data found",
   flat: false,
+  rowActive: undefined,
+  rowDisabled: undefined,
+  manualSort: false,
   clickable: false,
   selectable: false,
   expandable: false,
@@ -74,21 +83,20 @@ defineSlots<{
 }>();
 
 const tableId = useId();
-const sortKey = ref<string>("");
-const sortMode = ref<"asc" | "desc">("asc");
+/** The sorted column and direction, or `null`. Bind with `v-model:sortBy` to set it from outside, e.g. to keep it across pages or in the URL. */
+const sortBy = defineModel<{ key: string; mode: "asc" | "desc" } | null>("sortBy", { default: null });
+const sortKey = computed(() => sortBy.value?.key ?? "");
+const sortMode = computed(() => sortBy.value?.mode ?? "asc");
 
 const toggleSort = (col: Column) => {
   if (!col.sortable) return;
-  if (sortKey.value === col.key) sortMode.value = sortMode.value === "asc" ? "desc" : "asc";
-  else {
-    sortKey.value = col.key;
-    sortMode.value = "asc";
-  }
-  emit("sort", sortKey.value, sortMode.value);
+  const mode = sortKey.value === col.key && sortMode.value === "asc" ? "desc" : "asc";
+  sortBy.value = { key: col.key, mode };
+  emit("sort", col.key, mode);
 };
 
 const sortedRows = computed(() => {
-  if (!sortKey.value) return props.rows;
+  if (!sortKey.value || props.manualSort) return props.rows;
   const k = sortKey.value;
   const dir = sortMode.value === "asc" ? 1 : -1;
   return [...props.rows].sort((a, b) => String(sortValue(a[k]) ?? "").localeCompare(String(sortValue(b[k]) ?? ""), undefined, { numeric: true }) * dir);
@@ -102,7 +110,8 @@ function sortValue(v: unknown) {
   return isCell(v) ? (v.sort ?? v.data) : v;
 }
 
-const rowKeys = computed(() => props.rows.map((row) => row[props.rowKey]));
+const isDisabledRow = (row: Row) => !!props.rowDisabled?.(row);
+const rowKeys = computed(() => props.rows.filter((row) => !isDisabledRow(row)).map((row) => row[props.rowKey]));
 const selectedKeys = computed(() => new Set(selected.value));
 const allSelected = computed(() => rowKeys.value.length > 0 && rowKeys.value.every((k) => selectedKeys.value.has(k)));
 const someSelected = computed(() => !allSelected.value && rowKeys.value.some((k) => selectedKeys.value.has(k)));
@@ -213,8 +222,15 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
             <tr
               data-testid="ac-table-row"
               class="group transition-colors duration-100 hover:bg-surface-muted/70"
-              :class="[clickable && 'cursor-pointer', selectable && selectedKeys.has(row[rowKey]) && 'bg-primary-97']"
-              @click="clickable && emit('row-click', row)"
+              :class="[
+                clickable && 'cursor-pointer',
+                (rowActive?.(row) || (selectable && selectedKeys.has(row[rowKey]))) && 'bg-primary-97',
+                rowActive?.(row) && 'shadow-[inset_0_0_0_1px_var(--color-primary)]',
+                isDisabledRow(row) && 'pointer-events-none cursor-not-allowed opacity-50',
+              ]"
+              :aria-current="rowActive?.(row) ? 'true' : undefined"
+              :aria-disabled="isDisabledRow(row) || undefined"
+              @click="clickable && !isDisabledRow(row) && emit('row-click', row)"
             >
               <td v-if="expandable" class="h-12 w-10 border-b border-border-light pr-0 pl-3 group-last:border-0" @click.stop>
                 <button
@@ -236,6 +252,7 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
                     type="checkbox"
                     :class="checkboxClass"
                     :checked="selectedKeys.has(row[rowKey])"
+                    :disabled="isDisabledRow(row)"
                     :aria-label="`Select ${rowLabel(row)}`"
                     @change="toggleRow(row)"
                   />

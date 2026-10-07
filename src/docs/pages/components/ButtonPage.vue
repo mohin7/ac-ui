@@ -7,7 +7,7 @@ import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
 const dos = ["Use one solid primary button per view for the main action.", "Write labels in Title Case with a verb: “Create Database”, “Save Changes”.", "Use `color=\"danger\"` for destructive actions and confirm them."];
-const donts = ["Don't place two solid primary buttons side by side.", "Don't colour a button with custom classes — pick a `color` and `variant`.", "Don't put long sentences in a button; white on success is 3.5:1, so keep labels short."];
+const donts = ["Don't place two solid primary buttons side by side.", "Don't colour a button with custom classes — pick a `color` and `variant`.", "Don't put long sentences in a button; keep labels short."];
 </script>
 
 <template>

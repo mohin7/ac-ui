@@ -29,6 +29,8 @@ function readStored(): number | null {
 
 function apply(value: number) {
   document.documentElement.style.setProperty("--ac-scale", String(value));
+  // Components that switch layout by width (AcSideTabs) measure again.
+  window.dispatchEvent(new Event("ac-scale"));
 }
 
 function start(defaultScale: number) {

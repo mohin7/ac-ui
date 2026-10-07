@@ -19,6 +19,7 @@ const items = [
       email="mohin@appscode.com"
       :items="items"
       show-theme-mode
+      show-font-scale
       @select="last = $event.label"
       @logout="last = 'logout'"
     />

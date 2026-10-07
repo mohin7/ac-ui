@@ -36,6 +36,11 @@ const weights = [
 </script>
 
 <template>
+  <Callout type="note">
+    Sizes and line heights are shown at interface scale 1. They are multiples of <code class="prose-code">--ac-scale</code>, so they grow or shrink
+    together when the viewer picks a text size. See <RouterLink to="/getting-started/theming#interface-scale">Interface scale</RouterLink>.
+  </Callout>
+
   <DocHeading id="families">Families</DocHeading>
   <p>Geist for all UI text, Geist Mono for code, resource names and commands. Both are self-hosted variable fonts. The Bulma version used Roboto and Inconsolata.</p>
   <div class="my-4 grid gap-4 md:grid-cols-2">

@@ -68,7 +68,7 @@ const rows = [
   ["AcSidebarItem", 'SidebarItemWithDropDown + children', 'nested AcSidebarItem in the default slot + v-model:open'],
   ["AcNavbar", 'modifier-classes="is-light" + #navbar-brand-logo', '#brand'],
   ["AcNavbarItem", '<NavbarItem> + icon svg / <Notification :unread-notification>', ':icon="Bell" icon-only :badge="n"'],
-  ["AcUserMenu", '<User :user :accounts-domain @on-logout show-theme-mode>', ':name :email :avatar-url :logout-url @logout show-theme-mode'],
+  ["AcUserMenu", '<User :user :accounts-domain @on-logout show-theme-mode>', ':name :email :avatar-url :logout-url @logout show-theme-mode (new: show-font-scale)'],
   ["AcThemeMode", 'ThemeMode @set:theme', 'same event; also useColorMode()'],
   ["AcFileEditor", "<FilteredFileEditor> / <ResourceKeyValueEditor :preview-yamls> / ui-modules <PreviewYamlEditor>", "<AcFileEditor v-model:files> (from @appscode/design-system/editor)"],
   ["AcFileEditor", "cluster-ui / kubedb-ui <MultiFileEditor :files :schemas>", "<AcFileEditor v-model:files format-switch>, schema on each file"],

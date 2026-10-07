@@ -63,6 +63,13 @@ export const pages: DocPage[] = [
     section: "Getting Started",
     load: () => import("./pages/getting-started/MigrationPage.vue"),
   },
+  {
+    path: "/getting-started/changelog",
+    title: "Changelog",
+    description: "What changed in each release: new components, new props and visual changes.",
+    section: "Getting Started",
+    load: () => import("./pages/getting-started/ChangelogPage.vue"),
+  },
 
   // Foundations
   {

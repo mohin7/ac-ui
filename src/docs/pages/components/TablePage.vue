@@ -42,6 +42,12 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
   <DocHeading id="expandable" :level="3">Expandable rows</DocHeading>
   <p><code class="prose-code">expandable</code> adds an arrow column. Opening a row shows the <code class="prose-code">expanded</code> slot under it, across the full width of the table. Bind the open rows' <code class="prose-code">rowKey</code> values with <code class="prose-code">v-model:expanded</code>, or leave it unbound to let the table keep track. Use <code class="prose-code">can-expand</code> to give an arrow only to rows that have details. The arrow doesn't trigger <code class="prose-code">@row-click</code>.</p>
   <ComponentExample name="table/TableExpandable" />
+  <DocHeading id="row-states" :level="3">Active and disabled rows</DocHeading>
+  <p><code class="prose-code">row-active</code> takes a function that marks the current row, such as the one chosen in a picker: it gets a tint, a primary outline and <code class="prose-code">aria-current</code>. <code class="prose-code">row-disabled</code> greys a row out so it ignores clicks, and its checkbox (with <code class="prose-code">selectable</code>) is disabled and skipped by the header checkbox. Neither is the checkbox selection.</p>
+  <ComponentExample name="table/TableRowStates" />
+  <DocHeading id="manual-sort" :level="3">Sorting across pages</DocHeading>
+  <p>By default the table sorts the rows it is given, which is right when it holds the whole list. When the list is paged, that only reorders the page in view. Set <code class="prose-code">manual-sort</code> and the table stops reordering: sort the whole list yourself when <code class="prose-code">@sort</code> fires, or bind <code class="prose-code">v-model:sort-by</code> (<code class="prose-code">{ key, mode }</code> or <code class="prose-code">null</code>), which also lets you set or keep the sort from outside, such as in the URL. The header arrows still show.</p>
+  <ComponentExample name="table/TableManualSort" />
   <DocHeading id="flat" :level="3">Inside a card</DocHeading>
   <p>A table draws its own border, rounded corners and shadow. Put it in a card or section that already has a frame and that makes a box inside a box. <code class="prose-code">flat</code> removes the table's frame and softens the header rule, so the card is the only edge. Use <code class="prose-code">AcCard</code> with <code class="prose-code">:padded="false"</code>: it clips the table to its rounded corners.</p>
   <ComponentExample name="table/TableFlat" />

@@ -33,6 +33,9 @@ const donts = ["Don't use tabs for sequential steps — use Steps.", "Don't hide
   <DocHeading id="panels" :level="3">Panels, counts and disabled</DocHeading>
   <p>The default slot receives <code class="prose-code">active</code> so you can render the panel. <code class="prose-code">count</code> adds a pill; <code class="prose-code">disabled</code> blocks a tab.</p>
   <ComponentExample name="tabs/TabsPanels" />
+  <DocHeading id="links" :level="3">Links to routes</DocHeading>
+  <p>Give a tab <code class="prose-code">to</code> (a route, with vue-router) or <code class="prose-code">href</code> and it becomes a real link: it can be opened in a new tab, and with <code class="prose-code">to</code> the tab for the current route becomes active by itself, so <code class="prose-code">v-model</code> can stay unbound. Nested routes match the longest tab. Add <code class="prose-code">testid</code> to put a <code class="prose-code">data-testid</code> on a tab. This example links to other pages of this site.</p>
+  <ComponentExample name="tabs/TabsLinks" />
 
   <DocHeading id="guidelines">Guidelines</DocHeading>
   <DoDont :dos="dos" :donts="donts" />
