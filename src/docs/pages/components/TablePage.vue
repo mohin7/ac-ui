@@ -72,7 +72,7 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
     <li>The expand arrow is a button with <code class="prose-code">aria-expanded</code> and <code class="prose-code">aria-controls</code>, labelled "Expand" or "Collapse" with the row's first value. The detail area is a labelled region.</li>
   </ul>
 
-  <ApiTables component="AcTable" :extra-slots="[{'name': 'cell-<key>', 'type': '{ row: Row; value: unknown }', 'description': 'Custom content for the cell of column `key`, e.g. `#cell-status`.'}]" />
+  <ApiTables component="AcTable" :extra-slots="[{'name': 'cell-<key>', 'type': '{ row: Row; value: unknown }', 'description': 'Custom content for the cell of column `key`, e.g. `#cell-status`.'}, {'name': 'header-<key>', 'type': '{ column: Column }', 'description': 'Custom content for the header of column `key`, e.g. `#header-status`. Replaces the label; the sort arrow stays.'}]" />
 
   <DocHeading id="theme">Theme</DocHeading>
   <p>The Tailwind classes this component uses, all from the AppsCode theme. See <RouterLink to="/getting-started/theming">Theming</RouterLink>.</p>

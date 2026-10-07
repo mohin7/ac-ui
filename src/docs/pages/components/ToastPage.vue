@@ -117,9 +117,9 @@ const donts = [
         <tr><th class="h-9 px-4 font-medium">Classes</th><th class="h-9 px-4 font-medium">Used for</th></tr>
       </thead>
       <tbody>
-        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">rounded-10 border-border bg-surface shadow-lg</code></td><td class="px-4 py-3">Toast</td></tr>
-        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">text-success text-danger text-warning text-info</code></td><td class="px-4 py-3">Status icon</td></tr>
-        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">text-heading · text-muted</code></td><td class="px-4 py-3">Title · description</td></tr>
+        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">rounded-10 border shadow-lg · border-{tone}-80 + bg-{tone}-95</code></td><td class="px-4 py-3">Toast (a status tint, like AcAlert)</td></tr>
+        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">text-green-40 · text-red-40 · text-yellow-50 · text-blue-50</code></td><td class="px-4 py-3">Status icon</td></tr>
+        <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">text-{tone}-10 · text-{tone}-20</code></td><td class="px-4 py-3">Title · description</td></tr>
         <tr class="border-t border-border-light first:border-0"><td class="px-4 py-3"><code class="prose-code">fixed z-[100] sm:w-89 gap-2</code></td><td class="px-4 py-3">Stack</td></tr>
       </tbody>
     </table>

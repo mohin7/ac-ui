@@ -76,6 +76,8 @@ const emit = defineEmits<{ "row-click": [row: Row]; sort: [key: string, mode: "a
 defineSlots<{
   /** Custom cell for a column: `#cell-name="{ row, value }"`. One slot per column key. */
   [key: `cell-${string}`]: (props: { row: Row; value: unknown }) => unknown;
+  /** Custom header content for a column: `#header-name="{ column }"`. One slot per column key. The sort arrow stays. */
+  [key: `header-${string}`]: (props: { column: Column }) => unknown;
   /** Detail area under an open row, for tables with `expandable`: `#expanded="{ row }"`. */
   expanded?: (props: { row: Row }) => unknown;
   /** Content shown when `rows` is empty. */
@@ -195,7 +197,7 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
               @click="toggleSort(col)"
             >
               <span class="inline-flex items-center gap-1" :class="sortKey === col.key && 'text-heading'">
-                {{ col.label }}
+                <slot :name="`header-${col.key}`" :column="col">{{ col.label }}</slot>
                 <component
                   :is="sortKey === col.key ? ArrowUp : ChevronsUpDown"
                   v-if="col.sortable"

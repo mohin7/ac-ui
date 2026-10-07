@@ -5,6 +5,21 @@ import DocHeading from "../../components/DocHeading.vue";
 type Entry = { title: string; items: string[] };
 const releases: { version: string; id: string; summary: string; groups: Entry[] }[] = [
   {
+    version: "0.0.10",
+    id: "v0-0-10",
+    summary: "A header slot for table columns, a small pagination and tinted toasts.",
+    groups: [
+      {
+        title: "New",
+        items: [
+          "`AcTable` `header-<key>` slot: put your own content in the header of a column, such as `#header-status=\"{ column }\"`. The sort arrow stays.",
+          "`AcToaster` toasts are tinted by status (light green for success, red for error, yellow for warning, blue for info), like `AcAlert`, so they stand out from the page.",
+          "`AcPagination` `size=\"small\"`: 28px page buttons for cards and dense tables.",
+        ],
+      },
+    ],
+  },
+  {
     version: "0.0.9",
     id: "v0-0-9",
     summary: "One border colour for the lines between app regions.",

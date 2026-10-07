@@ -27,9 +27,9 @@ const donts = [
   <ComponentPlayground
     tag="AcPagination"
     :component="AcPagination"
-    :controls="[{'prop': 'siblings', 'type': 'select', 'options': [0, 1, 2]}, {'prop': 'itemLabel', 'type': 'text'}, {'prop': 'hidePageSize', 'type': 'boolean'}, {'prop': 'compact', 'type': 'boolean'}, {'prop': 'disabled', 'type': 'boolean'}]"
-    :initial="{'siblings': 1, 'itemLabel': 'databases', 'hidePageSize': false, 'compact': false, 'disabled': false}"
-    :defaults="{'siblings': 1, 'itemLabel': '', 'hidePageSize': false, 'compact': false, 'disabled': false}"
+    :controls="[{'prop': 'siblings', 'type': 'select', 'options': [0, 1, 2]}, {'prop': 'itemLabel', 'type': 'text'}, {'prop': 'hidePageSize', 'type': 'boolean'}, {'prop': 'compact', 'type': 'boolean'}, {'prop': 'size', 'type': 'select', 'options': ['normal', 'small']}, {'prop': 'disabled', 'type': 'boolean'}]"
+    :initial="{'siblings': 1, 'itemLabel': 'databases', 'hidePageSize': false, 'compact': false, 'size': 'normal', 'disabled': false}"
+    :defaults="{'siblings': 1, 'itemLabel': '', 'hidePageSize': false, 'compact': false, 'size': 'normal', 'disabled': false}"
     :extra="{'total': 240, 'class': 'w-full'}"
     extra-code='v-model:page="page" :total="240"'
     :script="script"
@@ -42,6 +42,9 @@ const donts = [
   <DocHeading id="many" :level="3">Many pages</DocHeading>
   <p>Long ranges collapse into ellipses around the current page. The number of buttons stays the same as you move, so the control doesn't jump. <code class="prose-code">siblings</code> sets how many neighbours of the current page are shown.</p>
   <ComponentExample name="pagination/PaginationMany" />
+  <DocHeading id="size" :level="3">Small</DocHeading>
+  <p>Use <code class="prose-code">size="small"</code> for 28px page buttons, inside cards and dense tables.</p>
+
   <DocHeading id="compact" :level="3">Compact</DocHeading>
   <p>Below 640px the page numbers are replaced by “3 / 6” between the arrows. <code class="prose-code">compact</code> forces that at every width, for side panels and cards.</p>
   <ComponentExample name="pagination/PaginationCompact" />

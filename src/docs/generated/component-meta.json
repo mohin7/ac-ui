@@ -3508,6 +3508,13 @@
         "description": "Disables every control, e.g. while a page loads."
       },
       {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "`small` makes the page buttons 28px (default `normal` is 32px). Use it inside cards and dense tables."
+      },
+      {
         "name": "page",
         "type": "number | undefined",
         "default": "1",

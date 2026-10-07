@@ -1,6 +1,6 @@
 {
   "name": "@mohin4/design-system",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "AppsCode design system: Tailwind CSS v4 theme and Vue 3 components.",
   "type": "module",
   "files": [
