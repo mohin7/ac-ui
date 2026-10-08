@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Activity } from "lucide-vue-next";
+import { Activity } from "@lucide/vue";
 import { AcFeatureCard } from "@/lib";
 import ApiTables from "../../components/ApiTables.vue";
 import Callout from "../../components/Callout.vue";
@@ -8,7 +8,7 @@ import ComponentPlayground from "../../components/ComponentPlayground.vue";
 import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
-const script = 'import { Activity } from "lucide-vue-next";';
+const script = 'import { Activity } from "@lucide/vue";';
 
 const dos = [
   "Keep descriptions to one or two sentences; they're clamped at three lines.",
@@ -36,9 +36,9 @@ const theme = [
   <ComponentPlayground
     tag="AcFeatureCard"
     :component="AcFeatureCard"
-    :controls="[{ prop: 'title', type: 'text' }, { prop: 'description', type: 'text' }, { prop: 'status', type: 'text' }, { prop: 'statusColor', type: 'select', options: ['default', 'primary', 'info', 'success', 'warning', 'danger'] }, { prop: 'required', type: 'boolean' }, { prop: 'centered', type: 'boolean' }, { prop: 'selectable', type: 'boolean' }, { prop: 'disabled', type: 'boolean' }]"
+    :controls="[{ prop: 'title', type: 'text' }, { prop: 'description', type: 'text' }, { prop: 'status', type: 'text' }, { prop: 'statusColor', type: 'select', options: ['default', 'primary', 'info', 'success', 'warning', 'danger'] }, { prop: 'required', type: 'boolean' }, { prop: 'recommended', type: 'boolean' }, { prop: 'centered', type: 'boolean' }, { prop: 'selectable', type: 'boolean' }, { prop: 'disabled', type: 'boolean' }]"
     :initial="{ title: 'Monitoring', description: 'Prometheus, Grafana and alert rules for every database in the cluster.', status: 'Enabled', statusColor: 'success', required: false, centered: false, selectable: false, disabled: false }"
-    :defaults="{ description: '', status: '', statusColor: 'default', required: false, centered: false, selectable: false, disabled: false }"
+    :defaults="{ description: '', status: '', statusColor: 'default', required: false, recommended: false, centered: false, selectable: false, disabled: false }"
     :extra="{ icon: Activity, class: 'w-80' }"
     extra-code=':icon="Activity"'
     :script="script"
@@ -61,6 +61,10 @@ const theme = [
   <DocHeading id="links" :level="3">Links and footer</DocHeading>
   <p>With <code class="prose-code">href</code> the card is a link; <code class="prose-code">target="_blank"</code> shows an external arrow and adds <code class="prose-code">rel="noopener noreferrer"</code>. With <code class="prose-code">to</code> it's a <code class="prose-code">RouterLink</code>. The <code class="prose-code">footer</code> slot adds a row at the bottom.</p>
   <ComponentExample name="feature-card/FeatureCardLinks" />
+
+  <DocHeading id="actions" :level="3">Actions and title icon</DocHeading>
+  <p>The <code class="prose-code">actions</code> slot puts controls at the top right of the card, such as an Enable or Reconcile button. They stay clickable even when the whole card is a link or button. The <code class="prose-code">title-extra</code> slot adds a small icon right after the title, for a ready or warning state. <code class="prose-code">recommended</code> adds a "Recommended" badge next to "Required".</p>
+  <ComponentExample name="feature-card/FeatureCardActions" />
 
   <DocHeading id="guidelines">Guidelines</DocHeading>
   <DoDont :dos="dos" :donts="donts" />

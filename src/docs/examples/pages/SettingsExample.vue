@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
-import { Bell, Copy, Check, KeyRound, Palette, Plus, Trash2, TriangleAlert, User, Users } from "lucide-vue-next";
+import { Bell, Copy, Check, KeyRound, Palette, Plus, Trash2, TriangleAlert, User, Users } from "@lucide/vue";
 import {
   AcAlert,
   AcAvatar,

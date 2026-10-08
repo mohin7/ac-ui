@@ -36,6 +36,22 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
   <DocHeading id="clickable" :level="3">Clickable rows</DocHeading>
   <p><code class="prose-code">clickable</code> emits <code class="prose-code">row-click</code> with the row, e.g. to open a detail page.</p>
   <ComponentExample name="table/TableClickable" />
+  <DocHeading id="selectable" :level="3">Selectable rows</DocHeading>
+  <p><code class="prose-code">selectable</code> adds a checkbox column for bulk actions. Bind the chosen rows' <code class="prose-code">rowKey</code> values with <code class="prose-code">v-model:selected</code>. The header checkbox chooses every row in view; choices on other pages are kept.</p>
+  <ComponentExample name="table/TableSelectable" />
+  <DocHeading id="expandable" :level="3">Expandable rows</DocHeading>
+  <p><code class="prose-code">expandable</code> adds an arrow column. Opening a row shows the <code class="prose-code">expanded</code> slot under it, across the full width of the table. Bind the open rows' <code class="prose-code">rowKey</code> values with <code class="prose-code">v-model:expanded</code>, or leave it unbound to let the table keep track. Use <code class="prose-code">can-expand</code> to give an arrow only to rows that have details. The arrow doesn't trigger <code class="prose-code">@row-click</code>.</p>
+  <ComponentExample name="table/TableExpandable" />
+  <DocHeading id="row-states" :level="3">Active and disabled rows</DocHeading>
+  <p><code class="prose-code">row-active</code> takes a function that marks the current row, such as the one chosen in a picker: it gets a tint, a primary outline and <code class="prose-code">aria-current</code>. <code class="prose-code">row-disabled</code> greys a row out so it ignores clicks, and its checkbox (with <code class="prose-code">selectable</code>) is disabled and skipped by the header checkbox. Neither is the checkbox selection.</p>
+  <ComponentExample name="table/TableRowStates" />
+  <DocHeading id="manual-sort" :level="3">Sorting across pages</DocHeading>
+  <p>By default the table sorts the rows it is given, which is right when it holds the whole list. When the list is paged, that only reorders the page in view. Set <code class="prose-code">manual-sort</code> and the table stops reordering: sort the whole list yourself when <code class="prose-code">@sort</code> fires, or bind <code class="prose-code">v-model:sort-by</code> (<code class="prose-code">{ key, mode }</code> or <code class="prose-code">null</code>), which also lets you set or keep the sort from outside, such as in the URL. The header arrows still show.</p>
+  <ComponentExample name="table/TableManualSort" />
+  <DocHeading id="flat" :level="3">Inside a card</DocHeading>
+  <p>A table draws its own border, rounded corners and shadow. Put it in a card or section that already has a frame and that makes a box inside a box. <code class="prose-code">flat</code> removes the table's frame and softens the header rule, so the card is the only edge. Use <code class="prose-code">AcCard</code> with <code class="prose-code">:padded="false"</code>: it clips the table to its rounded corners.</p>
+  <ComponentExample name="table/TableFlat" />
+
   <DocHeading id="loading" :level="3">Loading</DocHeading>
   <p><code class="prose-code">loading</code> shows skeleton rows while data loads.</p>
   <ComponentExample name="table/TableLoading" />
@@ -53,9 +69,10 @@ const donts = ["Don't show a blank table — always provide an empty state.", "D
   <ul>
     <li>Native <code class="prose-code">&lt;table&gt;</code> with <code class="prose-code">scope="col"</code> headers.</li>
     <li>Sorted columns expose <code class="prose-code">aria-sort</code>.</li>
+    <li>The expand arrow is a button with <code class="prose-code">aria-expanded</code> and <code class="prose-code">aria-controls</code>, labelled "Expand" or "Collapse" with the row's first value. The detail area is a labelled region.</li>
   </ul>
 
-  <ApiTables component="AcTable" :extra-slots="[{'name': 'cell-<key>', 'type': '{ row: Row; value: unknown }', 'description': 'Custom content for the cell of column `key`, e.g. `#cell-status`.'}]" />
+  <ApiTables component="AcTable" :extra-slots="[{'name': 'cell-<key>', 'type': '{ row: Row; value: unknown }', 'description': 'Custom content for the cell of column `key`, e.g. `#cell-status`.'}, {'name': 'header-<key>', 'type': '{ column: Column }', 'description': 'Custom content for the header of column `key`, e.g. `#header-status`. Replaces the label; the sort arrow stays.'}]" />
 
   <DocHeading id="theme">Theme</DocHeading>
   <p>The Tailwind classes this component uses, all from the AppsCode theme. See <RouterLink to="/getting-started/theming">Theming</RouterLink>.</p>

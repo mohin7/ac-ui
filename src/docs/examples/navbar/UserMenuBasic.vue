@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Building2, CreditCard, KeyRound, UserRound } from "lucide-vue-next";
+import { Building2, CreditCard, KeyRound, UserRound } from "@lucide/vue";
 import { AcUserMenu } from "@/lib";
 
 const last = ref("—");
@@ -19,6 +19,7 @@ const items = [
       email="mohin@appscode.com"
       :items="items"
       show-theme-mode
+      show-font-scale
       @select="last = $event.label"
       @logout="last = 'logout'"
     />

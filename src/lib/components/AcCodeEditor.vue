@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, useId, useSlots, watch } from "vue";
-import { Check, CircleAlert, Copy, TriangleAlert } from "lucide-vue-next";
+import { Check, CircleAlert, Copy, TriangleAlert } from "@lucide/vue";
 import { closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
 import { defaultKeymap, history, historyKeymap, indentWithTab, simplifySelection, temporarilySetTabFocusMode } from "@codemirror/commands";
 import { json } from "@codemirror/lang-json";
@@ -383,6 +383,7 @@ defineExpose({
   <div
     class="flex min-w-0 flex-col overflow-hidden bg-surface"
     :class="bordered && 'rounded-10 border border-border shadow-xs transition-[border-color,box-shadow] has-[.cm-editor.cm-focused]:focus-ring'"
+    data-ac-ds
     data-testid="ac-code-editor"
   >
     <div v-if="hasHeader" class="flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-border-light px-3 py-2">
@@ -426,7 +427,7 @@ defineExpose({
 
     <div v-if="problems.length && !showingChanges" :id="problemsId" class="border-t border-border-light bg-surface-muted">
       <p class="sr-only" aria-live="polite">{{ problems.length }} {{ problems.length === 1 ? "problem" : "problems" }}</p>
-      <ul class="ac-scrollbar max-h-[92px] py-1">
+      <ul class="ac-scrollbar max-h-[calc(92px*var(--ac-scale))] py-1">
         <li v-for="(problem, i) in problems" :key="i">
           <button
             type="button"

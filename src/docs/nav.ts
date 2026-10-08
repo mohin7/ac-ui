@@ -36,6 +36,13 @@ export const pages: DocPage[] = [
     load: () => import("./pages/getting-started/InstallationPage.vue"),
   },
   {
+    path: "/getting-started/existing-apps",
+    title: "Existing Apps",
+    description: "Use the new components in apps that still load the old Bulma design system, then finish the move.",
+    section: "Getting Started",
+    load: () => import("./pages/getting-started/ExistingAppsPage.vue"),
+  },
+  {
     path: "/getting-started/theming",
     title: "Theming",
     description: "How tokens map to Tailwind utilities, and how to re-hue the brand at runtime.",
@@ -55,6 +62,13 @@ export const pages: DocPage[] = [
     description: "Moving from the Bulma-based @appscode/design-system to this Tailwind version.",
     section: "Getting Started",
     load: () => import("./pages/getting-started/MigrationPage.vue"),
+  },
+  {
+    path: "/getting-started/changelog",
+    title: "Changelog",
+    description: "What changed in each release: new components, new props and visual changes.",
+    section: "Getting Started",
+    load: () => import("./pages/getting-started/ChangelogPage.vue"),
   },
 
   // Foundations
@@ -374,6 +388,24 @@ export const pages: DocPage[] = [
     group: "Form",
     component: "AcThemeMode",
     load: () => import("./pages/components/ThemeModePage.vue"),
+  },
+  {
+    path: "/components/font-scale",
+    title: "Font Scale",
+    description: "Lets people make the whole interface text larger or smaller.",
+    section: "Components",
+    group: "Form",
+    component: "AcFontScale",
+    load: () => import("./pages/components/FontScalePage.vue"),
+  },
+  {
+    path: "/components/page",
+    title: "Page",
+    description: "The padded, evenly spaced area that holds a page's cards, tables and forms.",
+    section: "Components",
+    group: "Layout",
+    component: "AcPage",
+    load: () => import("./pages/components/PagePage.vue"),
   },
   {
     path: "/components/modal",

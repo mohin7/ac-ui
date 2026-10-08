@@ -32,12 +32,14 @@ const vertical = computed(() => props.orientation === "vertical");
     :aria-orientation="orientation"
     class="shrink-0 bg-border"
     :class="vertical ? 'min-h-4 w-px self-stretch' : 'h-px w-full'"
+    data-ac-ds
     data-testid="ac-divider"
   />
   <div
     v-else
     class="flex shrink-0 items-center gap-3 text-xs font-medium text-muted"
     :class="vertical ? 'min-h-16 flex-col self-stretch' : 'w-full'"
+    data-ac-ds
     data-testid="ac-divider"
   >
     <span

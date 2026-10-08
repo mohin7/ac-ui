@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Bell, Plus, Terminal } from "lucide-vue-next";
+import { Bell, Plus, Terminal } from "@lucide/vue";
 import { AcLogo, AcNavbar, AcNavbarItem, AcUserMenu } from "@/lib";
 
 const section = ref("databases");

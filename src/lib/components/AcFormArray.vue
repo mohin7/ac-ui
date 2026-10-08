@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends Record<string, unknown>">
 import { computed, nextTick, ref, toRaw, useId } from "vue";
-import { Check, ChevronDown, ChevronRight, CircleAlert, Pencil, Plus, Trash2, X } from "lucide-vue-next";
+import { Check, ChevronDown, ChevronRight, CircleAlert, Pencil, Plus, Trash2, X } from "@lucide/vue";
 import AcBadge from "./AcBadge.vue";
 import AcButton from "./AcButton.vue";
 import AcCellValue from "./AcCellValue.vue";
@@ -338,6 +338,7 @@ defineExpose({
     role="group"
     :aria-labelledby="labelId"
     :aria-describedby="errorLines.length || hint ? messageId : undefined"
+    data-ac-ds
     data-testid="ac-form-array"
   >
     <!-- header -->
@@ -404,7 +405,7 @@ defineExpose({
                 >
                   {{ col.label }}
                 </th>
-                <th v-if="hasActionsColumn" scope="col" class="h-8 w-px border-b border-border bg-surface-muted px-3">
+                <th v-if="hasActionsColumn" scope="col" class="h-8 w-px border-b border-border bg-surface-muted px-3 text-right">
                   <span class="sr-only">Actions</span>
                 </th>
               </tr>

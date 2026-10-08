@@ -1,0 +1,7 @@
+// vite.config.ts — only when Lucide has no icon, or for brand logos
+import Icons from "unplugin-icons/vite";
+export default defineConfig({ plugins: [vue(), tailwindcss(), Icons({ compiler: "vue3" })] });
+
+// npm install -D unplugin-icons @iconify-json/ph @iconify-json/simple-icons
+import IconPhCrosshair from "~icons/ph/crosshair";
+import IconSimpleIconsGithub from "~icons/simple-icons/github";

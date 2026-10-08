@@ -24,6 +24,7 @@ defineSlots<{
   <div
     class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-3.5"
     :class="bordered && 'border-b border-border-light'"
+    data-ac-ds
     data-testid="ac-content-header"
   >
     <div class="flex min-w-0 items-center gap-2.5">

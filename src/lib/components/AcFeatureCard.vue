@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, useId } from "vue";
-import { ArrowRight, ArrowUpRight, Check } from "lucide-vue-next";
+import { ArrowRight, ArrowUpRight, Check } from "@lucide/vue";
 import AcBadge from "./AcBadge.vue";
 import type { Component } from "vue";
 import type { Tone } from "./types";
@@ -22,6 +22,8 @@ export interface Props {
   statusColor?: Tone | "default";
   /** Adds a "Required" badge. Old `isRequired`. */
   required?: boolean;
+  /** Adds a "Recommended" badge. Shown after "Required" when both are set. */
+  recommended?: boolean;
   /** Logo on top and centred text, for picking a provider or database type from a grid. Replaces the old Vendor card. */
   centered?: boolean;
   /** Makes the card a checkbox. Bind `v-model:checked`. Old CheckItemCard. */
@@ -44,6 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
   status: "",
   statusColor: "default",
   required: false,
+  recommended: false,
   centered: false,
   selectable: false,
   disabled: false,
@@ -67,6 +70,10 @@ defineSlots<{
   icon?: () => unknown;
   /** Replaces the `status` badge, e.g. with several badges. */
   status?: () => unknown;
+  /** Small content right after the title, before the badges, e.g. a ready or warning icon. */
+  "title-extra"?: () => unknown;
+  /** Controls at the top right of the card, e.g. an Enable or Reconcile button. They stay clickable when the whole card is a link or button. */
+  actions?: () => unknown;
   /** A row at the bottom of the card, e.g. a version or "Covers 4 topologies". */
   footer?: () => unknown;
 }>();
@@ -109,6 +116,7 @@ function onClick(e: MouseEvent) {
         'has-checked:border-primary has-checked:bg-primary-97 has-checked:shadow-[0_0_0_1px_var(--color-primary)] has-focus-visible:ring-[3px] has-focus-visible:ring-ring',
       disabled && 'cursor-not-allowed opacity-60',
     ]"
+    data-ac-ds
     data-testid="ac-feature-card"
   >
     <div class="flex w-full min-w-0 gap-3" :class="centered ? 'flex-col items-center' : 'items-start'">
@@ -155,11 +163,16 @@ function onClick(e: MouseEvent) {
               <template v-else>{{ title }}</template>
             </h3>
             <template v-if="!centered">
+              <slot name="title-extra" />
               <AcBadge v-if="required" label="Required" color="warning" variant="light" rounded />
+              <AcBadge v-if="recommended" label="Recommended" color="info" variant="light" rounded />
               <slot name="status">
                 <AcBadge v-if="status" :label="status" :color="statusColor" variant="light" rounded dot />
               </slot>
             </template>
+          </div>
+          <div v-if="$slots.actions && !centered" class="relative z-10 -my-0.5 flex shrink-0 items-center gap-2">
+            <slot name="actions" />
           </div>
           <component
             :is="target === '_blank' ? ArrowUpRight : ArrowRight"
@@ -180,8 +193,9 @@ function onClick(e: MouseEvent) {
         <div v-if="$slots.default" class="mt-2 text-base text-body">
           <slot />
         </div>
-        <div v-if="centered && (required || status || $slots.status)" class="mt-2 flex flex-wrap justify-center gap-2">
+        <div v-if="centered && (required || recommended || status || $slots.status)" class="mt-2 flex flex-wrap justify-center gap-2">
           <AcBadge v-if="required" label="Required" color="warning" variant="light" rounded />
+          <AcBadge v-if="recommended" label="Recommended" color="info" variant="light" rounded />
           <slot name="status">
             <AcBadge v-if="status" :label="status" :color="statusColor" variant="light" rounded dot />
           </slot>

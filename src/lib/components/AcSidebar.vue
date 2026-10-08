@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from "vue";
-import { PanelLeftClose, PanelLeftOpen, X } from "lucide-vue-next";
+import { PanelLeftClose, PanelLeftOpen, X } from "@lucide/vue";
 
 export interface Props {
   /** Accessible name of the navigation landmark. */
@@ -13,6 +13,8 @@ export interface Props {
   contained?: boolean;
   /** Width in px below which the sidebar becomes an off-canvas drawer: the window's width, or the parent's with `contained`. `0` keeps it docked. */
   breakpoint?: number;
+  /** With the sidebar collapsed to the rail, opens it to full width over the page while the pointer or keyboard focus is inside, then folds it back. The page doesn't shift. */
+  hoverExpand?: boolean;
   /** Offset from the top of the viewport on desktop, e.g. `"56px"` under a full-width navbar. The height shrinks to match. */
   top?: string;
 }
@@ -25,6 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
   collapsible: true,
   contained: false,
   breakpoint: 768,
+  hoverExpand: false,
   top: "0px",
 });
 
@@ -53,7 +56,41 @@ let returnFocus: HTMLElement | null = null;
 let media: MediaQueryList | null = null;
 let observer: ResizeObserver | null = null;
 
-const rail = computed(() => collapsed.value && !isMobile.value);
+// Hover-expand: the pointer or focus is inside a collapsed sidebar, so it opens over the page.
+const hovering = ref(false);
+const peek = computed(() => props.hoverExpand && collapsed.value && !isMobile.value && hovering.value);
+const rail = computed(() => collapsed.value && !isMobile.value && !peek.value);
+// The sidebar is set to the rail, even while it's opened over the page.
+const railSet = computed(() => collapsed.value && !isMobile.value);
+// After the Collapse button is used, don't reopen until the pointer has left and come back.
+let suppressPeek = false;
+const PEEK_IN_MS = 120;
+const PEEK_OUT_MS = 180;
+let peekTimer: ReturnType<typeof setTimeout> | undefined;
+
+function setHovering(on: boolean) {
+  if (!props.hoverExpand) return;
+  if (on && suppressPeek) return;
+  clearTimeout(peekTimer);
+  peekTimer = setTimeout(() => (hovering.value = on), on ? PEEK_IN_MS : PEEK_OUT_MS);
+}
+
+function toggleCollapsed() {
+  suppressPeek = true;
+  clearTimeout(peekTimer);
+  hovering.value = false;
+  collapsed.value = !collapsed.value;
+}
+
+function onMouseleave() {
+  suppressPeek = false;
+  setHovering(false);
+}
+
+function onFocusout(e: FocusEvent) {
+  // Focus moving to another element inside the sidebar keeps it open.
+  if (!root.value?.contains(e.relatedTarget as Node | null)) setHovering(false);
+}
 const drawerOpen = computed(() => isMobile.value && mobileOpen.value);
 const dark = computed(() => props.dark);
 const rootStyle = computed(() =>
@@ -61,7 +98,7 @@ const rootStyle = computed(() =>
 );
 
 const rootClass = computed(() => {
-  const look = props.dark ? "dark border-r border-border-light bg-sidebar text-body" : "border-r border-border bg-surface-muted text-body";
+  const look = props.dark ? "dark border-r border-border-light bg-sidebar text-body" : "border-r border-border-light bg-surface-muted text-body";
   if (isMobile.value) {
     return [
       look,
@@ -73,7 +110,8 @@ const rootClass = computed(() => {
   }
   return [
     look,
-    props.contained ? "relative h-full" : "sticky",
+    // Open over the page; the spacer in the template keeps the page's 56px.
+    peek.value ? [props.contained ? "absolute inset-y-0 left-0" : "fixed left-0", "z-30 shadow-xl"] : props.contained ? "relative h-full" : "sticky",
     "transition-[width] duration-200 ease-out-soft motion-reduce:transition-none",
     rail.value ? "w-14" : "w-60",
   ];
@@ -178,6 +216,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  clearTimeout(peekTimer);
   media?.removeEventListener("change", onMediaChange);
   observer?.disconnect();
   if (drawerOpen.value && !props.contained) lockScroll(false);
@@ -198,10 +237,14 @@ defineExpose({ toggle });
       class="inset-0 z-[79] bg-overlay"
       :class="contained ? 'absolute' : 'fixed'"
       aria-hidden="true"
+      data-ac-ds
       data-testid="ac-sidebar-backdrop"
       @click="closeDrawer"
     />
   </Transition>
+
+  <!-- keeps the page where it was while the sidebar opens over it -->
+  <div v-if="peek" class="w-14 shrink-0" :class="contained && 'h-full'" aria-hidden="true" data-ac-ds />
 
   <aside
     ref="root"
@@ -212,8 +255,13 @@ defineExpose({ toggle });
     :role="drawerOpen ? 'dialog' : undefined"
     :aria-modal="drawerOpen || undefined"
     :aria-label="drawerOpen ? label : undefined"
+    data-ac-ds
     data-testid="ac-sidebar"
     @keydown="onKeydown"
+    @mouseenter="setHovering(true)"
+    @mouseleave="onMouseleave"
+    @focusin="setHovering(true)"
+    @focusout="onFocusout"
   >
     <div
       v-if="$slots.header || isMobile"
@@ -229,6 +277,7 @@ defineExpose({ toggle });
         class="-mr-1.5 inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-6 text-muted transition hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
         :class="dark ? 'hover:bg-white/8' : 'hover:bg-slate-90'"
         aria-label="Close navigation"
+        data-ac-ds
         data-testid="ac-sidebar-close"
         @click="closeDrawer"
       >
@@ -255,13 +304,14 @@ defineExpose({ toggle });
         type="button"
         class="flex h-8 w-full cursor-pointer items-center gap-2.5 rounded-6 text-base text-label transition-colors hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
         :class="[rail ? 'justify-center' : 'px-2.5', dark ? 'hover:bg-white/8' : 'hover:bg-slate-90']"
-        :aria-label="rail ? 'Expand sidebar' : 'Collapse sidebar'"
+        :aria-label="railSet ? 'Expand sidebar' : 'Collapse sidebar'"
         :title="rail ? 'Expand sidebar' : undefined"
+        data-ac-ds
         data-testid="ac-sidebar-collapse"
-        @click="collapsed = !collapsed"
+        @click="toggleCollapsed"
       >
-        <component :is="rail ? PanelLeftOpen : PanelLeftClose" class="size-4 shrink-0 text-muted" aria-hidden="true" />
-        <span v-if="!rail">Collapse</span>
+        <component :is="railSet ? PanelLeftOpen : PanelLeftClose" class="size-4 shrink-0 text-muted" aria-hidden="true" />
+        <span v-if="!rail">{{ railSet ? "Expand" : "Collapse" }}</span>
       </button>
     </div>
   </aside>

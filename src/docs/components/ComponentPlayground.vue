@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown } from "@lucide/vue";
 import CodeBlock from "./CodeBlock.vue";
 
 export interface Control {
@@ -27,7 +27,7 @@ const props = withDefaults(
     extra?: Record<string, unknown>;
     /** How the extra props appear in the code, e.g. ':options="options"'. */
     extraCode?: string;
-    /** A <script setup> body shown above the template in the code. */
+    /** A `script setup` body shown above the template in the code. */
     script?: string;
     /** Module the component is imported from in the code. */
     importFrom?: string;
@@ -62,7 +62,7 @@ const code = computed(() => {
   const open = `<${props.tag}${attrs.length ? " " + attrs.join(" ") : ""}`;
   const tpl = props.slotText ? `${open}>${props.slotText}</${props.tag}>` : `${open} />`;
   const imports = `import { ${props.tag} } from "${props.importFrom}";`;
-  const script = `<script setup lang="ts">\n${imports}\n${props.script ? props.script.trim() + "\n" : ""}</` + `script>\n\n`;
+  const script = `${"<"}script setup lang="ts">\n${imports}\n${props.script ? props.script.trim() + "\n" : ""}</` + `script>\n\n`;
   return `${script}<template>\n  ${tpl}\n</template>`;
 });
 </script>

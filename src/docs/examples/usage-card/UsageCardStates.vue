@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Database, Users } from "lucide-vue-next";
+import { Database, Users } from "@lucide/vue";
 import { AcButton, AcUsageCard, useToast } from "@/lib";
 
 const { toast } = useToast();

@@ -48,7 +48,7 @@ function onSubmit(e: Event) {
 </script>
 
 <template>
-  <form class="w-full" :novalidate="!nativeValidation" data-testid="ac-form" @submit.prevent="onSubmit">
+  <form class="w-full" :novalidate="!nativeValidation" data-ac-ds data-testid="ac-form" @submit.prevent="onSubmit">
     <div class="flex w-full flex-col" :class="widthClass">
       <slot />
     </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AcButton, AcTooltip } from "@/lib";
-import { Copy, RotateCw, Terminal, Trash2 } from "lucide-vue-next";
+import { Copy, RotateCw, Terminal, Trash2 } from "@lucide/vue";
 </script>
 
 <template>

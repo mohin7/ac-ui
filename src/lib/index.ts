@@ -1,5 +1,7 @@
 export * from "./components";
 export { useColorMode } from "./composables/useColorMode";
+export { useFontScale, FONT_SCALES } from "./composables/useFontScale";
+export type { FontScale } from "./composables/useFontScale";
 export type { ColorMode } from "./composables/useColorMode";
 export { useToast } from "./composables/useToast";
 export {
@@ -41,7 +43,7 @@ export type { SegmentedOption } from "./components/AcSegmentedControl.vue";
 export type { SideTabItem } from "./components/AcSideTabs.vue";
 export type { SliderMark } from "./components/AcSlider.vue";
 export type { StatusBarItem, StatusBarStatus } from "./components/AcStatusBar.vue";
-export type { Step } from "./components/AcSteps.vue";
+export type { Step, SubStep } from "./components/AcSteps.vue";
 export type { Column } from "./components/AcTable.vue";
 export type { TabItem } from "./components/AcTabs.vue";
 export type { UsageBreakdownRow } from "./components/AcUsageCard.vue";

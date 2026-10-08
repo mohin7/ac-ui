@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Activity, DatabaseBackup, LayoutDashboard, Settings2, TriangleAlert } from "lucide-vue-next";
+import { Activity, DatabaseBackup, LayoutDashboard, Settings2, TriangleAlert } from "@lucide/vue";
 import { AcSideTabs } from "@/lib";
 import ApiTables from "../../components/ApiTables.vue";
 import Callout from "../../components/Callout.vue";
@@ -16,7 +16,7 @@ const items = [
   { key: "danger", label: "Danger zone", icon: TriangleAlert, tone: "danger" },
 ];
 const script =
-  'import { ref } from "vue";\nimport { Activity, DatabaseBackup, LayoutDashboard, Settings2, TriangleAlert } from "lucide-vue-next";\n\nconst section = ref("overview");\nconst items = [\n  { key: "overview", label: "Overview", icon: LayoutDashboard },\n  { key: "configuration", label: "Configuration", icon: Settings2 },\n  { key: "backups", label: "Backups", icon: DatabaseBackup, badge: 12 },\n  { key: "monitoring", label: "Monitoring", icon: Activity },\n  { key: "danger", label: "Danger zone", icon: TriangleAlert, tone: "danger" },\n];';
+  'import { ref } from "vue";\nimport { Activity, DatabaseBackup, LayoutDashboard, Settings2, TriangleAlert } from "@lucide/vue";\n\nconst section = ref("overview");\nconst items = [\n  { key: "overview", label: "Overview", icon: LayoutDashboard },\n  { key: "configuration", label: "Configuration", icon: Settings2 },\n  { key: "backups", label: "Backups", icon: DatabaseBackup, badge: 12 },\n  { key: "monitoring", label: "Monitoring", icon: Activity },\n  { key: "danger", label: "Danger zone", icon: TriangleAlert, tone: "danger" },\n];';
 
 const dos = [
   "Use side tabs for five or more sections of one resource or settings area.",
@@ -30,14 +30,14 @@ const donts = [
 ];
 const theme = [
   ["w-[220px] · w-14", "List width (the `width` prop) · collapsed rail (56px)"],
-  ["border-r border-border bg-surface", "List surface"],
+  ["border-r border-border-light bg-surface", "List surface"],
   ["sticky top-[top] max-h-[calc(100dvh-…)]", "Sticky list, scrolls on its own when long"],
   ["h-8 rounded-6 text-body hover:bg-surface-sunken", "Item"],
   ["bg-primary-95 text-primary-20", "Active item"],
   ["text-red-30 · bg-red-95 text-red-20", "`tone: \"danger\"` item · active"],
-  ["border-l border-border", "Guide line beside nested items"],
+  ["border-l border-border-light", "Guide line beside nested items"],
   ["text-sm uppercase tracking-[0.06em] text-muted", "Group heading"],
-  ["border-b border-border bg-surface", "Phone select or scrolling row"],
+  ["border-b border-border-light bg-surface", "Phone select or scrolling row"],
 ];
 </script>
 

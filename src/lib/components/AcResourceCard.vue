@@ -139,13 +139,14 @@ function onClick(e: MouseEvent) {
 </script>
 
 <template>
-  <AcSkeleton v-if="loading" shape="info-card" :label="`Loading ${name || 'resource'}`" data-testid="ac-resource-card" />
+  <AcSkeleton v-if="loading" shape="info-card" :label="`Loading ${name || 'resource'}`" data-ac-ds data-testid="ac-resource-card" />
   <article
     v-else
     class="group relative flex min-w-0 flex-col rounded-10 border border-border bg-surface shadow-xs transition-[border-color,box-shadow] duration-150 has-[[data-ac-card-link]:focus-visible]:ring-[3px] has-[[data-ac-card-link]:focus-visible]:ring-ring"
     :class="[(link || isButton()) && 'hover:border-border-dark hover:shadow-sm', disabled && 'opacity-60']"
     :aria-labelledby="`${id}-name`"
     :aria-disabled="disabled || undefined"
+    data-ac-ds
     data-testid="ac-resource-card"
   >
     <div class="flex min-w-0 items-start gap-3 p-4">
@@ -231,7 +232,7 @@ function onClick(e: MouseEvent) {
         <dd class="mt-0.5 flex min-w-0 flex-wrap items-center gap-1.5 text-base font-medium text-heading">
           <slot :name="`detail-${detail.key}`" :detail="detail">
             <span v-if="isEmpty(detail.value)" class="text-muted" aria-label="Not set">—</span>
-            <span v-else class="min-w-0 break-words" :class="detail.mono && 'font-mono text-[12.5px]'">{{ detail.value }}</span>
+            <span v-else class="min-w-0 break-words" :class="detail.mono && 'font-mono text-[length:calc(12.5px*var(--ac-scale))]'">{{ detail.value }}</span>
           </slot>
         </dd>
       </div>

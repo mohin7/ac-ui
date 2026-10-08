@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, useAttrs, useId, watch } from "vue";
-import { Calendar, CalendarRange, ChevronLeft, ChevronRight, CircleAlert, Timer, X } from "lucide-vue-next";
+import { Calendar, CalendarRange, ChevronLeft, ChevronRight, CircleAlert, Timer, X } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 
 export interface DatePickerPreset {
@@ -259,7 +259,10 @@ const durationSpinners = computed<Spinner[]>(() => [
   spinner("m", "Minutes", 0, 59, false, false, () => duration.m, (n) => (duration.m = n)),
 ]);
 
-const hoisted = computed(() => !!props.label && (hasValue.value || open.value));
+// Focused or open counts as active: the same ring and label colour as AcInput gets on focus.
+const focused = ref(false);
+const active = computed(() => open.value || focused.value);
+const hoisted = computed(() => !!props.label && (hasValue.value || active.value));
 const describedBy = computed(() => (props.errorMsg || props.hint ? msgId : undefined));
 const dialogLabel = computed(() => {
   if (props.mode === "duration") return props.label || "Choose duration";
@@ -708,7 +711,7 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="root" v-bind="rootAttrs" class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-date-picker">
+  <div ref="root" v-bind="rootAttrs" class="w-full" :class="disabled && 'opacity-60'" data-ac-ds data-testid="ac-date-picker">
     <div class="relative">
       <button
         :id="`${id}-trigger`"
@@ -726,10 +729,16 @@ defineExpose({
         :class="[
           size === 'small' ? 'h-9' : 'h-10',
           disabled ? '' : 'cursor-pointer',
-          errorMsg ? 'border-red-60' : open ? 'focus-ring' : 'border-border hover:border-border-dark focus-visible:focus-ring',
+          errorMsg
+            ? ['border-red-60', active && 'border-danger shadow-[0_0_0_3px_var(--color-red-90)]']
+            : active
+              ? 'focus-ring'
+              : 'border-border hover:border-border-dark',
         ]"
         @click="open ? closePanel() : openPanel()"
         @keydown="onTriggerKeydown"
+        @focus="focused = true"
+        @blur="focused = false"
       >
         <span :id="valueId" class="truncate tabular-nums" :class="!displayText && 'text-muted'">
           {{ displayText || (label ? "" : placeholder || (mode === "duration" ? "Choose duration" : "Choose date")) }}
@@ -744,7 +753,7 @@ defineExpose({
         :class="[
           disabled ? 'bg-linear-to-b from-surface from-50% to-surface-muted to-50%' : 'bg-surface',
           hoisted ? 'top-0 -translate-y-1/2 text-xs font-medium' : 'top-1/2 -translate-y-1/2 text-base text-muted',
-          hoisted && (errorMsg ? 'text-red-30' : open ? 'text-primary-20' : 'text-label'),
+          hoisted && (errorMsg ? 'text-red-30' : active ? 'text-primary-20' : 'text-label'),
         ]"
       >
         {{ label }}<span v-if="required" class="text-danger" aria-hidden="true"> *</span>
@@ -793,6 +802,8 @@ defineExpose({
             left: `${placement.left}px`,
             maxHeight: `${placement.maxHeight}px`,
           }"
+          data-ac-ds
+          data-testid="ac-date-picker-panel"
           @keydown="onPanelKeydown"
         >
           <!-- presets -->
@@ -813,7 +824,7 @@ defineExpose({
             </button>
           </div>
 
-          <div class="max-w-full min-w-0" :class="mode === 'duration' ? 'w-72' : 'w-[276px]'">
+          <div class="max-w-full min-w-0" :class="mode === 'duration' ? 'w-72' : 'w-[calc(276px*var(--ac-scale))]'">
             <!-- duration -->
             <div v-if="mode === 'duration'" class="p-4">
               <p class="text-base font-medium text-heading">{{ label || "Duration" }}</p>

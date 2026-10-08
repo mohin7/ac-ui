@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { Save, Trash2 } from "lucide-vue-next";
+import { Save, Trash2 } from "@lucide/vue";
 import { AcButton } from "@/lib";
 import { AcFileEditor } from "@/lib/editor";
 

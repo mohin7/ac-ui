@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="Row extends Record<string, unknown>">
-import { computed, ref } from "vue";
-import { ArrowUp, ChevronsUpDown } from "lucide-vue-next";
+import { computed, ref, useId } from "vue";
+import { ArrowUp, Check, ChevronRight, ChevronsUpDown, Minus } from "@lucide/vue";
 import AcCellValue from "./AcCellValue.vue";
 import type { CellType, ResourceCell, ResourceColumn } from "./AcCellValue.vue";
 
@@ -31,6 +31,22 @@ export interface Props<R> {
   emptyText?: string;
   /** Adds a pointer cursor and emits `row-click`. */
   clickable?: boolean;
+  /** Adds a checkbox column for choosing rows, e.g. for bulk delete. Bind the chosen rows' `rowKey` values with `v-model:selected`. */
+  selectable?: boolean;
+  /** Adds an arrow column that opens a detail area under each row. Fill it with the `expanded` slot, and bind the open rows' `rowKey` values with `v-model:expanded`. */
+  expandable?: boolean;
+  /** With `expandable`, decides per row whether it can open. Rows that can't show no arrow. */
+  canExpand?: (row: R) => boolean;
+  /** Marks the current row, e.g. the one chosen in a picker: tinted with a primary outline and `aria-current`. Not the checkbox selection, which is `selectable`. */
+  rowActive?: (row: R) => boolean;
+  /** Greys a row out: it ignores clicks and its checkbox is disabled. */
+  rowDisabled?: (row: R) => boolean;
+  /** The table doesn't reorder rows itself: sort the whole list outside (all pages, or on the server) when `sort` fires or `v-model:sortBy` changes. Headers still show the arrow. */
+  manualSort?: boolean;
+  /** Drops the table's own frame (border, rounded corners, shadow) so it sits flush inside a card or section that already has one. Without it a table in a card draws a second box. */
+  flat?: boolean;
+  /** Turns a server cell's link template into a URL, e.g. to fill `${username}` and `${clustername}` from the current route. */
+  resolveLink?: (link: string) => string;
 }
 
 const props = withDefaults(defineProps<Props<Row>>(), {
@@ -38,33 +54,51 @@ const props = withDefaults(defineProps<Props<Row>>(), {
   loading: false,
   loaderRows: 3,
   emptyText: "No data found",
+  flat: false,
+  rowActive: undefined,
+  rowDisabled: undefined,
+  manualSort: false,
   clickable: false,
+  selectable: false,
+  expandable: false,
+  canExpand: undefined,
+  resolveLink: undefined,
 });
+
+/** `rowKey` values of the chosen rows. Bind with `v-model:selected`. Rows that leave `rows` (another page, a search) stay chosen. */
+const selected = defineModel<unknown[]>("selected", { default: () => [] });
+
+/** `rowKey` values of the rows that are open. Bind with `v-model:expanded`. */
+const expanded = defineModel<unknown[]>("expanded", { default: () => [] });
 
 const emit = defineEmits<{ "row-click": [row: Row]; sort: [key: string, mode: "asc" | "desc"] }>();
 
 defineSlots<{
   /** Custom cell for a column: `#cell-name="{ row, value }"`. One slot per column key. */
   [key: `cell-${string}`]: (props: { row: Row; value: unknown }) => unknown;
+  /** Custom header content for a column: `#header-name="{ column }"`. One slot per column key. The sort arrow stays. */
+  [key: `header-${string}`]: (props: { column: Column }) => unknown;
+  /** Detail area under an open row, for tables with `expandable`: `#expanded="{ row }"`. */
+  expanded?: (props: { row: Row }) => unknown;
   /** Content shown when `rows` is empty. */
   empty?: () => unknown;
 }>();
 
-const sortKey = ref<string>("");
-const sortMode = ref<"asc" | "desc">("asc");
+const tableId = useId();
+/** The sorted column and direction, or `null`. Bind with `v-model:sortBy` to set it from outside, e.g. to keep it across pages or in the URL. */
+const sortBy = defineModel<{ key: string; mode: "asc" | "desc" } | null>("sortBy", { default: null });
+const sortKey = computed(() => sortBy.value?.key ?? "");
+const sortMode = computed(() => sortBy.value?.mode ?? "asc");
 
 const toggleSort = (col: Column) => {
   if (!col.sortable) return;
-  if (sortKey.value === col.key) sortMode.value = sortMode.value === "asc" ? "desc" : "asc";
-  else {
-    sortKey.value = col.key;
-    sortMode.value = "asc";
-  }
-  emit("sort", sortKey.value, sortMode.value);
+  const mode = sortKey.value === col.key && sortMode.value === "asc" ? "desc" : "asc";
+  sortBy.value = { key: col.key, mode };
+  emit("sort", col.key, mode);
 };
 
 const sortedRows = computed(() => {
-  if (!sortKey.value) return props.rows;
+  if (!sortKey.value || props.manualSort) return props.rows;
   const k = sortKey.value;
   const dir = sortMode.value === "asc" ? 1 : -1;
   return [...props.rows].sort((a, b) => String(sortValue(a[k]) ?? "").localeCompare(String(sortValue(b[k]) ?? ""), undefined, { numeric: true }) * dir);
@@ -78,27 +112,92 @@ function sortValue(v: unknown) {
   return isCell(v) ? (v.sort ?? v.data) : v;
 }
 
+const isDisabledRow = (row: Row) => !!props.rowDisabled?.(row);
+const rowKeys = computed(() => props.rows.filter((row) => !isDisabledRow(row)).map((row) => row[props.rowKey]));
+const selectedKeys = computed(() => new Set(selected.value));
+const allSelected = computed(() => rowKeys.value.length > 0 && rowKeys.value.every((k) => selectedKeys.value.has(k)));
+const someSelected = computed(() => !allSelected.value && rowKeys.value.some((k) => selectedKeys.value.has(k)));
+
+// Only the rows in view: choices made on other pages are kept.
+function toggleAll() {
+  const inView = new Set(rowKeys.value);
+  selected.value = allSelected.value
+    ? selected.value.filter((k) => !inView.has(k))
+    : [...selected.value, ...rowKeys.value.filter((k) => !selectedKeys.value.has(k))];
+}
+
+function toggleRow(row: Row) {
+  const key = row[props.rowKey];
+  selected.value = selectedKeys.value.has(key) ? selected.value.filter((k) => k !== key) : [...selected.value, key];
+}
+
+const expandedKeys = computed(() => new Set(expanded.value));
+const isOpen = (row: Row) => props.expandable && expandedKeys.value.has(row[props.rowKey]);
+const rowCanExpand = (row: Row) => !props.canExpand || props.canExpand(row);
+const detailId = (row: Row) => `${tableId}-detail-${String(row[props.rowKey])}`;
+const columnCount = computed(() => props.columns.length + (props.selectable ? 1 : 0) + (props.expandable ? 1 : 0));
+
+function toggleExpanded(row: Row) {
+  const key = row[props.rowKey];
+  expanded.value = expandedKeys.value.has(key) ? expanded.value.filter((k) => k !== key) : [...expanded.value, key];
+}
+
+// Names the row by its first column, e.g. "Select demo-postgres", falling back to its key.
+function rowLabel(row: Row) {
+  const first = row[props.columns[0]?.key ?? ""];
+  const text = isCell(first) ? first.data : first;
+  return typeof text === "string" || typeof text === "number" ? text : String(row[props.rowKey]);
+}
+
+/** Flat tables sit under a card's own border, so the header rule is the quiet one. */
+const headBorder = computed(() => (props.flat ? "border-border-light" : "border-border"));
+
+const checkboxClass =
+  "peer size-4 cursor-pointer appearance-none rounded-4 border border-border-dark bg-surface align-middle shadow-xs transition-[background-color,border-color,box-shadow] duration-150 hover:border-slate-60 checked:border-primary checked:bg-primary checked:shadow-button indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50";
+
 const alignClass = (col: Column) => ({ left: "text-left", center: "text-center", right: "text-right" })[col.align ?? "left"];
 </script>
 
 <template>
-  <div class="w-full overflow-hidden rounded-10 border border-border bg-surface shadow-xs" data-testid="ac-table">
+  <div class="w-full overflow-hidden bg-surface" :class="!flat && 'rounded-10 border border-border shadow-xs'" data-ac-ds data-testid="ac-table">
     <div class="ac-scrollbar">
       <table class="w-full border-separate border-spacing-0 text-base">
         <thead>
           <tr>
+            <th v-if="expandable" scope="col" class="h-9 w-10 border-b bg-surface-muted pr-0 pl-3" :class="[headBorder, !flat && 'first:rounded-tl-10']">
+              <span class="sr-only">Expand</span>
+            </th>
+            <th v-if="selectable" scope="col" class="h-9 w-10 border-b bg-surface-muted pr-0 pl-4" :class="[headBorder, !flat && 'first:rounded-tl-10']">
+              <span class="relative flex size-4">
+                <input
+                  type="checkbox"
+                  :class="checkboxClass"
+                  :checked="allSelected"
+                  :indeterminate="someSelected"
+                  :disabled="loading || !rows.length"
+                  aria-label="Select all rows"
+                  @change="toggleAll"
+                />
+                <component
+                  :is="someSelected ? Minus : Check"
+                  class="pointer-events-none absolute inset-0 m-auto size-3 text-white opacity-0 peer-checked:opacity-100 peer-indeterminate:opacity-100"
+                  :stroke-width="3"
+                  aria-hidden="true"
+                />
+              </span>
+            </th>
             <th
               v-for="col in columns"
               :key="col.key"
               scope="col"
-              class="h-9 border-b border-border bg-surface-muted px-4 text-xs font-medium whitespace-nowrap text-label first:rounded-tl-10 last:rounded-tr-10"
-              :class="[alignClass(col), col.sortable && 'cursor-pointer select-none transition-colors hover:text-heading']"
+              class="h-9 border-b bg-surface-muted px-4 text-xs font-medium whitespace-nowrap text-label"
+              :class="[headBorder, !flat && 'first:rounded-tl-10 last:rounded-tr-10', alignClass(col), col.sortable && 'cursor-pointer select-none transition-colors hover:text-heading']"
               :style="col.width ? { width: col.width } : undefined"
               :aria-sort="sortKey === col.key ? (sortMode === 'asc' ? 'ascending' : 'descending') : undefined"
               @click="toggleSort(col)"
             >
               <span class="inline-flex items-center gap-1" :class="sortKey === col.key && 'text-heading'">
-                {{ col.label }}
+                <slot :name="`header-${col.key}`" :column="col">{{ col.label }}</slot>
                 <component
                   :is="sortKey === col.key ? ArrowUp : ChevronsUpDown"
                   v-if="col.sortable"
@@ -113,19 +212,59 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
         <tbody>
           <template v-if="loading">
             <tr v-for="i in loaderRows" :key="`loader-${i}`">
+              <td v-if="expandable" class="h-12 border-b border-border-light pl-3 [tr:last-child_&]:border-0" />
+              <td v-if="selectable" class="h-12 border-b border-border-light pl-4 [tr:last-child_&]:border-0" />
               <td v-for="(col, c) in columns" :key="col.key" class="h-12 border-b border-border-light px-4 [tr:last-child_&]:border-0">
                 <span class="block h-2.5 animate-pulse rounded-full bg-surface-sunken" :style="{ width: `${50 + ((i * 17 + c * 23) % 40)}%` }" />
               </td>
             </tr>
           </template>
           <template v-else>
+            <template v-for="(row, i) in sortedRows" :key="String(row[rowKey] ?? i)">
             <tr
-              v-for="(row, i) in sortedRows"
-              :key="String(row[rowKey] ?? i)"
+              data-testid="ac-table-row"
               class="group transition-colors duration-100 hover:bg-surface-muted/70"
-              :class="clickable && 'cursor-pointer'"
-              @click="clickable && emit('row-click', row)"
+              :class="[
+                clickable && 'cursor-pointer',
+                (rowActive?.(row) || (selectable && selectedKeys.has(row[rowKey]))) && 'bg-primary-97',
+                rowActive?.(row) && 'shadow-[inset_0_0_0_1px_var(--color-primary)]',
+                isDisabledRow(row) && 'pointer-events-none cursor-not-allowed opacity-50',
+              ]"
+              :aria-current="rowActive?.(row) ? 'true' : undefined"
+              :aria-disabled="isDisabledRow(row) || undefined"
+              @click="clickable && !isDisabledRow(row) && emit('row-click', row)"
             >
+              <td v-if="expandable" class="h-12 w-10 border-b border-border-light pr-0 pl-3 group-last:border-0" @click.stop>
+                <button
+                  v-if="rowCanExpand(row)"
+                  type="button"
+                  class="inline-flex size-7 cursor-pointer items-center justify-center rounded-6 text-muted transition-colors hover:bg-surface-sunken hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+                  :aria-expanded="isOpen(row)"
+                  :aria-controls="detailId(row)"
+                  :aria-label="`${isOpen(row) ? 'Collapse' : 'Expand'} ${rowLabel(row)}`"
+                  data-testid="ac-table-expand"
+                  @click="toggleExpanded(row)"
+                >
+                  <ChevronRight class="size-4 transition-transform duration-150 motion-reduce:transition-none" :class="isOpen(row) && 'rotate-90'" aria-hidden="true" />
+                </button>
+              </td>
+              <td v-if="selectable" class="h-12 w-10 border-b border-border-light pr-0 pl-4 group-last:border-0" @click.stop>
+                <span class="relative flex size-4">
+                  <input
+                    type="checkbox"
+                    :class="checkboxClass"
+                    :checked="selectedKeys.has(row[rowKey])"
+                    :disabled="isDisabledRow(row)"
+                    :aria-label="`Select ${rowLabel(row)}`"
+                    @change="toggleRow(row)"
+                  />
+                  <Check
+                    class="pointer-events-none absolute inset-0 m-auto size-3 text-white opacity-0 peer-checked:opacity-100"
+                    :stroke-width="3"
+                    aria-hidden="true"
+                  />
+                </span>
+              </td>
               <td
                 v-for="col in columns"
                 :key="col.key"
@@ -140,11 +279,20 @@ const alignClass = (col: Column) => ({ left: "text-left", center: "text-center",
                     :column="col.descriptor"
                     :type="col.type"
                     :title="col.label"
+                    :resolve-link="resolveLink"
                   />
                   <template v-else>{{ row[col.key] }}</template>
                 </slot>
               </td>
             </tr>
+            <tr v-if="isOpen(row) && rowCanExpand(row)" class="group" data-testid="ac-table-detail">
+              <td :colspan="columnCount" class="border-b border-border-light bg-surface-muted/50 p-0 group-last:border-0">
+                <div :id="detailId(row)" role="region" :aria-label="`Details for ${rowLabel(row)}`" class="px-4 py-3 text-body">
+                  <slot name="expanded" :row="row" />
+                </div>
+              </td>
+            </tr>
+            </template>
           </template>
         </tbody>
       </table>

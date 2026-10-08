@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, inject, onBeforeUnmount, onMounted, provide, ref, useId, watch } from "vue";
-import { ChevronRight } from "lucide-vue-next";
+import { ChevronRight } from "@lucide/vue";
 import type { Component, Ref } from "vue";
 import type { Tone } from "./types";
 
@@ -147,7 +147,7 @@ onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
-  <li class="m-0 list-none" data-testid="ac-sidebar-item">
+  <li class="m-0 list-none" data-ac-ds data-testid="ac-sidebar-item">
     <component
       :is="tag"
       v-if="!hasChildren"
@@ -158,6 +158,7 @@ onBeforeUnmount(() => observer?.disconnect());
         disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : ['cursor-pointer', hover],
       ]"
       :title="rail ? (badgeText ? `${label} (${badgeText})` : label) : undefined"
+      data-ac-ds
       data-testid="ac-sidebar-link"
       @click="onClick"
     >
@@ -197,6 +198,7 @@ onBeforeUnmount(() => observer?.disconnect());
         :aria-expanded="rail ? undefined : open"
         :aria-controls="`${id}-list`"
         :title="rail ? label : undefined"
+        data-ac-ds
         data-testid="ac-sidebar-group"
         @click="onGroupClick"
       >
@@ -227,11 +229,11 @@ onBeforeUnmount(() => observer?.disconnect());
         />
       </button>
       <ul
-        v-show="open && !rail"
         :id="`${id}-list`"
         ref="list"
         role="list"
-        class="mt-0.5 ml-4.5 flex flex-col gap-0.5 border-l border-border pl-2"
+        class="mt-0.5 ml-4.5 flex-col gap-0.5 border-l border-border pl-2"
+        :class="open && !rail ? 'flex' : 'hidden'"
       >
         <slot />
       </ul>

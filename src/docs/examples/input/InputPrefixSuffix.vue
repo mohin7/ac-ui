@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Layers } from "lucide-vue-next";
+import { Layers } from "@lucide/vue";
 import { AcInput } from "@/lib";
 
 const endpoint = ref("");

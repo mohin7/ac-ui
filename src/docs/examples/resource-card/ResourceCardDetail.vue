@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Archive, Play, ShieldCheck } from "lucide-vue-next";
+import { Archive, Play, ShieldCheck } from "@lucide/vue";
 import { AcBadge, AcButton, AcResourceCard } from "@/lib";
 </script>
 

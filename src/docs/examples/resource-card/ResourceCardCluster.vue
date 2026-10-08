@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cloud, Download, KeyRound, Trash2 } from "lucide-vue-next";
+import { Cloud, Download, KeyRound, Trash2 } from "@lucide/vue";
 import { AcDropdownDivider, AcDropdownItem, AcResourceCard, useToast } from "@/lib";
 
 const { toast } = useToast();

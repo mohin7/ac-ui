@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { Inbox, SearchX, TriangleAlert } from "lucide-vue-next";
+import { Inbox, SearchX, TriangleAlert } from "@lucide/vue";
 import type { Component } from "vue";
 
 export interface Props {
@@ -66,6 +66,7 @@ const heading = computed(() => {
     class="flex flex-col items-center px-4 text-center"
     :class="sizing.root"
     :role="variant === 'error' ? 'alert' : undefined"
+    data-ac-ds
     data-testid="ac-empty-state"
   >
     <slot name="icon">

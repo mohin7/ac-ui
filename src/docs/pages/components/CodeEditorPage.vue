@@ -8,6 +8,8 @@ import ComponentExample from "../../components/ComponentExample.vue";
 import ComponentPlayground from "../../components/ComponentPlayground.vue";
 import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
+import importCode from "../../snippets/code-editor/import-code.txt?raw";
+import asyncCode from "../../snippets/code-editor/async-code.txt?raw";
 
 const sample = `apiVersion: v1
 kind: Service
@@ -22,17 +24,6 @@ spec:
       targetPort: 5432
 `;
 const script = 'import { ref } from "vue";\n\nconst manifest = ref(`apiVersion: v1\\nkind: Service\\n…`);';
-
-const importCode = `import { AcCodeEditor } from "@appscode/design-system/editor";`;
-
-const asyncCode = `import { defineAsyncComponent, h } from "vue";
-import { AcSkeleton } from "@appscode/design-system";
-
-const AcCodeEditor = defineAsyncComponent({
-  loader: () => import("@appscode/design-system/editor").then((m) => m.AcCodeEditor),
-  loadingComponent: () => h(AcSkeleton, { shape: "editor", label: "Loading editor" }),
-  delay: 0,
-});`;
 
 const dos = [
   "Pass the CRD's `openAPIV3Schema` as `schema` so people see a wrong field or type before the API server rejects it.",

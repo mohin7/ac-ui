@@ -37,6 +37,7 @@ defineOptions({ inheritAttrs: false });
       class="flex flex-col items-center justify-center gap-3 px-4 text-center"
       :class="fullPage ? 'fixed inset-0 z-[80] bg-surface' : 'size-full'"
       :style="fullPage ? undefined : { minHeight }"
+      data-ac-ds
       data-testid="ac-preloader"
     >
       <AcSpinner v-if="showSpinner" size="normal" class="text-primary" label="" />

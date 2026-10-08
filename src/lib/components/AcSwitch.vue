@@ -43,7 +43,7 @@ defineExpose({
 </script>
 
 <template>
-  <div v-bind="rootAttrs" data-testid="ac-switch">
+  <div v-bind="rootAttrs" data-ac-ds data-testid="ac-switch">
     <div class="flex items-center gap-2">
       <slot name="left" />
       <label v-if="label" :for="id" class="cursor-pointer text-base text-heading">{{ label }}</label>

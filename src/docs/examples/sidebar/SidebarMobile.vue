@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Activity, Database, DatabaseBackup, LayoutDashboard, Settings } from "lucide-vue-next";
+import { Activity, Database, DatabaseBackup, LayoutDashboard, Settings } from "@lucide/vue";
 import { AcLogo, AcNavbar, AcSidebar, AcSidebarItem, AcSidebarSection } from "@/lib";
 
 const menuOpen = ref(false);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AcTooltip } from "@/lib";
-import { CircleHelp } from "lucide-vue-next";
+import { CircleHelp } from "@lucide/vue";
 </script>
 
 <template>

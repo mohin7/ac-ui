@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { ListFilter } from "lucide-vue-next";
+import { ListFilter } from "@lucide/vue";
 import { useRoute } from "vue-router";
 import { pages, sections } from "../nav";
 

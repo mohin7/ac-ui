@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Bot, Monitor, Smartphone } from "lucide-vue-next";
+import { Bot, Monitor, Smartphone } from "@lucide/vue";
 import { AcButton, AcResourceCard } from "@/lib";
 
 const sessions = [

@@ -23,6 +23,7 @@ const sizes = { xs: "size-3", small: "size-4", normal: "size-5", large: "size-8"
     :role="label ? 'status' : undefined"
     :aria-label="label || undefined"
     :aria-hidden="!label || undefined"
+    data-ac-ds
     data-testid="ac-spinner"
   >
     <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-opacity="0.2" stroke-width="2" />

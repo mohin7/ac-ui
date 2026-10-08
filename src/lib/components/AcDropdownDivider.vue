@@ -10,7 +10,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div role="separator" :aria-label="label || undefined" class="group" data-testid="ac-dropdown-divider">
+  <div role="separator" :aria-label="label || undefined" class="group" data-ac-ds data-testid="ac-dropdown-divider">
     <div class="-mx-1 my-1 h-px bg-border-light group-first:hidden" />
     <div v-if="label" class="px-2.5 pt-1.5 pb-1 text-sm font-medium tracking-wide text-muted uppercase">{{ label }}</div>
   </div>

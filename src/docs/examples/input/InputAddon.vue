@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Check, Copy, FolderOpen, WandSparkles } from "lucide-vue-next";
+import { Check, Copy, FolderOpen, WandSparkles } from "@lucide/vue";
 import { AcInput } from "@/lib";
 
 const password = ref("");

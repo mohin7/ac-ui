@@ -18,9 +18,9 @@ const donts = ["Don't use Steps as navigation between unrelated pages."];
   <ComponentPlayground
     tag="AcSteps"
     :component="AcSteps"
-    :controls="[{'prop': 'active', 'type': 'select', 'options': [1, 2, 3, 4]}]"
-    :initial="{'active': 2}"
-    :defaults="{}"
+    :controls="[{'prop': 'active', 'type': 'select', 'options': [1, 2, 3, 4]}, {'prop': 'orientation', 'type': 'select', 'options': ['horizontal', 'vertical']}]"
+    :initial="{'active': 2, 'orientation': 'horizontal'}"
+    :defaults="{'orientation': 'horizontal'}"
     :extra="{'options': [{'id': 1, 'title': 'Select Cluster', 'description': 'Choose where to deploy'}, {'id': 2, 'title': 'Configure', 'description': 'Version and storage'}, {'id': 3, 'title': 'Review', 'description': 'Confirm and deploy'}]}"
     extra-code=':options="steps"'
     :script="script"
@@ -30,6 +30,9 @@ const donts = ["Don't use Steps as navigation between unrelated pages."];
   <DocHeading id="basic" :level="3">Basic</DocHeading>
   <p>Steps with an id lower than <code class="prose-code">active</code> show a check mark.</p>
   <ComponentExample name="steps/StepsBasic" />
+  <DocHeading id="vertical" :level="3">Vertical, with sub-steps</DocHeading>
+  <p><code class="prose-code">orientation="vertical"</code> stacks the steps in a column, for a side panel next to the form. A step can carry <code class="prose-code">substeps</code>; the current step lists them, and <code class="prose-code">active-substep</code> marks where you are, with earlier sub-steps ticked. Sub-step ids must be unique across all steps.</p>
+  <ComponentExample name="steps/StepsVertical" />
   <DocHeading id="wizard" :level="3">In a wizard</DocHeading>
   <p>Drive <code class="prose-code">active</code> with Back and Next buttons.</p>
   <ComponentExample name="steps/StepsWizard" />

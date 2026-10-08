@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { X } from "lucide-vue-next";
+import { X } from "@lucide/vue";
 import type { Tone } from "./types";
 
 export interface Props {
@@ -61,7 +61,8 @@ function remove() {
 <template>
   <span
     class="inline-flex h-6 max-w-full items-stretch overflow-hidden border text-xs leading-none whitespace-nowrap"
-    :class="[boxClass, rounded ? 'rounded-50' : 'rounded-6', isKeyValue && 'font-mono text-[11.5px]']"
+    :class="[boxClass, rounded ? 'rounded-50' : 'rounded-6', isKeyValue && 'font-mono text-[length:calc(11.5px*var(--ac-scale))]']"
+    data-ac-ds
     data-testid="ac-tag"
   >
     <template v-if="isKeyValue">

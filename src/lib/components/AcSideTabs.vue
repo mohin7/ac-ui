@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref, useId, useSlots, watch } from "vue";
-import { ChevronRight, PanelLeftClose, PanelLeftOpen } from "lucide-vue-next";
+import { ChevronRight, PanelLeftClose, PanelLeftOpen } from "@lucide/vue";
 import AcSelect from "./AcSelect.vue";
 import type { Component, Ref } from "vue";
 import type { SelectOption, Tone } from "./types";
@@ -55,7 +55,7 @@ export interface Props {
   hideTabs?: boolean;
   /** Shows a Collapse button that toggles `v-model:collapsed` (an icon-only rail). */
   collapsible?: boolean;
-  /** Width in px below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. `0` keeps it vertical. */
+  /** Width in px (at scale 1) below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. It grows with the interface scale. `0` keeps it vertical. */
   breakpoint?: number;
   /** Phone layout: a `select`, or a horizontal row of tabs that `scroll`s. */
   mobile?: "select" | "scroll";
@@ -67,7 +67,7 @@ const props = withDefaults(defineProps<Props>(), {
   top: "0px",
   bottom: "0px",
   offsetSelectors: () => [],
-  width: "220px",
+  width: "calc(220px * var(--ac-scale))",
   hideTabs: false,
   collapsible: false,
   breakpoint: 640,
@@ -175,6 +175,13 @@ const panelStyle = computed(() =>
   props.sticky ? { top: stickyTop.value, maxHeight: `calc(100dvh - ${stickyTop.value} - ${props.bottom})` } : undefined,
 );
 
+// The column's edge runs down to the bottom of the viewport even when the content beside it is short.
+// The list starts at `stickyTop`, so that is where the remaining height is measured from.
+const columnStyle = computed(() => ({
+  width: rail.value ? "calc(56px * var(--ac-scale))" : props.width,
+  minHeight: props.sticky && hasContent.value ? `calc(100dvh - ${stickyTop.value} - ${props.bottom})` : undefined,
+}));
+
 function isActive(item: SideTabItem) {
   return item.key === model.value;
 }
@@ -276,7 +283,9 @@ function revealActive() {
 function measure() {
   const target = hasContent.value ? root.value : root.value?.parentElement;
   if (!target) return;
-  compact.value = props.breakpoint > 0 && target.clientWidth < props.breakpoint;
+  // The list and its text grow with the interface scale, so the width that needs the phone layout does too.
+  const scale = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ac-scale")) || 1;
+  compact.value = props.breakpoint > 0 && target.clientWidth < props.breakpoint * scale;
 }
 
 function watchOffsets() {
@@ -312,6 +321,7 @@ watch(() => props.offsetSelectors.join(","), watchOffsets);
 
 onMounted(() => {
   measure();
+  window.addEventListener("ac-scale", measure);
   watchOffsets();
   const target = hasContent.value ? root.value : root.value?.parentElement;
   if (target && typeof ResizeObserver !== "undefined") {
@@ -321,6 +331,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  window.removeEventListener("ac-scale", measure);
   resizeObserver?.disconnect();
   offsetObserver?.disconnect();
 });
@@ -330,16 +341,17 @@ onBeforeUnmount(() => {
   <div
     ref="root"
     :class="hasContent ? ['flex w-full min-w-0', compact ? 'flex-col' : 'flex-row'] : compact ? 'w-full' : 'flex shrink-0 self-stretch'"
+    data-ac-ds
     data-testid="ac-side-tabs"
   >
     <template v-if="!hideTabs">
       <!-- Phone: select -->
-      <div v-if="compact && mobile === 'select'" class="border-b border-border bg-surface px-4 py-3">
+      <div v-if="compact && mobile === 'select'" class="border-b border-border-light bg-surface px-4 py-3">
         <AcSelect :model-value="model || null" :options="selectOptions" :label="label" @update:model-value="onSelect" />
       </div>
 
       <!-- Phone: a row of tabs that scrolls sideways -->
-      <nav v-else-if="compact" :aria-label="label" class="border-b border-border bg-surface">
+      <nav v-else-if="compact" :aria-label="label" class="border-b border-border-light bg-surface">
         <ul
           ref="scroller"
           class="flex gap-1 overflow-x-auto px-2 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -370,8 +382,8 @@ onBeforeUnmount(() => {
       <!-- Wide: a vertical list -->
       <div
         v-else
-        class="shrink-0 border-r border-border bg-surface transition-[width] duration-200 ease-out-soft motion-reduce:transition-none"
-        :style="{ width: rail ? '56px' : width }"
+        class="shrink-0 border-r border-border-light bg-surface transition-[width] duration-200 ease-out-soft motion-reduce:transition-none"
+        :style="columnStyle"
       >
         <nav
           :aria-label="label"
@@ -462,10 +474,10 @@ onBeforeUnmount(() => {
                     />
                   </button>
                   <ul
-                    v-show="isOpen(item) && !rail"
                     :id="`${id}-${item.key}`"
                     role="list"
-                    class="mt-0.5 ml-4.5 flex flex-col gap-0.5 border-l border-border pl-2"
+                    class="mt-0.5 ml-4.5 flex-col gap-0.5 border-l border-border-light pl-2"
+                    :class="isOpen(item) && !rail ? 'flex' : 'hidden'"
                   >
                     <li v-for="child in item.children" :key="child.key">
                       <component

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cloud, Database, Server } from "lucide-vue-next";
+import { Cloud, Database, Server } from "@lucide/vue";
 import { AcTag } from "@/lib";
 </script>
 

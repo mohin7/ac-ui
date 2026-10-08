@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { ArrowUpRight, RotateCw } from "lucide-vue-next";
+import { ArrowUpRight, RotateCw } from "@lucide/vue";
 import { AcAlert, AcButton } from "@/lib";
 
 const retrying = ref(false);

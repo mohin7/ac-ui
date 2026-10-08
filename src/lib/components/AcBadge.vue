@@ -56,6 +56,7 @@ const dotClass = computed(() => {
   <span
     class="inline-flex h-5.5 items-center gap-1.5 px-2 text-xs leading-none font-medium whitespace-nowrap tabular-nums"
     :class="[classes, rounded ? 'rounded-50' : 'rounded-6']"
+    data-ac-ds
     data-testid="ac-badge"
   >
     <span v-if="dot" class="size-1.5 shrink-0 rounded-full" :class="dotClass" aria-hidden="true" />

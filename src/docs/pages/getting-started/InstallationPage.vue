@@ -2,23 +2,13 @@
 import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
 import DocHeading from "../../components/DocHeading.vue";
+import vite from "../../snippets/installation/vite.txt?raw";
+import fonts from "../../snippets/installation/fonts.txt?raw";
+import main from "../../snippets/installation/main.txt?raw";
+import use from "../../snippets/installation/use.txt?raw";
 
-const deps = `npm install vue lucide-vue-next
+const deps = `npm install vue @lucide/vue
 npm install -D tailwindcss @tailwindcss/vite`;
-
-const vite = `import { fileURLToPath, URL } from "node:url";
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import tailwindcss from "@tailwindcss/vite";
-
-export default defineConfig({
-  plugins: [vue(), tailwindcss()],
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
-    },
-  },
-});`;
 
 const tsconfig = `{
   "compilerOptions": {
@@ -33,29 +23,6 @@ const css = `@import "tailwindcss";
 @import "./lib/theme.css";`;
 
 const fontsInstall = `npm install @fontsource-variable/geist @fontsource-variable/geist-mono`;
-
-const fonts = `import "@fontsource-variable/geist";
-import "@fontsource-variable/geist-mono";`;
-
-const main = `import { createApp } from "vue";
-import App from "./App.vue";
-import "@fontsource-variable/geist";
-import "@fontsource-variable/geist-mono";
-import "./main.css";
-
-createApp(App).mount("#app");`;
-
-const use = `<script setup lang="ts">
-import { AcButton, AcBadge } from "@/lib";
-<\/script>
-
-<template>
-  <div class="flex items-center gap-3 p-6">
-    <h4>demo-postgres</h4>
-    <AcBadge label="Ready" color="success" variant="light" rounded dot />
-    <AcButton title="Open Console" class="ml-auto" />
-  </div>
-</template>`;
 </script>
 
 <template>
@@ -65,6 +32,11 @@ import { AcButton, AcBadge } from "@/lib";
     <li>Tailwind CSS v4 (the theme uses <code class="prose-code">@theme</code>)</li>
     <li>Vite, or any bundler with Tailwind v4 support</li>
   </ul>
+
+  <Callout type="note">
+    These steps are for an app that doesn't load the old Bulma design system. For cluster-ui, kubedb-ui, platform-ui and the other apps that
+    still do, follow <RouterLink to="/getting-started/existing-apps">Existing Apps</RouterLink> instead.
+  </Callout>
 
   <DocHeading id="steps">Steps</DocHeading>
 
@@ -79,7 +51,7 @@ import { AcButton, AcBadge } from "@/lib";
   <DocHeading id="copy-lib" :level="3">3. Add the library</DocHeading>
   <p>
     Copy <code class="prose-code">src/lib</code> (the theme, components and composables) into your app. Its only
-    dependencies are Vue and <code class="prose-code">lucide-vue-next</code>.
+    dependencies are Vue and <code class="prose-code">@lucide/vue</code>.
   </p>
   <CodeBlock :code="copy" lang="bash" filename="Terminal" />
   <Callout type="note">
@@ -113,6 +85,6 @@ import { AcButton, AcBadge } from "@/lib";
   <ul>
     <li>Add <RouterLink to="/components/theme-mode">AcThemeMode</RouterLink> and the no-flash snippet from <RouterLink to="/getting-started/dark-mode">Dark Mode</RouterLink>.</li>
     <li>Mount <code class="prose-code">&lt;AcToaster /&gt;</code> once in your root component to use <RouterLink to="/components/toast">useToast()</RouterLink>.</li>
-    <li>Icons come from <code class="prose-code">lucide-vue-next</code> — see <RouterLink to="/foundations/icons">Icons</RouterLink>.</li>
+    <li>Icons come from <code class="prose-code">@lucide/vue</code> — see <RouterLink to="/foundations/icons">Icons</RouterLink>.</li>
   </ul>
 </template>

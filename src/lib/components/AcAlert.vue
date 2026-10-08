@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "lucide-vue-next";
+import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 import type { Component } from "vue";
 import type { Tone } from "./types";
@@ -67,13 +67,14 @@ const actionColor = computed(() => (props.color === "neutral" ? "white" : props.
     class="flex items-start gap-3 rounded-10 border px-4 py-3 text-base [&_a]:font-medium [&_a]:underline [&_a]:decoration-current/40 [&_a]:underline-offset-2 [&_a:hover]:decoration-current"
     :class="[tone.box, tone.body]"
     :role="color === 'danger' || color === 'warning' ? 'alert' : 'status'"
+    data-ac-ds
     data-testid="ac-alert"
   >
     <span v-if="!hideIcon" class="mt-0.5 inline-flex shrink-0 [&_svg]:size-4" :class="tone.icon" aria-hidden="true">
       <slot name="icon"><component :is="glyph" /></slot>
     </span>
     <div class="flex min-w-0 flex-1 flex-wrap items-center gap-x-4 gap-y-2">
-      <div class="min-w-0 flex-[1_1_16rem]">
+      <div class="min-w-0 flex-[1_1_256px]">
         <p v-if="title" class="font-semibold" :class="tone.title">{{ title }}</p>
         <div :class="title && 'mt-0.5'"><slot /></div>
       </div>
@@ -85,6 +86,7 @@ const actionColor = computed(() => (props.color === "neutral" ? "white" : props.
             variant="outlined"
             size="small"
             :loading="actionLoading"
+            data-ac-ds
             data-testid="ac-alert-action"
             @click="emit('action', $event)"
           >

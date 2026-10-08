@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookOpen, LifeBuoy } from "lucide-vue-next";
+import { BookOpen, LifeBuoy } from "@lucide/vue";
 import { AcBadge, AcFeatureCard } from "@/lib";
 </script>
 

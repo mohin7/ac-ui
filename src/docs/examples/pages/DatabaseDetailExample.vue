@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { Download, EllipsisVertical, Pause, Play, Plug, RefreshCw, RotateCcw, Scaling, Trash2 } from "lucide-vue-next";
+import { Download, EllipsisVertical, Pause, Play, Plug, RefreshCw, RotateCcw, Scaling, Trash2 } from "@lucide/vue";
 import {
   AcAvatar,
   AcBadge,

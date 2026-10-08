@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Bell } from "lucide-vue-next";
+import { Bell } from "@lucide/vue";
 import { AcAppSwitcher, AcLogo, AcNavbar, AcNavbarItem, AcUserMenu } from "@/lib";
 </script>
 

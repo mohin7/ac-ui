@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cpu, HardDrive, MemoryStick, RefreshCw, SquareTerminal } from "lucide-vue-next";
+import { Cpu, HardDrive, MemoryStick, RefreshCw, SquareTerminal } from "@lucide/vue";
 import { AcBadge, AcStatusBar, useToast } from "@/lib";
 
 const toast = useToast();

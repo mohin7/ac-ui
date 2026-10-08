@@ -1,0 +1,8 @@
+<script setup lang="ts">
+import { Database } from "@lucide/vue";
+</script>
+
+<template>
+  <!-- Components that show an icon take the component itself, not a name string -->
+  <AcSidebarItem label="Databases" :icon="Database" to="/databases" />
+</template>

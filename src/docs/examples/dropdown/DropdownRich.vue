@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AcDropdown, AcDropdownDivider, AcDropdownItem } from "@/lib";
-import { BookOpen, Download, FileCode, KeyRound, Scaling, Trash2 } from "lucide-vue-next";
+import { BookOpen, Download, FileCode, KeyRound, Scaling, Trash2 } from "@lucide/vue";
 </script>
 
 <template>

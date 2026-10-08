@@ -68,11 +68,12 @@ const keyClass = computed(() =>
   <kbd
     v-if="!parts.length"
     :class="[KEY_CLASS, keyClass]"
+    data-ac-ds
     data-testid="ac-kbd"
   >
     <slot />
   </kbd>
-  <kbd v-else class="inline-flex items-center gap-0.5 font-sans" data-testid="ac-kbd">
+  <kbd v-else class="inline-flex items-center gap-0.5 font-sans" data-ac-ds data-testid="ac-kbd">
     <template v-for="(part, i) in parts" :key="i">
       <span v-if="i > 0 && separator" class="px-px text-xs text-muted">{{ separator }}</span>
       <kbd :class="[KEY_CLASS, keyClass]">

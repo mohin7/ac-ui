@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AcButton, AcDropdown, AcDropdownItem } from "@/lib";
-import { ChevronDown, Plus } from "lucide-vue-next";
+import { ChevronDown, Plus } from "@lucide/vue";
 
 const engines = ["Postgres", "MySQL", "MongoDB", "Redis", "Elasticsearch", "Kafka"];
 </script>

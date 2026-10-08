@@ -157,6 +157,7 @@ function onClick(e: MouseEvent) {
     :class="(link || isButton()) && 'hover:border-border-dark hover:shadow-sm'"
     :aria-labelledby="`${id}-title`"
     :aria-busy="loading || undefined"
+    data-ac-ds
     data-testid="ac-usage-card"
   >
     <div class="flex min-w-0 flex-col gap-4 p-4">
@@ -255,7 +256,7 @@ function onClick(e: MouseEvent) {
               :key="i"
               scope="col"
               class="h-9 px-4 font-medium whitespace-nowrap"
-              :class="i > 0 && 'text-right'"
+              :class="i > 0 ? 'text-right' : 'text-left'"
             >
               {{ h }}
             </th>

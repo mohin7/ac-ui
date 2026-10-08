@@ -1,0 +1,11 @@
+<script setup lang="ts">
+import { AcButton, AcBadge } from "@/lib";
+</script>
+
+<template>
+  <div class="flex items-center gap-3 p-6">
+    <h4>demo-postgres</h4>
+    <AcBadge label="Ready" color="success" variant="light" rounded dot />
+    <AcButton title="Open Console" class="ml-auto" />
+  </div>
+</template>

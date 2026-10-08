@@ -76,6 +76,7 @@ provide("ac-accordion", {
       'flex flex-col gap-3': variant === 'separated',
       'divide-y divide-border-light border-y border-border-light': variant === 'flush',
     }"
+    data-ac-ds
     data-testid="ac-accordion"
     @keydown="onKeydown"
   >

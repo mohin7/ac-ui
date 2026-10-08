@@ -53,7 +53,7 @@ const donts = [
   <DocHeading id="user-menu" :level="3">User menu</DocHeading>
   <p>
     <code class="prose-code">AcUserMenu</code> is an avatar button that opens the account menu: name and email, your rows (<code class="prose-code">items</code>
-    or the default slot), an optional theme switch (<code class="prose-code">show-theme-mode</code>) and Sign out, which emits
+    or the default slot), an optional theme switch (<code class="prose-code">show-theme-mode</code>), an optional text-size switch (<code class="prose-code">show-font-scale</code>, see <RouterLink to="/components/font-scale">Font Scale</RouterLink>) and Sign out, which emits
     <code class="prose-code">logout</code>. The avatar shows the initials of <code class="prose-code">name</code> unless you pass
     <code class="prose-code">avatar-url</code>. The menu is attached to <code class="prose-code">&lt;body&gt;</code>, so the navbar never clips it.
   </p>

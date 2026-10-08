@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from "vue";
-import { ChevronDown, Search, X } from "lucide-vue-next";
+import { ChevronDown, Search, X } from "@lucide/vue";
 
 export interface SearchFilterOption {
   value: string | number;
@@ -65,7 +65,7 @@ onBeforeUnmount(() => clearTimeout(timer));
 </script>
 
 <template>
-  <div class="flex w-full" data-testid="ac-search-bar">
+  <div class="flex w-full" data-ac-ds data-testid="ac-search-bar">
     <div class="relative min-w-0 flex-1">
       <Search class="pointer-events-none absolute top-1/2 left-2.5 z-20 size-3.5 -translate-y-1/2 text-muted" aria-hidden="true" />
       <input
@@ -94,6 +94,7 @@ onBeforeUnmount(() => clearTimeout(timer));
         :aria-label="filterLabel"
         class="relative block max-w-48 cursor-pointer appearance-none truncate rounded-r-6 border border-border bg-surface-muted pr-8 pl-3 text-base font-medium text-heading shadow-xs transition-[border-color,box-shadow,background-color] outline-none hover:border-border-dark hover:bg-surface-sunken focus:z-10 focus:focus-ring"
         :class="height"
+        data-ac-ds
         data-testid="ac-search-bar-filter"
       >
         <option v-for="option in filterOptions" :key="option.value" :value="option.value">{{ option.label }}</option>

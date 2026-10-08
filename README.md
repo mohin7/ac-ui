@@ -42,11 +42,40 @@ Example pages put them together: a database list, a database detail page, a crea
 - **Shape:** 6px radius on controls and 10px on surfaces, with soft layered shadows from `shadow-xs` to `shadow-xl`.
 - **Focus:** a `focus-ring` utility (primary border and a soft halo) on form fields.
 - **Dark mode:** class-based. Every token has a dark value, so components need no dark-specific code.
-- **Icons:** [Lucide](https://lucide.dev) (`lucide-vue-next`). Components never draw their own SVG icons.
+- **Icons:** [Lucide](https://lucide.dev) (`@lucide/vue`). Components never draw their own SVG icons.
 
 ## Using it in an app
 
-The package is `@appscode/design-system` **3.0.0-alpha**, still marked `private` so it can't be published by accident. `npm run build:lib` writes it to `dist/lib`.
+The package is `@appscode/design-system` **3.0.0-alpha**, still marked `private` so it can't be published by accident. `npm run build:lib` writes it to `dist/lib`, and `npm pack` makes an installable tarball.
+
+There are two ways to load the styles:
+
+| The app… | Load | Tailwind in the app |
+| --- | --- | --- |
+| still loads the old Bulma/SCSS design system (cluster-ui, kubedb-ui, platform-ui…) | `compat.css` | No |
+| doesn't load the old styles (new apps, or after migrating) | `theme.css` with Tailwind v4 | Yes |
+
+### In an app that still loads the old styles
+
+The docs page **Getting Started → Existing Apps** has the full guide. In short:
+
+```sh
+# installed next to the old 2.x package, under a second name
+npm install @appscode/ds-next@npm:@appscode/design-system@3.0.0-alpha.2 @lucide/vue
+```
+
+```ts
+// main.ts (Vite), or the `css` list in nuxt.config.ts: after the old styles
+import "./assets/styles/scss/main.scss";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import "@appscode/ds-next/compat.css";
+```
+
+- **`compat.css`** is the library's styles, precompiled and fenced in: they apply only inside new components, and win over the old `!important` utilities there. Old pages don't change; this was checked pixel by pixel in kubedb-ui.
+- **Don't put utility classes on new components** while both are loaded. Wrap the component in your own element for spacing.
+
+### In an app without the old styles
 
 ```ts
 // main.ts: fonts once
@@ -60,12 +89,15 @@ import "@fontsource-variable/geist-mono";
 @import "@appscode/design-system/theme.css";
 ```
 
+### Either way
+
 ```ts
 import { AcButton, AcInput, useToast } from "@appscode/design-system";
 import { AcCodeEditor, AcFileEditor } from "@appscode/design-system/editor";
 ```
 
-- **Peer dependencies:** `vue` ^3.5 and `lucide-vue-next` ^1.0. CodeMirror, Ajv and `yaml` are regular dependencies, bundled only by apps that import from `/editor`.
+- **Requirements:** Vue 3.5+, Vite 5+ or Nuxt 3+, and TypeScript with `moduleResolution: "bundler"`. Every component renders on the server, so Nuxt SSR works.
+- **Peer dependencies:** `vue` ^3.5 and `@lucide/vue` ^1.0. CodeMirror, Ajv and `yaml` are regular dependencies, bundled only by apps that import from `/editor`.
 - **Dark mode:** put `.dark` on `<html>` (the old `.is-dark-theme` class works too), or call `useColorMode().setMode("dark" | "light" | "system")`. The user's choice is saved under the old `themeMode` localStorage key.
 - **Toasts:** mount `<AcToaster />` once near the root, then call `useToast().success("Saved")` anywhere.
 - **Brand colour:** `useBrandColor().setColor("#0066cc")` re-hues the primary scale. The old `HexToHSL`, `setThemeHSL` and `getThemeHSL` helpers are exported under the same names.
@@ -77,7 +109,7 @@ import { AcCodeEditor, AcFileEditor } from "@appscode/design-system/editor";
 | --- | --- |
 | `npm run dev` | Regenerates the API data, then starts the docs site at http://localhost:5173 |
 | `npm run build` | Regenerates the API data, type-checks, and builds the docs site into `dist/` |
-| `npm run build:lib` | Builds the library into `dist/lib`: ES modules, `.d.ts` files and `theme.css` |
+| `npm run build:lib` | Builds the library into `dist/lib`: ES modules, `.d.ts` files, `theme.css` and `compat.css` |
 | `npm run type-check` | `vue-tsc` over the whole project |
 | `npm run meta` | Regenerates `src/docs/generated/component-meta.json` (the API tables) from the components' types |
 
@@ -100,12 +132,14 @@ src/
     router.ts                 hash router built from nav.ts
     pages/                    getting-started/, foundations/, components/, examples/
     examples/<slug>/*.vue     one runnable file per example, shown live with its source
+    snippets/<page>/*.txt     code samples shown on pages, loaded with ?raw
     components/               doc building blocks: ComponentPlayground, ComponentExample, ApiTables, DoDont…
     layout/                   header, sidebar, table of contents, search
     generated/                component-meta.json, written by scripts/gen-meta.mjs (don't edit)
 scripts/
   gen-meta.mjs                reads component types with vue-component-meta → API tables
   copy-theme.mjs              ships theme.css with the library build
+  build-compat.mjs            builds compat.css for apps that still load the old styles
 public/                       favicon, logos
 vite.config.ts                docs site
 vite.lib.config.ts            library build (two entries: index and editor/index)

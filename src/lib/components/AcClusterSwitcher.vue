@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
-import { Check, ChevronsUpDown, Cloud, Plus, Search } from "lucide-vue-next";
+import { Check, ChevronsUpDown, Cloud, Plus, Search } from "@lucide/vue";
 import AcSkeleton from "./AcSkeleton.vue";
 import type { Ref } from "vue";
 
@@ -314,13 +314,14 @@ defineExpose({
 </script>
 
 <template>
-  <div class="min-w-0" :class="rail ? 'inline-flex' : 'flex w-full'" data-testid="ac-cluster-switcher">
+  <div class="min-w-0" :class="rail ? 'inline-flex' : 'flex w-full'" data-ac-ds data-testid="ac-cluster-switcher">
     <div
       v-if="loading"
       role="status"
       aria-label="Loading clusters"
       class="flex h-10 items-center rounded-8 border"
       :class="[rail ? 'size-10 justify-center' : 'w-full gap-2.5 px-2', onDark ? 'border-white/10' : 'border-border']"
+      data-ac-ds
       data-testid="ac-cluster-switcher-loading"
     >
       <AcSkeleton shape="rect" width="28px" height="28px" label="" class="shrink-0" />
@@ -346,6 +347,7 @@ defineExpose({
           : 'border-border bg-surface shadow-xs enabled:hover:border-border-dark',
         open && (onDark ? 'bg-white/8' : 'border-border-dark'),
       ]"
+      data-ac-ds
       data-testid="ac-cluster-switcher-trigger"
       @click="open ? close() : show()"
       @keydown="onTriggerKeydown"
@@ -395,6 +397,7 @@ defineExpose({
           class="fixed z-[90] flex max-w-[calc(100vw-16px)] flex-col overflow-hidden rounded-10 border border-border bg-surface shadow-lg"
           :class="rail ? 'origin-left' : fromTop ? 'origin-top' : 'origin-bottom'"
           :style="style"
+          data-ac-ds
           data-testid="ac-cluster-switcher-panel"
           @keydown="onPanelKeydown"
         >
@@ -415,6 +418,7 @@ defineExpose({
                 autocomplete="off"
                 spellcheck="false"
                 class="h-8 w-full rounded-6 bg-surface-muted pr-2 pl-8 text-base text-heading outline-none placeholder:text-muted focus:bg-surface focus:ring-1 focus:ring-border"
+                data-ac-ds
                 data-testid="ac-cluster-switcher-search"
                 @keydown="onListKeydown"
               />
@@ -440,6 +444,7 @@ defineExpose({
               :aria-disabled="isDisabled(cluster) || undefined"
               class="flex items-center gap-2.5 rounded-6 px-2 py-1.5 transition-colors duration-75"
               :class="[isDisabled(cluster) ? 'cursor-not-allowed opacity-50' : 'cursor-pointer', index === activeIndex && 'bg-surface-muted']"
+              data-ac-ds
               data-testid="ac-cluster-switcher-option"
               @mouseenter="!isDisabled(cluster) && (activeIndex = index)"
               @mousedown.prevent
@@ -487,6 +492,7 @@ defineExpose({
                 :href="importUrl || undefined"
                 :type="importUrl ? undefined : 'button'"
                 class="flex h-8 w-full cursor-pointer items-center gap-2.5 rounded-6 px-2 text-base text-body no-underline outline-none transition-colors hover:bg-surface-muted hover:text-heading focus-visible:bg-surface-muted focus-visible:text-heading focus-visible:ring-[3px] focus-visible:ring-ring"
+                data-ac-ds
                 data-testid="ac-cluster-switcher-import"
                 @click="onImport"
               >

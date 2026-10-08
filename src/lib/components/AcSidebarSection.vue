@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, useId } from "vue";
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown } from "@lucide/vue";
 import type { Ref } from "vue";
 
 interface SidebarContext {
@@ -35,6 +35,7 @@ const rail = computed(() => sidebar?.rail.value ?? false);
   <li
     class="list-none"
     :class="rail ? 'mt-2 border-t border-border-light pt-2 first:mt-0 first:border-0 first:pt-0' : 'mt-4 first:mt-0'"
+    data-ac-ds
     data-testid="ac-sidebar-section"
   >
     <template v-if="label && !rail">
@@ -55,7 +56,13 @@ const rail = computed(() => sidebar?.rail.value ?? false);
       </button>
       <p v-else class="h-7 truncate px-2.5 text-sm leading-7 font-medium tracking-wider text-muted uppercase">{{ label }}</p>
     </template>
-    <ul v-show="open || rail || !collapsible" :id="`${id}-items`" role="list" :aria-label="label || undefined" class="flex flex-col gap-0.5">
+    <ul
+      :id="`${id}-items`"
+      role="list"
+      :aria-label="label || undefined"
+      class="flex-col gap-0.5"
+      :class="open || rail || !collapsible ? 'flex' : 'hidden'"
+    >
       <slot />
     </ul>
   </li>

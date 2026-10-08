@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import { Trash2 } from "lucide-vue-next";
+import { Trash2 } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 import AcInput from "./AcInput.vue";
 import AcModal from "./AcModal.vue";
@@ -73,12 +73,13 @@ const cancel = () => {
       </div>
     </div>
     <template #footer>
-      <AcButton title="Cancel" color="white" :disabled="loading" data-testid="ac-delete-modal-cancel" @click="cancel" />
+      <AcButton title="Cancel" color="white" :disabled="loading" data-ac-ds data-testid="ac-delete-modal-cancel" @click="cancel" />
       <AcButton
         :title="confirmText"
         color="danger"
         :loading="loading"
         :disabled="!canConfirm"
+        data-ac-ds
         data-testid="ac-delete-modal-confirm"
         @click="emit('confirm', itemName)"
       />

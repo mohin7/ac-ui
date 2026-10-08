@@ -25,7 +25,7 @@ const dos = [
 const donts = [
   "Don't use primary for decoration or large backgrounds.",
   "Don't use purple as a status.",
-  "Don't set small body text in white on primary (3.7:1) or warning (2.1:1).",
+  "Don't set small body text in white on warning (2.1:1) or on the dark theme's info and danger (about 4:1).",
   "Don't hard-code hex values in components — use the scale.",
 ];
 
@@ -117,9 +117,17 @@ const donts = [
   <DocHeading id="contrast">Contrast</DocHeading>
   <p>Values are kept exact from the Bulma source. Know these pairs:</p>
   <Callout type="warning">
-    White on <code class="prose-code">primary</code> is 3.7:1 and on <code class="prose-code">success</code> 3.5:1 —
-    fine for short 13px/500 button labels, below WCAG 4.5:1 for body text. White on
+    White on <code class="prose-code">primary</code> is 4.8:1 and on <code class="prose-code">success</code> 4.6:1 (both AA).
+    <code class="prose-code">info</code> is 5.0:1 and <code class="prose-code">danger</code> 5.8:1 in the light theme; in the dark theme they are
+    4.2:1 and 4.0:1, fine for short 13px/500 button labels but below 4.5:1 for body text. White on
     <code class="prose-code">warning</code> is 2.1:1, so warning fills use <code class="prose-code">text-on-warning</code>.
+  </Callout>
+  <Callout type="note">
+    <strong>Which border?</strong> The edge of a surface (card, modal, input, popover, table) uses
+    <code class="prose-code">border-border</code>. A divider inside a surface (a card's header rule, table rows, list
+    separators) and the lines between app regions (navbar, page header, breadcrumb, sidebars, side tabs, tab strip, status bar)
+    use <code class="prose-code">border-border-light</code>, so the page's frame reads as one quiet colour and surfaces stand out from it.
+    Controls that need an edge to be seen (inputs) use <code class="prose-code">border-border-dark</code>.
   </Callout>
   <Callout type="note">
     <code class="prose-code">border</code> (slate-80) is 1.2:1 on white — decorative only. Inputs get their edge from

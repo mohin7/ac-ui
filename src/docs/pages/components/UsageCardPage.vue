@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { HardDrive } from "lucide-vue-next";
+import { HardDrive } from "@lucide/vue";
 import { AcUsageCard } from "@/lib";
 import ApiTables from "../../components/ApiTables.vue";
 import Callout from "../../components/Callout.vue";
@@ -8,7 +8,7 @@ import ComponentPlayground from "../../components/ComponentPlayground.vue";
 import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
-const script = 'import { HardDrive } from "lucide-vue-next";';
+const script = 'import { HardDrive } from "@lucide/vue";';
 
 const dos = [
   "Say what is left or over, not only the percentage — the card does this from `used` and `limit`.",

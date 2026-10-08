@@ -1,0 +1,9 @@
+// nuxt.config.ts: the order of this list is the order the styles load
+export default defineNuxtConfig({
+  css: [
+    "@/assets/scss/main.scss",
+    "@fontsource-variable/geist",
+    "@fontsource-variable/geist-mono",
+    "@appscode/ds-next/compat.css",
+  ],
+});

@@ -98,13 +98,16 @@ import {
   Users,
   Wallet,
   X,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { AcButton } from "@/lib";
 import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
 import DocHeading from "../../components/DocHeading.vue";
 import DoDont from "../../components/DoDont.vue";
 import { useCopy } from "../../composables/useCopy";
+import usage from "../../snippets/icons/usage.txt?raw";
+import asProp from "../../snippets/icons/as-prop.txt?raw";
+import fallback from "../../snippets/icons/fallback.txt?raw";
 
 const groups = [
   { name: "Actions", icons: { Plus, Pencil, Trash2, Copy, Download, Upload, RefreshCw, RotateCcw, Save, Search, Funnel, Settings, ExternalLink, Link, Share2, Play, Pause, Square, Power, LogIn, LogOut, Undo2, Eye, EyeOff, Ellipsis, EllipsisVertical, X, Check } },
@@ -158,38 +161,7 @@ const sizes = [
   { cls: "size-8", px: 32, use: "Empty states and hero tiles (use stroke-width 1.5)" },
 ];
 
-const install = "npm install lucide-vue-next";
-const usage = `<script setup lang="ts">
-import { Database, Plus } from "lucide-vue-next";
-import { AcButton } from "@appscode/design-system";
-<\/script>
-
-<template>
-  <!-- Decorative: the text already says what it is -->
-  <AcButton title="Create Database">
-    <template #icon><Plus class="size-4" /></template>
-  </AcButton>
-
-  <!-- Icon-only: needs a label -->
-  <button type="button" aria-label="Open databases">
-    <Database class="size-4" aria-hidden="true" />
-  </button>
-</template>`;
-const asProp = `<script setup lang="ts">
-import { Database } from "lucide-vue-next";
-<\/script>
-
-<template>
-  <!-- Components that show an icon take the component itself, not a name string -->
-  <AcSidebarItem label="Databases" :icon="Database" to="/databases" />
-</template>`;
-const fallback = `// vite.config.ts — only when Lucide has no icon, or for brand logos
-import Icons from "unplugin-icons/vite";
-export default defineConfig({ plugins: [vue(), tailwindcss(), Icons({ compiler: "vue3" })] });
-
-// npm install -D unplugin-icons @iconify-json/ph @iconify-json/simple-icons
-import IconPhCrosshair from "~icons/ph/crosshair";
-import IconSimpleIconsGithub from "~icons/simple-icons/github";`;
+const install = "npm install @lucide/vue";
 
 const dos = ["Use size-4 next to 13px text and let the icon inherit the text colour.", "Give every icon-only button an aria-label."];
 const donts = ["Don't mix icon sets for the same concept on one screen.", "Don't draw new SVGs in components — pick a Lucide icon, or add a Phosphor one if Lucide has nothing."];
@@ -207,7 +179,7 @@ const filtered = computed(() => {
 
 function copyImport(name: string) {
   lastCopied.value = name;
-  copy(`import { ${name} } from "lucide-vue-next";`);
+  copy(`import { ${name} } from "@lucide/vue";`);
 }
 </script>
 
@@ -218,7 +190,7 @@ function copyImport(name: string) {
     icons you add look like the ones already on the page.
   </p>
   <ol>
-    <li><strong>Lucide</strong> (<code class="prose-code">lucide-vue-next</code>) — reach for it first. Clean 24px outline icons, 1,600+ of them.</li>
+    <li><strong>Lucide</strong> (<code class="prose-code">@lucide/vue</code>) — reach for it first. Clean 24px outline icons, 1,600+ of them.</li>
     <li><strong>Phosphor</strong> via unplugin-icons — only when Lucide has nothing close.</li>
     <li><strong>simple-icons</strong> via unplugin-icons — brand and company logos (GitHub, AWS, Postgres…).</li>
   </ol>

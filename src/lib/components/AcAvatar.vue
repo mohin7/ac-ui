@@ -93,6 +93,7 @@ watch(
     :role="accessibleName ? 'img' : undefined"
     :aria-label="accessibleName || undefined"
     :aria-hidden="!accessibleName || undefined"
+    data-ac-ds
     data-testid="ac-avatar"
   >
     <span

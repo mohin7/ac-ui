@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from "vue";
-import { RefreshCw } from "lucide-vue-next";
+import { RefreshCw } from "@lucide/vue";
 import { AcBadge, AcBanner, AcButton, AcContentTable, AcEmptyState, AcTable } from "@/lib";
 import type { Column } from "@/lib";
 

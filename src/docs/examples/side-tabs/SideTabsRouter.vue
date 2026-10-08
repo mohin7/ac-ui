@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Columns3, PanelBottom, PanelLeft, Rows3 } from "lucide-vue-next";
+import { Columns3, PanelBottom, PanelLeft, Rows3 } from "@lucide/vue";
 import { AcSideTabs } from "@/lib";
 
 // Items with `to` render RouterLinks; the one for the current route becomes active by itself.

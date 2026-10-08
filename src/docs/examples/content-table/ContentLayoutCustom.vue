@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from "lucide-vue-next";
+import { Link } from "@lucide/vue";
 import { AcButton, AcContentHeader, AcContentLayout } from "@/lib";
 </script>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, useId } from "vue";
-import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-vue-next";
+import { ArrowDownRight, ArrowUpRight, Minus } from "@lucide/vue";
 import type { Component } from "vue";
 import type { Tone } from "./types";
 
@@ -185,6 +185,7 @@ function onClick(e: MouseEvent) {
       (link || isButton()) && 'hover:border-border-dark hover:shadow-sm',
     ]"
     :aria-busy="loading || undefined"
+    data-ac-ds
     data-testid="ac-stat-card"
   >
     <div class="flex min-w-0 items-start justify-between gap-2" :class="inline && 'flex-1'">

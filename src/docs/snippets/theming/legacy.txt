@@ -1,0 +1,4 @@
+// Before
+import { HexToHSL, HSLToHex, getThemeHSL, setThemeHSL } from "@appscode/design-system/plugins/theme";
+// After: same names and return shapes, so only the path changes
+import { HexToHSL, HSLToHex, getThemeHSL, setThemeHSL } from "@appscode/design-system";

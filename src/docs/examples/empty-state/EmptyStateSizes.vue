@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KeyRound } from "lucide-vue-next";
+import { KeyRound } from "@lucide/vue";
 import { AcEmptyState } from "@/lib";
 </script>
 

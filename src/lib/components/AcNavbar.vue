@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Menu } from "lucide-vue-next";
+import { Menu } from "@lucide/vue";
 
 export interface Props {
   /** When the menu button shows: `mobile` below 768px, `always`, or `never`. It emits `menu`; wire it to the sidebar's `v-model:mobile-open` or its `toggle()`. */
@@ -40,6 +40,7 @@ defineSlots<{
   <header
     class="top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b border-border-light bg-surface/90 px-3 backdrop-blur-md sm:gap-3 sm:px-4"
     :class="sticky && 'sticky'"
+    data-ac-ds
     data-testid="ac-navbar"
   >
     <button
@@ -48,6 +49,7 @@ defineSlots<{
       class="-ml-1.5 inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-6 text-label transition hover:bg-surface-sunken hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
       :class="menuButton === 'mobile' && 'md:hidden'"
       :aria-label="menuLabel"
+      data-ac-ds
       data-testid="ac-navbar-menu"
       @click="emit('menu')"
     >

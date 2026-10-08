@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Server } from "lucide-vue-next";
+import { Server } from "@lucide/vue";
 import { AcButton, AcResourceCard } from "@/lib";
 
 const loading = ref(true);

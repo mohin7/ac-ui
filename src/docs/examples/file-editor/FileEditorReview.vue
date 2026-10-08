@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { ArrowLeft, Send } from "lucide-vue-next";
+import { ArrowLeft, Send } from "@lucide/vue";
 import { AcButton } from "@/lib";
 import { AcFileEditor, type EditorProblem } from "@/lib/editor";
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { Check, ChevronRight, Code, Copy } from "lucide-vue-next";
+import { Check, ChevronRight, Code, Copy } from "@lucide/vue";
 import type { DocPage } from "../nav";
 import { useCopy } from "../composables/useCopy";
 

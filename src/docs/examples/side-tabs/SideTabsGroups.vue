@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Boxes, FileCode, GitBranch, LayoutDashboard, ListTree, Network, ScrollText, Wrench } from "lucide-vue-next";
+import { Boxes, FileCode, GitBranch, LayoutDashboard, ListTree, Network, ScrollText, Wrench } from "@lucide/vue";
 import { AcSideTabs } from "@/lib";
 
 const page = ref("ops-scale");

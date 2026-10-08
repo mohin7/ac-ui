@@ -1,0 +1,7 @@
+<!-- Yes: your own element carries the spacing, with the classes your app already uses -->
+<div class="mt-20">
+  <AcStatCard label="Databases" :value="12" />
+</div>
+
+<!-- No: under compat.css this mt-4 means 16px if the library uses mt-4, and nothing otherwise -->
+<AcStatCard class="mt-4" label="Databases" :value="12" />

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Callout from "../../components/Callout.vue";
 import CopyChip from "../../components/CopyChip.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
 import DocHeading from "../../components/DocHeading.vue";
@@ -28,6 +29,11 @@ const layout = `<!-- A typical console page section -->
 </script>
 
 <template>
+  <Callout type="note">
+    Spacing values are shown at interface scale 1. They are multiples of <code class="prose-code">--ac-scale</code>, so they grow or shrink
+    together when the viewer picks a text size. See <RouterLink to="/getting-started/theming#interface-scale">Interface scale</RouterLink>.
+  </Callout>
+
   <DocHeading id="scale">Scale</DocHeading>
   <p>
     One Tailwind unit is 4px (<code class="prose-code">--spacing: 4px</code>), so any spacing utility is

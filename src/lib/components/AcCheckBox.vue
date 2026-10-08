@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T">
 import { useId } from "vue";
-import { Check } from "lucide-vue-next";
+import { Check } from "@lucide/vue";
 import type { Option } from "./types";
 
 export interface Props<V> {
@@ -19,7 +19,7 @@ const id = useId();
 </script>
 
 <template>
-  <div class="flex flex-col gap-2.5" data-testid="ac-checkbox">
+  <div class="flex flex-col gap-2.5" data-ac-ds data-testid="ac-checkbox">
     <label
       v-for="(option, i) in options"
       :key="option.label"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance } from "vue";
-import { CircleCheck, CircleMinus, CircleX, Info, TriangleAlert } from "lucide-vue-next";
+import { CircleCheck, CircleMinus, CircleX, Info, TriangleAlert } from "@lucide/vue";
 import AcSpinner from "./AcSpinner.vue";
 import type { Component } from "vue";
 
@@ -163,7 +163,8 @@ function clamp(v: number) {
   <footer
     :aria-label="label"
     class="@container z-10 w-full border-t"
-    :class="[dark ? 'dark border-border-light bg-sidebar text-body' : 'border-border bg-surface-muted text-body', sticky && 'sticky bottom-0']"
+    :class="[dark ? 'dark border-border-light bg-sidebar text-body' : 'border-border-light bg-surface-muted text-body', sticky && 'sticky bottom-0']"
+    data-ac-ds
     data-testid="ac-status-bar"
   >
     <div class="flex h-7 items-center justify-between gap-4 px-2 @lg:px-3">
@@ -213,7 +214,7 @@ function clamp(v: number) {
                 <span
                   v-if="item.value !== undefined"
                   class="max-w-48 truncate font-medium text-heading"
-                  :class="item.mono && 'font-mono text-[11.5px]'"
+                  :class="item.mono && 'font-mono text-[length:calc(11.5px*var(--ac-scale))]'"
                   >{{ item.value }}</span
                 >
               </template>

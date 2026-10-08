@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cpu, HardDrive, MemoryStick } from "lucide-vue-next";
+import { Cpu, HardDrive, MemoryStick } from "@lucide/vue";
 import { AcUsageCard } from "@/lib";
 </script>
 

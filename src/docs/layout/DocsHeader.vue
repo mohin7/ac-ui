@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { Menu, Search } from "lucide-vue-next";
-import { AcThemeMode, AcLogo } from "@/lib";
+import { Menu, Search } from "@lucide/vue";
+import { AcFontScale, AcThemeMode, AcLogo } from "@/lib";
 import BrandHueMenu from "./BrandHueMenu.vue";
+import pkg from "../../../package.json";
 
 const emit = defineEmits<{ search: []; menu: [] }>();
 const route = useRoute();
@@ -32,9 +33,9 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
         <AcLogo :size="22" label="" />
         <span class="hidden border-l border-border pl-2.5 text-[15px] font-normal tracking-[-0.02em] text-muted sm:inline">Design System</span>
       </RouterLink>
-      <span class="ml-1 hidden rounded-50 border border-border px-2 py-0.5 font-mono text-[11px] text-label sm:inline">v0.2</span>
+      <span class="ml-1 hidden rounded-50 border border-border px-2 py-0.5 font-mono text-[11px] text-label xl:inline">v{{ pkg.version }}</span>
 
-      <nav class="ml-6 hidden items-center gap-0.5 md:flex" aria-label="Main">
+      <nav class="ml-3 hidden items-center gap-0.5 lg:flex xl:ml-6" aria-label="Main">
         <RouterLink
           v-for="t in tabs"
           :key="t.label"
@@ -51,18 +52,19 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
         </RouterLink>
       </nav>
 
-      <div class="ml-auto flex items-center gap-1.5">
+      <div class="ml-auto flex min-w-0 items-center gap-1.5">
         <button
           type="button"
-          class="group inline-flex h-8 cursor-pointer items-center gap-2 rounded-6 border border-border bg-surface-muted pr-1.5 pl-2.5 text-base text-muted shadow-xs transition hover:border-border-dark hover:bg-surface sm:w-60"
+          class="group inline-flex h-8 min-w-0 shrink cursor-pointer items-center gap-2 overflow-hidden rounded-6 border border-border bg-surface-muted pr-1.5 pl-2.5 text-base text-muted shadow-xs transition hover:border-border-dark hover:bg-surface sm:w-44 xl:w-60"
           @click="emit('search')"
         >
           <Search class="size-3.5" aria-hidden="true" />
-          <span class="hidden flex-1 text-left sm:inline">Search docs…</span>
-          <kbd class="hidden h-5 items-center rounded-4 border border-border bg-surface px-1.5 font-sans text-[11px] font-medium text-label sm:inline-flex">
+          <span class="hidden flex-1 truncate text-left sm:inline">Search docs…</span>
+          <kbd class="hidden h-5 shrink-0 items-center rounded-4 border border-border bg-surface px-1.5 font-sans text-[11px] font-medium text-label sm:inline-flex">
             {{ isMac ? "⌘" : "Ctrl" }} K
           </kbd>
         </button>
+        <AcFontScale class="hidden lg:inline-flex" />
         <AcThemeMode class="hidden sm:inline-flex" default-mode="system" />
         <BrandHueMenu />
       </div>

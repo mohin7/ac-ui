@@ -17,6 +17,7 @@ defineSlots<{
 <template>
   <section
     :class="surface && 'rounded-10 border border-border bg-surface shadow-xs'"
+    data-ac-ds
     data-testid="ac-content-layout"
   >
     <slot name="header" />

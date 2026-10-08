@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, useId, watch } from "vue";
-import { CircleAlert } from "lucide-vue-next";
+import { CircleAlert } from "@lucide/vue";
 
 export interface Props {
   /** Floating label. It rests on the first line and rises on focus or when filled. */
@@ -85,7 +85,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="w-full" :class="disabled && 'opacity-60'" data-testid="ac-textarea">
+  <div class="w-full" :class="disabled && 'opacity-60'" data-ac-ds data-testid="ac-textarea">
     <div class="relative">
       <!-- placeholder=" " lets the label float with :placeholder-shown, as in AcInput -->
       <textarea

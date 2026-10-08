@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, ref, useId, watch } from "vue";
-import { ChevronDown, LogOut } from "lucide-vue-next";
+import { ChevronDown, LogOut } from "@lucide/vue";
+import AcFontScale from "./AcFontScale.vue";
 import AcThemeMode from "./AcThemeMode.vue";
 import type { Component } from "vue";
 
@@ -30,6 +31,8 @@ export interface Props {
   items?: UserMenuItem[];
   /** Adds the Light / Dark / System switch (`AcThemeMode`). */
   showThemeMode?: boolean;
+  /** Adds a text-size switch (`AcFontScale`) that scales the whole interface. */
+  showFontScale?: boolean;
   /** Shows the name next to the avatar in the trigger (from 640px up). */
   showName?: boolean;
   /** Makes Sign out a link to this URL, e.g. `${accountsDomain}/user/logout`. `logout` is emitted either way. */
@@ -44,6 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
   profileUrl: "",
   items: () => [],
   showThemeMode: false,
+  showFontScale: false,
   showName: true,
   logoutUrl: "",
   logoutLabel: "Sign out",
@@ -214,7 +218,7 @@ onBeforeUnmount(unlisten);
 </script>
 
 <template>
-  <div class="inline-flex" data-testid="ac-user-menu">
+  <div class="inline-flex" data-ac-ds data-testid="ac-user-menu">
     <button
       :id="triggerId"
       ref="trigger"
@@ -225,6 +229,7 @@ onBeforeUnmount(unlisten);
       :aria-label="`${name}, account menu`"
       class="group inline-flex h-8 shrink-0 cursor-pointer items-center gap-2 rounded-50 p-0.5 transition-colors hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
       :class="[showName && 'sm:pr-2', open && 'bg-surface-sunken']"
+      data-ac-ds
       data-testid="ac-user-menu-trigger"
       @click="open ? close() : openMenu()"
       @keydown="onTriggerKeydown"
@@ -265,6 +270,7 @@ onBeforeUnmount(unlisten);
             bottom: placement.bottom !== undefined ? `${placement.bottom}px` : undefined,
             right: `${placement.right}px`,
           }"
+          data-ac-ds
           data-testid="ac-user-menu-panel"
           @keydown="onMenuKeydown"
         >
@@ -311,6 +317,11 @@ onBeforeUnmount(unlisten);
             <AcThemeMode display="labels" @set:theme="emit('set:theme', $event)" />
           </div>
 
+          <div v-if="showFontScale" role="group" :aria-labelledby="`${id}-scale`" class="border-t border-border-light px-3.5 py-2.5">
+            <p :id="`${id}-scale`" class="mb-1.5 text-xs font-medium text-label">Text size</p>
+            <AcFontScale display="labels" />
+          </div>
+
           <div role="group" class="border-t border-border-light p-1">
             <component
               :is="logoutUrl ? 'a' : 'button'"
@@ -319,6 +330,7 @@ onBeforeUnmount(unlisten);
               role="menuitem"
               tabindex="-1"
               :class="ITEM_CLASS"
+              data-ac-ds
               data-testid="ac-user-menu-logout"
               @click="logout"
             >

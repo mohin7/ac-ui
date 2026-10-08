@@ -45,7 +45,7 @@ const searchText = defineModel<string>("search", { default: "" });
 </script>
 
 <template>
-  <AcContentLayout data-testid="ac-content-table">
+  <AcContentLayout data-ac-ds data-testid="ac-content-table">
     <template v-if="!hideHeader" #header>
       <AcContentHeader :title="title" :subtitle="subtitle">
         <template v-if="$slots['title-actions']" #title-actions><slot name="title-actions" /></template>

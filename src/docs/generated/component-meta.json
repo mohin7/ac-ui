@@ -614,6 +614,11 @@
         "name": "icon",
         "type": "any",
         "description": "A 16px icon before the label (an inline SVG or icon component)."
+      },
+      {
+        "name": "icon-right",
+        "type": "any",
+        "description": "A 16px icon after the label, e.g. an arrow or chevron."
       }
     ]
   },
@@ -685,7 +690,7 @@
         "type": "boolean | undefined",
         "default": "true",
         "required": false,
-        "description": "Adds 20px padding to the body. Turn off for flush tables."
+        "description": "Adds 20px padding to the body. Turn off for flush tables; the body then clips to the card's rounded corners."
       }
     ],
     "events": [],
@@ -798,7 +803,7 @@
       {
         "name": "maxWidth",
         "type": "string | undefined",
-        "default": "\"280px\"",
+        "default": "\"calc(280px * var(--ac-scale))\"",
         "required": false,
         "description": "CSS max width. Longer text is cut with an ellipsis and a tooltip shows it in full."
       },
@@ -1750,7 +1755,7 @@
         "type": "Component | undefined",
         "default": "undefined",
         "required": false,
-        "description": "An icon component shown before the label, e.g. `:icon=\"Trash2\"` from lucide-vue-next. Or use the `icon` slot."
+        "description": "An icon component shown before the label, e.g. `:icon=\"Trash2\"` from"
       },
       {
         "name": "shortcut",
@@ -1944,6 +1949,13 @@
         "description": "Adds a \"Required\" badge. Old `isRequired`."
       },
       {
+        "name": "recommended",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a \"Recommended\" badge. Shown after \"Required\" when both are set."
+      },
+      {
         "name": "centered",
         "type": "boolean | undefined",
         "default": "false",
@@ -2022,6 +2034,16 @@
         "description": "Replaces the `status` badge, e.g. with several badges."
       },
       {
+        "name": "title-extra",
+        "type": "any",
+        "description": "Small content right after the title, before the badges, e.g. a ready or warning icon."
+      },
+      {
+        "name": "actions",
+        "type": "any",
+        "description": "Controls at the top right of the card, e.g. an Enable or Reconcile button. They stay clickable when the whole card is a link or button."
+      },
+      {
         "name": "footer",
         "type": "any",
         "description": "A row at the bottom of the card, e.g. a version or \"Covers 4 topologies\"."
@@ -2078,6 +2100,13 @@
         "default": "true",
         "required": false,
         "description": "Adds a copy button to the header."
+      },
+      {
+        "name": "downloadable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a download button to the header. It saves the open file's text, in the format shown, under the file's name. Hidden while a secret is masked."
       },
       {
         "name": "wrap",
@@ -2141,6 +2170,11 @@
         "name": "validate",
         "type": "[problems: Record<string, EditorProblem[]>]",
         "signature": "(evt: \"validate\", problems: Record<string, EditorProblem[]>): void"
+      },
+      {
+        "name": "download",
+        "type": "[file: F]",
+        "signature": "(evt: \"download\", file: F): void"
       },
       {
         "name": "update:view",
@@ -2288,6 +2322,32 @@
         "name": "reject",
         "type": "[rejections: FileRejection[]]",
         "signature": "(event: \"reject\", rejections: FileRejection[]): void"
+      }
+    ],
+    "slots": []
+  },
+  "AcFontScale": {
+    "props": [
+      {
+        "name": "defaultScale",
+        "type": "number | FontScale | undefined",
+        "default": "\"default\"",
+        "required": false,
+        "description": "Used until the viewer picks a size: a preset name or a number (0.8–1.5)."
+      },
+      {
+        "name": "display",
+        "type": "\"labels\" | \"icons\" | undefined",
+        "default": "\"icons\"",
+        "required": false,
+        "description": "`icons` is a compact switch of four \"A\"s; `labels` adds the words, for menus and settings pages."
+      }
+    ],
+    "events": [
+      {
+        "name": "set:scale",
+        "type": "[scale: number]",
+        "signature": "(event: \"set:scale\", scale: number): void"
       }
     ],
     "slots": []
@@ -2706,6 +2766,13 @@
         "default": "\"0px\"",
         "required": false,
         "description": "Distance from the top when sticky, e.g. `\"56px\"` under an app navbar."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"compact\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "`normal` suits a page's main header. `compact` has a 14px title and less padding, for dense pages and forms."
       }
     ],
     "events": [
@@ -2716,6 +2783,11 @@
       }
     ],
     "slots": [
+      {
+        "name": "icon",
+        "type": "any",
+        "description": "A logo or icon before the title, e.g. the database engine's logo on a resource page. Shown in a 40px tile."
+      },
       {
         "name": "breadcrumb",
         "type": "any",
@@ -3352,6 +3424,39 @@
       }
     ]
   },
+  "AcPage": {
+    "props": [
+      {
+        "name": "padded",
+        "type": "boolean | undefined",
+        "default": "true",
+        "required": false,
+        "description": "Pads the page on all sides (20px). Turn off when a parent already pads it."
+      },
+      {
+        "name": "gap",
+        "type": "\"normal\" | \"small\" | \"large\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "Space between the page's direct children: `small` 12px, `normal` 20px, `large` 32px."
+      },
+      {
+        "name": "width",
+        "type": "\"normal\" | \"narrow\" | \"wide\" | \"full\" | undefined",
+        "default": "\"full\"",
+        "required": false,
+        "description": "Caps the content width and centres it: `narrow` 768px, `normal` 1024px, `wide` 1280px, `full` fills the area."
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "any",
+        "description": "The page's sections: `AcCard`, `AcSectionContent`, `AcTable`, a form. Each direct child is spaced by `gap`."
+      }
+    ]
+  },
   "AcPagination": {
     "props": [
       {
@@ -3401,6 +3506,13 @@
         "default": "false",
         "required": false,
         "description": "Disables every control, e.g. while a page loads."
+      },
+      {
+        "name": "size",
+        "type": "\"normal\" | \"small\" | undefined",
+        "default": "\"normal\"",
+        "required": false,
+        "description": "`small` makes the page buttons 28px (default `normal` is 32px). Use it inside cards and dense tables."
       },
       {
         "name": "page",
@@ -3805,7 +3917,7 @@
         "type": "boolean | undefined",
         "default": "true",
         "required": false,
-        "description": "Pads the body. Turn off for flush tables and lists."
+        "description": "Pads the body. Turn off for flush tables and lists; the body then clips to the card's rounded corners."
       },
       {
         "name": "plain",
@@ -3938,6 +4050,13 @@
         "description": "The choices: `{ value, label, description?, disabled?, group? }`."
       },
       {
+        "name": "by",
+        "type": "(V extends object ? keyof V & string : never) | ((a: V, b: V) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "How to tell whether two values are the same, for option values that are objects. A property name (`\"id\"`) or a function `(a, b) => boolean`. Without it values are compared with `===`, which is right for strings and numbers."
+      },
+      {
         "name": "label",
         "type": "string | undefined",
         "default": "\"\"",
@@ -3964,6 +4083,20 @@
         "default": "false",
         "required": false,
         "description": "Adds a search box to the list. Emits `search` so you can load options from an API."
+      },
+      {
+        "name": "creatable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "With `searchable`, lets the viewer add a value that isn't in the list: an \"Add\" row appears for text that matches no option, and Enter takes it. The text becomes the value, so use it with string values. Emits `create`."
+      },
+      {
+        "name": "createText",
+        "type": "string | undefined",
+        "default": "\"Add\"",
+        "required": false,
+        "description": "Word at the start of the add row, which reads `Add “text”`."
       },
       {
         "name": "clearable",
@@ -4051,6 +4184,11 @@
         "name": "remove",
         "type": "[option: SelectOption<V>]",
         "signature": "(evt: \"remove\", option: SelectOption<V>): void"
+      },
+      {
+        "name": "create",
+        "type": "[text: string]",
+        "signature": "(evt: \"create\", text: string): void"
       },
       {
         "name": "refresh",
@@ -4221,7 +4359,7 @@
       {
         "name": "width",
         "type": "string | undefined",
-        "default": "\"220px\"",
+        "default": "\"calc(220px * var(--ac-scale))\"",
         "required": false,
         "description": "Width of the list."
       },
@@ -4244,7 +4382,7 @@
         "type": "number | undefined",
         "default": "640",
         "required": false,
-        "description": "Width in px below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. `0` keeps it vertical."
+        "description": "Width in px (at scale 1) below which the list turns into the phone layout: the component's own width with content beside it, otherwise its parent's. It grows with the interface scale. `0` keeps it vertical."
       },
       {
         "name": "mobile",
@@ -4329,6 +4467,13 @@
         "default": "768",
         "required": false,
         "description": "Width in px below which the sidebar becomes an off-canvas drawer: the window's width, or the parent's with `contained`. `0` keeps it docked."
+      },
+      {
+        "name": "hoverExpand",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "With the sidebar collapsed to the rail, opens it to full width over the page while the pointer or keyboard focus is inside, then folds it back. The page doesn't shift."
       },
       {
         "name": "top",
@@ -4938,6 +5083,20 @@
         "type": "number",
         "required": true,
         "description": "Id of the current step. Lower ids show a check mark."
+      },
+      {
+        "name": "orientation",
+        "type": "\"horizontal\" | \"vertical\" | undefined",
+        "default": "\"horizontal\"",
+        "required": false,
+        "description": "`horizontal` fits a wizard's header. `vertical` fits a side panel and can list `substeps`."
+      },
+      {
+        "name": "activeSubstep",
+        "type": "string | number | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "With `orientation=\"vertical\"`, the id of the current sub-step of the current step. Earlier sub-steps show a check mark."
       }
     ],
     "events": [],
@@ -5054,6 +5213,83 @@
         "default": "false",
         "required": false,
         "description": "Adds a pointer cursor and emits `row-click`."
+      },
+      {
+        "name": "selectable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a checkbox column for choosing rows, e.g. for bulk delete. Bind the chosen rows' `rowKey` values with `v-model:selected`."
+      },
+      {
+        "name": "expandable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds an arrow column that opens a detail area under each row. Fill it with the `expanded` slot, and bind the open rows' `rowKey` values with `v-model:expanded`."
+      },
+      {
+        "name": "canExpand",
+        "type": "((row: Row) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "With `expandable`, decides per row whether it can open. Rows that can't show no arrow."
+      },
+      {
+        "name": "rowActive",
+        "type": "((row: Row) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Marks the current row, e.g. the one chosen in a picker: tinted with a primary outline and `aria-current`. Not the checkbox selection, which is `selectable`."
+      },
+      {
+        "name": "rowDisabled",
+        "type": "((row: Row) => boolean) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Greys a row out: it ignores clicks and its checkbox is disabled."
+      },
+      {
+        "name": "manualSort",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "The table doesn't reorder rows itself: sort the whole list outside (all pages, or on the server) when `sort` fires or `v-model:sortBy` changes. Headers still show the arrow."
+      },
+      {
+        "name": "flat",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Drops the table's own frame (border, rounded corners, shadow) so it sits flush inside a card or section that already has one. Without it a table in a card draws a second box."
+      },
+      {
+        "name": "resolveLink",
+        "type": "((link: string) => string) | undefined",
+        "default": "undefined",
+        "required": false,
+        "description": "Turns a server cell's link template into a URL, e.g. to fill `${username}` and `${clustername}` from the current route."
+      },
+      {
+        "name": "selected",
+        "type": "unknown[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "`rowKey` values of the chosen rows. Bind with `v-model:selected`. Rows that leave `rows` (another page, a search) stay chosen."
+      },
+      {
+        "name": "expanded",
+        "type": "unknown[] | undefined",
+        "default": "[]",
+        "required": false,
+        "description": "`rowKey` values of the rows that are open. Bind with `v-model:expanded`."
+      },
+      {
+        "name": "sortBy",
+        "type": "{ key: string; mode: \"asc\" | \"desc\"; } | null | undefined",
+        "default": "null",
+        "required": false,
+        "description": "The sorted column and direction, or `null`. Bind with `v-model:sortBy` to set it from outside, e.g. to keep it across pages or in the URL."
       }
     ],
     "events": [
@@ -5066,9 +5302,29 @@
         "name": "row-click",
         "type": "[row: Row]",
         "signature": "(evt: \"row-click\", row: Row): void"
+      },
+      {
+        "name": "update:selected",
+        "type": "[value: unknown[]]",
+        "signature": "(event: \"update:selected\", value: unknown[]): void"
+      },
+      {
+        "name": "update:expanded",
+        "type": "[value: unknown[]]",
+        "signature": "(event: \"update:expanded\", value: unknown[]): void"
+      },
+      {
+        "name": "update:sortBy",
+        "type": "[value: { key: string; mode: \"asc\" | \"desc\"; } | null]",
+        "signature": "(event: \"update:sortBy\", value: { key: string; mode: \"asc\" | \"desc\"; } | null): void"
       }
     ],
     "slots": [
+      {
+        "name": "expanded",
+        "type": "{ row: Row; }",
+        "description": "Detail area under an open row, for tables with `expandable`: `#expanded=\"{ row }\"`."
+      },
       {
         "name": "empty",
         "type": "any",
@@ -5082,12 +5338,13 @@
         "name": "items",
         "type": "TabItem[]",
         "required": true,
-        "description": "The tabs: `{ key, label, count?, disabled? }`. `v-model` holds the active `key`."
+        "description": "The tabs: `{ key, label, count?, disabled?, to?, href?, testid? }`. `v-model` holds the active `key`. With `to`, it follows the current route."
       },
       {
         "name": "modelValue",
-        "type": "string",
-        "required": true,
+        "type": "string | undefined",
+        "default": "\"\"",
+        "required": false,
         "description": ""
       }
     ],
@@ -5564,6 +5821,13 @@
         "default": "false",
         "required": false,
         "description": "Adds the Light / Dark / System switch (`AcThemeMode`)."
+      },
+      {
+        "name": "showFontScale",
+        "type": "boolean | undefined",
+        "default": "false",
+        "required": false,
+        "description": "Adds a text-size switch (`AcFontScale`) that scales the whole interface."
       },
       {
         "name": "showName",

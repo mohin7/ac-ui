@@ -98,6 +98,7 @@ function onKeydown(e: KeyboardEvent, index: number) {
     :aria-disabled="disabled || undefined"
     class="items-center gap-0.5 rounded-8 border border-border bg-surface-muted p-0.5"
     :class="[block ? 'flex w-full' : 'inline-flex max-w-full', disabled && 'opacity-50']"
+    data-ac-ds
     data-testid="ac-segmented-control"
   >
     <button

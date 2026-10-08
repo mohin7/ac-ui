@@ -9,7 +9,7 @@ export interface BrandPreset {
 
 // AppsCode green is the default; the blue is the commented-out preset in the old _root-variables.scss.
 export const presets: BrandPreset[] = [
-  { name: "AppsCode green", hue: 149, saturation: 100, light: 30 },
+  { name: "AppsCode green", hue: 149, saturation: 100, light: 26 },
   { name: "Legacy blue", hue: 208, saturation: 77, light: 40 },
 ];
 

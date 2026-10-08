@@ -1,0 +1,6 @@
+# Next to the old 2.x package, under a second name
+npm install @appscode/ds-next@npm:@appscode/design-system@3.0.0-alpha.2 @lucide/vue
+
+# Before it's published: build a tarball from the design system repo, then install that file
+npm pack                                   # in the design system repo
+npm install @appscode/ds-next@file:./appscode-design-system-3.0.0-alpha.2.tgz @lucide/vue

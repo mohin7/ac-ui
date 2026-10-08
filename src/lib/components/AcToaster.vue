@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
-import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "lucide-vue-next";
+import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from "@lucide/vue";
 import AcButton from "./AcButton.vue";
 import { useToast } from "../composables/useToast";
 import type { Toast, ToastTone } from "../composables/useToast";
@@ -20,12 +20,15 @@ const props = withDefaults(defineProps<Props>(), {
   label: "Notifications",
 });
 
-const TONES: Record<ToastTone, { icon?: typeof Info; class: string }> = {
-  neutral: { class: "" },
-  success: { icon: CircleCheck, class: "text-success" },
-  error: { icon: CircleAlert, class: "text-danger" },
-  warning: { icon: TriangleAlert, class: "text-warning" },
-  info: { icon: Info, class: "text-info" },
+// A tinted surface and hairline in the status hue, like AcAlert. The tint is a gradient laid over the solid
+// surface colour, so a toast stays opaque in dark mode where the tint tokens are translucent.
+const tint = (shade: string) => `bg-surface bg-[image:linear-gradient(var(--color-${shade}),var(--color-${shade}))]`;
+const TONES: Record<ToastTone, { icon?: typeof Info; icon_class: string; box: string; title: string; text: string }> = {
+  neutral: { icon_class: "", box: "border-border bg-surface", title: "text-heading", text: "text-muted" },
+  success: { icon: CircleCheck, icon_class: "text-green-40", box: `border-green-80 ${tint("green-95")}`, title: "text-green-10", text: "text-green-20" },
+  error: { icon: CircleAlert, icon_class: "text-red-40", box: `border-red-80 ${tint("red-95")}`, title: "text-red-10", text: "text-red-20" },
+  warning: { icon: TriangleAlert, icon_class: "text-yellow-50", box: `border-yellow-70 ${tint("yellow-95")}`, title: "text-yellow-10", text: "text-yellow-20" },
+  info: { icon: Info, icon_class: "text-blue-50", box: `border-blue-80 ${tint("blue-95")}`, title: "text-blue-10", text: "text-blue-20" },
 };
 // Phones show only the newest few so the stack doesn't cover the page.
 const PHONE_MAX = 3;
@@ -135,7 +138,7 @@ onBeforeUnmount(() => timers.forEach((t) => clearTimeout(t.handle)));
 
 <template>
   <Teleport to="body">
-    <section :aria-label="label" data-testid="ac-toaster">
+    <section :aria-label="label" data-ac-ds data-testid="ac-toaster">
       <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">{{ politeText }}</div>
       <div class="sr-only" role="alert" aria-live="assertive" aria-atomic="true">{{ assertiveText }}</div>
       <TransitionGroup
@@ -155,21 +158,22 @@ onBeforeUnmount(() => timers.forEach((t) => clearTimeout(t.handle)));
         <li
           v-for="(t, i) in shown"
           :key="t.id"
-          class="pointer-events-auto flex items-start gap-3 rounded-10 border border-border bg-surface py-3 pr-2.5 pl-3.5 shadow-lg"
-          :class="(atTop ? i : shown.length - 1 - i) >= PHONE_MAX && 'max-sm:hidden'"
+          class="pointer-events-auto flex items-start gap-3 rounded-10 border py-3 pr-2.5 pl-3.5 shadow-lg"
+          :class="[TONES[t.tone].box, (atTop ? i : shown.length - 1 - i) >= PHONE_MAX && 'max-sm:hidden']"
+          data-ac-ds
           data-testid="ac-toast"
           :data-tone="t.tone"
         >
-          <component :is="TONES[t.tone].icon" v-if="TONES[t.tone].icon" class="mt-0.5 size-4 shrink-0" :class="TONES[t.tone].class" aria-hidden="true" />
+          <component :is="TONES[t.tone].icon" v-if="TONES[t.tone].icon" class="mt-0.5 size-4 shrink-0" :class="TONES[t.tone].icon_class" aria-hidden="true" />
           <div class="min-w-0 flex-1 py-px">
-            <p class="text-base font-medium text-heading">{{ t.title }}</p>
-            <p v-if="t.description" class="mt-0.5 text-base text-muted">{{ t.description }}</p>
+            <p class="text-base font-medium" :class="TONES[t.tone].title">{{ t.title }}</p>
+            <p v-if="t.description" class="mt-0.5 text-base" :class="TONES[t.tone].text">{{ t.description }}</p>
           </div>
           <AcButton v-if="t.action" :title="t.action.label" size="small" color="white" class="shrink-0" @click="runAction(t)" />
           <button
             v-if="t.dismissible"
             type="button"
-            class="inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-6 text-muted transition hover:bg-surface-sunken hover:text-heading focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
+            class="inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-6 opacity-70 transition hover:bg-black/5 hover:opacity-100 dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
             :aria-label="`Dismiss: ${t.title}`"
             @click="dismiss(t.id)"
           >

@@ -61,7 +61,7 @@ const hasHeader = computed(() => !!props.label || (props.showValue && !props.ind
 </script>
 
 <template>
-  <div class="w-full" data-testid="ac-progress">
+  <div class="w-full" data-ac-ds data-testid="ac-progress">
     <div v-if="hasHeader" class="mb-1.5 flex items-baseline justify-between gap-3 text-xs">
       <span v-if="label" :id="`${id}-label`" class="min-w-0 truncate font-medium text-label">{{ label }}</span>
       <span

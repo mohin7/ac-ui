@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AcButton, AcButtons } from "@/lib";
-import { Minus, Play, Plus, RotateCw, Square } from "lucide-vue-next";
+import { Minus, Play, Plus, RotateCw, Square } from "@lucide/vue";
 </script>
 
 <template>

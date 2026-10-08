@@ -4,7 +4,7 @@ export interface Props {
   title?: string;
   /** Small line under the title. */
   subtitle?: string;
-  /** Adds 20px padding to the body. Turn off for flush tables. */
+  /** Adds 20px padding to the body. Turn off for flush tables; the body then clips to the card's rounded corners. */
   padded?: boolean;
 }
 
@@ -18,7 +18,7 @@ defineSlots<{
 </script>
 
 <template>
-  <section class="rounded-10 border border-border bg-surface shadow-xs" data-testid="ac-card">
+  <section class="rounded-10 border border-border bg-surface shadow-xs" data-ac-ds data-testid="ac-card">
     <header
       v-if="title || $slots.actions"
       class="flex items-center justify-between gap-4 border-b border-border-light px-5 py-3.5"
@@ -29,6 +29,6 @@ defineSlots<{
       </div>
       <div class="flex shrink-0 items-center gap-2"><slot name="actions" /></div>
     </header>
-    <div :class="padded && 'p-5'"><slot /></div>
+    <div :class="padded ? 'p-5' : ['overflow-hidden rounded-b-10', !(title || $slots.actions) && 'rounded-t-10']"><slot /></div>
   </section>
 </template>

@@ -7,7 +7,7 @@ import DoDont from "../../components/DoDont.vue";
 import DocHeading from "../../components/DocHeading.vue";
 
 const dos = ["Use one solid primary button per view for the main action.", "Write labels in Title Case with a verb: “Create Database”, “Save Changes”.", "Use `color=\"danger\"` for destructive actions and confirm them."];
-const donts = ["Don't place two solid primary buttons side by side.", "Don't colour a button with custom classes — pick a `color` and `variant`.", "Don't put long sentences in a button; white on primary is 3.7:1, so keep labels short."];
+const donts = ["Don't place two solid primary buttons side by side.", "Don't colour a button with custom classes — pick a `color` and `variant`.", "Don't put long sentences in a button; keep labels short."];
 </script>
 
 <template>
@@ -32,7 +32,7 @@ const donts = ["Don't place two solid primary buttons side by side.", "Don't col
   <p><code class="prose-code">small</code> (24px) fits tables and toolbars, <code class="prose-code">normal</code> (32px) is the default, <code class="prose-code">medium</code> (40px) is for empty states and hero actions.</p>
   <ComponentExample name="button/ButtonSizes" center />
   <DocHeading id="icon" :level="3">Icon</DocHeading>
-  <p>Put an inline SVG or icon component in the <code class="prose-code">icon</code> slot. For an icon-only button, leave out <code class="prose-code">title</code> and add an <code class="prose-code">aria-label</code>.</p>
+  <p>Put an inline SVG or icon component in the <code class="prose-code">icon</code> slot. The <code class="prose-code">icon-right</code> slot puts one after the label, for arrows and chevrons. For an icon-only button, leave out <code class="prose-code">title</code> and add an <code class="prose-code">aria-label</code>.</p>
   <ComponentExample name="button/ButtonIcon" center />
   <DocHeading id="loading" :level="3">Loading</DocHeading>
   <p>Set <code class="prose-code">loading</code> while an async action runs. The button keeps its width, shows a spinner and ignores clicks.</p>

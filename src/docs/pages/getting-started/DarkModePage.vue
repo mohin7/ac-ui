@@ -1,19 +1,12 @@
 <script setup lang="ts">
-import { Database } from "lucide-vue-next";
+import { Database } from "@lucide/vue";
 import { AcAlert, AcBadge, AcButton, AcInput, AcSwitch } from "@/lib";
 import Callout from "../../components/Callout.vue";
 import CodeBlock from "../../components/CodeBlock.vue";
 import DocHeading from "../../components/DocHeading.vue";
 import DoDont from "../../components/DoDont.vue";
-
-const setup = `<script setup lang="ts">
-import { AcThemeMode } from "@appscode/design-system";
-<\/script>
-
-<template>
-  <!-- Anywhere in the app: navbar, user menu or settings -->
-  <AcThemeMode default-mode="system" />
-</template>`;
+import setup from "../../snippets/dark-mode/setup.txt?raw";
+import composable from "../../snippets/dark-mode/composable.txt?raw";
 
 const noFlash = `<!-- index.html, inside <head>: apply the saved theme before the first paint -->
 <script>
@@ -23,11 +16,6 @@ const noFlash = `<!-- index.html, inside <head>: apply the saved theme before th
     if (dark) document.documentElement.classList.add("dark", "is-dark-theme");
   } catch {}
 <\/script>`;
-
-const composable = `import { useColorMode } from "@appscode/design-system";
-
-const { mode, isDark, setMode } = useColorMode({ defaultMode: "system" });
-setMode("dark"); // "light" | "dark" | "system"`;
 
 const variant = `<!-- Only for things tokens can't express, such as swapping a logo -->
 <img src="/logo.svg" class="dark:hidden" alt="AppsCode" />
